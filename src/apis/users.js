@@ -5,6 +5,11 @@ function login(loginRequestDto) {
 	return API.post("/users/login", loginRequestDto);
 }
 
+function logout() {
+	console.log("로그아웃 API");
+	return API.get("/users/logout");
+}
+
 function joinUser(createUserAccountRequestDto) {
 	console.log("회원가입 API");
 	return API.post("/users", createUserAccountRequestDto);
@@ -20,4 +25,4 @@ function validateEmail(email) {
 	return API.get("/users/duplication-email/" + email);
 }
 
-export { login, joinUser, validateLoginId, validateEmail };
+export { login, logout, joinUser, validateLoginId, validateEmail };

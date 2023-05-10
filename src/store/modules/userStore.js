@@ -1,19 +1,28 @@
 // import { login, joinUser, validateEmail, validateLoginId } from "../../api/users";
-import { login, joinUser, validateEmail, validateLoginId } from "@/apis/users";
+import { login, logout, joinUser, validateEmail, validateLoginId } from "@/apis/users";
 
 const userStore = {
 	namespaced: true,
 	state: {
-		loginUser: {
+		login_user: {
 			userId: "",
 			loginid: "",
 			nickname: "",
 		},
 	},
-	getters: {},
+	getters: {
+		getLoginUserNickname(state) {
+			return state.login_user.nickname;
+		},
+	},
 	mutations: {
 		SET_LOGIN_USER(state, data) {
-			state.loginUser = data;
+			state.login_user = data;
+		},
+		REMOVE_LOGIN_USER(state) {
+			state.login_user.userId = "";
+			state.login_user.loginid = "";
+			state.login_user.nickname = "";
 		},
 	},
 	actions: {
@@ -27,6 +36,18 @@ const userStore = {
 				return true;
 			}
 			alert(res.data.developerMessage);
+			return false;
+		},
+
+		async logout({ commit }) {
+			let res = await logout();
+			if (res.data.statusCode == 200) {
+				alert("로그아웃 성공");
+				console.log("로그아웃성공");
+				document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				commit("REMOVE_LOGIN_USER");
+				return true;
+			}
 			return false;
 		},
 
