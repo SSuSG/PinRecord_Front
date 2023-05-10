@@ -8,7 +8,7 @@
 
 		<v-sheet min-height="500">
 			<div class="text-center">
-				<img src="../assets/ssafy.svg" class="img-fluid pa-3 my-5" alt="Logo" width="250" height="150" />
+				<img src="@/assets/ssafy.svg" class="img-fluid pa-3 my-5" alt="Logo" width="250" height="150" />
 			</div>
 			<v-sheet class="headline mb-2 text-center"> 로그인 </v-sheet>
 

@@ -1,8 +1,18 @@
 <template>
-	<div id="app">
+	<v-app>
+		<header-component></header-component>
 		<router-view />
-	</div>
+	</v-app>
 </template>
+
+<script>
+import HeaderComponent from "./components/Header/HeaderComponent.vue";
+
+export default {
+	name: "app",
+	components: { HeaderComponent },
+};
+</script>
 
 <style lang="scss">
 #app {
