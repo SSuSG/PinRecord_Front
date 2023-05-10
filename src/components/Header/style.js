@@ -6,7 +6,7 @@ export const StyledHeader = styled.div`
   align-items: center;
   /* background: palevioletred; */
   /* background-color: aliceblue; */
-  box-shadow: 0px 2px 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
   font-size: 1em;
   padding: 0.25em 1em;
   width: 100%;

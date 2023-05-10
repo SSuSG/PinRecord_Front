@@ -1,12 +1,13 @@
 <template>
   <div>
     <header-component />
-    home page
+    <grid-component></grid-component>
   </div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/Header/HeaderComponent.vue";
+import GridComponent from "@/components/Grid/GridComponent.vue";
 export default {
   name: "HomePage",
 
@@ -15,6 +16,7 @@ export default {
   },
   components: {
     HeaderComponent,
+    GridComponent,
   },
   mounted() {},
 
