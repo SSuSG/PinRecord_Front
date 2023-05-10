@@ -1,12 +1,12 @@
 <template>
   <div>
-    <Header />
+    <header-component />
     home page
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header/HeaderComponent";
+import HeaderComponent from "@/components/Header/HeaderComponent.vue";
 export default {
   name: "HomePage",
 
@@ -14,7 +14,7 @@ export default {
     return {};
   },
   components: {
-    Header,
+    HeaderComponent,
   },
   mounted() {},
 
