@@ -1,23 +1,20 @@
 <template>
-  <StyledHeader>
-    <div>로고</div>
-    <ButtonList>
-      <ButtonLi><button>Login</button></ButtonLi>
-      <ButtonLi><button>MyPage</button></ButtonLi>
-    </ButtonList>
-  </StyledHeader>
+	<StyledHeader>
+		<div>로고</div>
+		<login-comp></login-comp>
+	</StyledHeader>
 </template>
 
 <script>
-import { StyledHeader, ButtonList, ButtonLi } from "@/components/Header/style";
+import { StyledHeader } from "@/components/Header/style";
+import LoginComp from "../User/LoginComp.vue";
 
 export default {
-  name: "HeaderComponent",
-  components: {
-    StyledHeader,
-    ButtonList,
-    ButtonLi,
-  },
+	name: "HeaderComponent",
+	components: {
+		StyledHeader,
+		LoginComp,
+	},
 };
 </script>
 <style></style>
