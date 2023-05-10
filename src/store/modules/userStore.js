@@ -1,4 +1,5 @@
-import { login, joinUser, validateEmail, validateLoginId } from "../../api/users";
+// import { login, joinUser, validateEmail, validateLoginId } from "../../api/users";
+import { login, joinUser, validateEmail, validateLoginId } from "@/apis/users";
 
 const userStore = {
 	namespaced: true,
