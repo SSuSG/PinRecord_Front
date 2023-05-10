@@ -1,18 +1,18 @@
 <template>
-  <div>user page</div>
+	<div>user page</div>
 </template>
 
 <script>
 export default {
-  name: "UserPage",
+	name: "UserPage",
 
-  data() {
-    return {};
-  },
+	data() {
+		return {};
+	},
 
-  mounted() {},
+	mounted() {},
 
-  methods: {},
+	methods: {},
 };
 </script>
 

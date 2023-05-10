@@ -5,15 +5,15 @@ import HomePage from "@/pages/Home/HomePage";
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: HomePage,
-  },
+	{
+		path: "/",
+		name: "home",
+		component: HomePage,
+	},
 ];
 
 const router = new VueRouter({
-  routes,
+	routes,
 });
 
 export default router;

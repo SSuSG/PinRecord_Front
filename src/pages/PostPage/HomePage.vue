@@ -1,18 +1,18 @@
 <template>
-  <div>post page</div>
+	<div>post page</div>
 </template>
 
 <script>
 export default {
-  name: "PostPage",
+	name: "PostPage",
 
-  data() {
-    return {};
-  },
+	data() {
+		return {};
+	},
 
-  mounted() {},
+	mounted() {},
 
-  methods: {},
+	methods: {},
 };
 </script>
 
