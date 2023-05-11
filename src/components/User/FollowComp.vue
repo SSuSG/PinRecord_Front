@@ -1,5 +1,5 @@
 <template>
-	<div>아이디찾기</div>
+	<div>list</div>
 </template>
 
 <script>

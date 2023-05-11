@@ -8,6 +8,8 @@ module.exports = {
 		parser: "@babel/eslint-parser",
 	},
 	rules: {
+		// eslint-disable-next-line
+		"no-unused-vars": "off",
 		"no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
 		"prettier/prettier": [
@@ -26,5 +28,8 @@ module.exports = {
 				"useTabs": true,
 			},
 		],
+	},
+	globals: {
+		kakao: true,
 	},
 };

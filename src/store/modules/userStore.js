@@ -1,5 +1,5 @@
 // import { login, joinUser, validateEmail, validateLoginId } from "../../api/users";
-import { login, logout, joinUser, validateEmail, validateLoginId } from "@/apis/users";
+import { login, logout, joinUser, validateEmail, validateLoginId, getUserByUserId } from "@/apis/users";
 
 const userStore = {
 	namespaced: true,
@@ -28,7 +28,6 @@ const userStore = {
 	actions: {
 		async login({ commit }, loginRequestDto) {
 			let res = await login(loginRequestDto);
-			console.log(res.data);
 
 			if (res.data.statusCode == 200) {
 				alert("로그인 성공");
@@ -43,7 +42,6 @@ const userStore = {
 			let res = await logout();
 			if (res.data.statusCode == 200) {
 				alert("로그아웃 성공");
-				console.log("로그아웃성공");
 				document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 				commit("REMOVE_LOGIN_USER");
 				return true;
@@ -51,22 +49,20 @@ const userStore = {
 			return false;
 		},
 
-		async joinUser({ commit }, createUserAccountRequestDto) {
-			console.log(commit);
-			let res = await joinUser(createUserAccountRequestDto);
-			return res;
+		joinUser({ commit }, createUserAccountRequestDto) {
+			return joinUser(createUserAccountRequestDto);
 		},
 
-		async validateEmail({ commit }, email) {
-			console.log(commit);
-			let res = await validateEmail(email);
-			return res;
+		validateEmail({ commit }, email) {
+			return validateEmail(email);
 		},
 
-		async validateLoginId({ commit }, loginId) {
-			console.log(commit);
-			let res = await validateLoginId(loginId);
-			return res;
+		validateLoginId({ commit }, loginId) {
+			return validateLoginId(loginId);
+		},
+
+		getUserByUserId({ commit }, userId) {
+			return getUserByUserId(userId);
 		},
 	},
 };
