@@ -19,9 +19,9 @@ export const ButtonList = styled.ul`
 `;
 export const ButtonLi = styled.li`
 	float: left;
-	margin-left: 20px;
+	margin-left: 5px;
 	padding: 8px 10px;
-	background-color: royalblue;
+	/* background-color: royalblue; */
 	color: white;
 	border-radius: 10px;
 	font-weight: 400;
