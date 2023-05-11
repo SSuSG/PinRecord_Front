@@ -9,7 +9,7 @@ export const StyledHeader = styled.div`
 	box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
 	font-size: 1em;
 	padding: 0.25em 1em;
-	width: 100%;
+	width: 100vw;
 	height: 70px;
 	position: sticky;
 `;
