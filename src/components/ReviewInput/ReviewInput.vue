@@ -11,9 +11,9 @@
 			</div>
 		</div>
 		<label>비용</label>
-		<TextInput type="text" v-model="travelInfo.cost" />
+		<TextInput type="number" v-model="travelInfo.cost" ref="cost" />
 		<label>여행은 어떠셨나요?</label>
-		<CommentInput type="text" v-model="travelInfo.comment" />
+		<CommentInput type="text" v-model="travelInfo.comment" ref="comment" />
 		<button @click="onSubmit()">작성하기</button>
 	</div>
 </template>
@@ -44,7 +44,24 @@ export default {
 
 	methods: {
 		onSubmit() {
-			console.log({ ...this.travelInfo });
+			if (this.validate()) {
+				console.log({ ...this.travelInfo });
+			}
+		},
+		validate() {
+			if (this.travelInfo.startDate === "" || this.travelInfo.endDate === "") {
+				alert("날짜를 입력해주세요.");
+				return false;
+			} else if (this.travelInfo.cost === "") {
+				alert("여행비용을 입력해주세요.");
+				this.$refs.cost.$el.focus();
+				return false;
+			} else if (this.travelInfo.comment === "") {
+				alert("코멘트를 입력해주세요.");
+				this.$refs.comment.$el.focus();
+				return false;
+			}
+			return true;
 		},
 	},
 
