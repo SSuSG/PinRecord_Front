@@ -2,7 +2,9 @@
 	<div>
 		<GridWrapper>
 			<div v-for="(data, index) in dummy" v-bind:key="index">
-				{{ data.content }}
+				<router-link :to="{ name: 'detail', params: { postId: index } }">
+					{{ index }}
+				</router-link>
 			</div>
 		</GridWrapper>
 	</div>
