@@ -1,5 +1,5 @@
 // import { login, joinUser, validateEmail, validateLoginId } from "../../api/users";
-import { login, logout, joinUser, validateEmail, validateLoginId, getUserByUserId } from "@/apis/users";
+import { login, logout, joinUser, validateEmail, validateLoginId, getUserByUserId } from "@/apis/user";
 
 const userStore = {
 	namespaced: true,
@@ -13,6 +13,9 @@ const userStore = {
 	getters: {
 		getLoginUserNickname(state) {
 			return state.login_user.nickname;
+		},
+		getLoginUserUserId(state) {
+			return state.login_user.userId;
 		},
 	},
 	mutations: {

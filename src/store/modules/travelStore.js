@@ -1,4 +1,4 @@
-import { getTravelListByUserId, getZzimTravelListByUserId } from "@/apis/travels";
+import { getTravelListByUserId, getZzimTravelListByUserId } from "@/apis/travel";
 
 const travelStore = {
 	namespaced: true,

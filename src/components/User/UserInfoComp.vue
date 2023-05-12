@@ -8,14 +8,12 @@
 			</v-row>
 
 			<v-row justify="center">
-				<v-col>
-					<v-card-text>{{ user.nickname }}</v-card-text>
-				</v-col>
+				<v-card-text>{{ user.nickname }}</v-card-text>
 			</v-row>
 
-			<v-row justify="center">
-				<v-btn text>팔로워목록</v-btn>
-				<v-btn text>팔로잉목록</v-btn>
+			<v-row justify="center" class="pb-2">
+				<follower-comp :followerList="followerList" />
+				<following-comp :followingList="followingList" />
 			</v-row>
 
 			<v-row justify="center" class="pb-6">
@@ -31,14 +29,40 @@
 </template>
 
 <script>
+import FollowerComp from "./FollowerComp.vue";
+import FollowingComp from "./FollowingComp.vue";
+import { mapActions } from "vuex";
+
 export default {
 	name: "UserInfoComp",
-	props: ["user"],
-	data() {
-		return {};
+	props: {
+		user: Object,
 	},
-	methods: {},
-	created() {},
+	data() {
+		return {
+			followerList: null,
+			followingList: null,
+		};
+	},
+	components: {
+		FollowerComp,
+		FollowingComp,
+	},
+	methods: {
+		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId"]),
+		async getUserFollowInfo(userId) {
+			let res1 = await this.findFollowerByUserId(userId);
+			console.log(res1);
+			this.followerList = res1.data.data;
+
+			let res2 = await this.findFollowingByUserId(userId);
+			console.log(res2);
+			this.followingList = res2.data.data;
+		},
+	},
+	created() {
+		this.getUserFollowInfo(this.$route.params.userId);
+	},
 };
 </script>
 

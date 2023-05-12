@@ -9,12 +9,16 @@
 				</v-row>
 				<v-row no-gutters>
 					<v-col>
-						<user-tabs-info-comp :userNickname="user.nickname" />
+						<user-tabs-info-comp
+							:userNickname="user.nickname"
+							:travelList="writeTravelList"
+							:zzimTravelList="zzimTravelList"
+						/>
 					</v-col>
 				</v-row>
 			</v-col>
 			<v-col cols="12" lg="8" class="pl-2">
-				<user-page-map-comp :writeTravelList="writeTravelList" />
+				<user-page-map-comp />
 			</v-col>
 		</v-row>
 	</v-container>
@@ -37,13 +41,17 @@ export default {
 				nickname: "",
 				name: "",
 				profileImage: "",
+				followerCnt: null,
+				followingCnt: null,
 			},
-			writeTravelList: [],
+			writeTravelList: null,
+			zzimTravelList: null,
 		};
 	},
 	created() {
 		this.getUserInfo(this.$route.params.userId);
 		this.getUserTravelList(this.$route.params.userId);
+		this.getUserZzimTravelList(this.$route.params.userId);
 	},
 
 	methods: {
@@ -52,12 +60,14 @@ export default {
 		async getUserInfo(userId) {
 			let res = await this.getUserByUserId(userId);
 			this.user = res.data.data;
-			console.log(this.user);
 		},
 		async getUserTravelList(userId) {
 			let res = await this.getTravelListByUserId(userId);
 			this.writeTravelList = res.data.data;
-			console.log(this.writeTravelList);
+		},
+		async getUserZzimTravelList(userId) {
+			let res = await this.getZzimTravelListByUserId(userId);
+			this.zzimTravelList = res.data.data;
 		},
 	},
 };
