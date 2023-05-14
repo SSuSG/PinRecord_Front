@@ -1,5 +1,14 @@
 // import { login, joinUser, validateEmail, validateLoginId } from "../../api/users";
-import { login, logout, joinUser, validateEmail, validateLoginId, getUserByUserId } from "@/apis/user";
+import {
+	login,
+	logout,
+	joinUser,
+	validateEmail,
+	validateLoginId,
+	getUserByUserId,
+	findLoginIdByEmail,
+	findPasswordByLoginIdAndEmail,
+} from "@/apis/user";
 
 const userStore = {
 	namespaced: true,
@@ -66,6 +75,14 @@ const userStore = {
 
 		getUserByUserId({ commit }, userId) {
 			return getUserByUserId(userId);
+		},
+
+		findLoginIdByEmail({ commit }, email) {
+			return findLoginIdByEmail(email);
+		},
+		findPasswordByLoginIdAndEmail({ commit }, findPasswordRequestDto) {
+			console.log(findPasswordRequestDto);
+			return findPasswordByLoginIdAndEmail(findPasswordRequestDto);
 		},
 	},
 };

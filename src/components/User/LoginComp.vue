@@ -50,9 +50,9 @@
 			<br />
 			<v-divider></v-divider>
 			<v-sheet>
-				<!-- <find-id></find-id> -->
+				<find-login-id-comp />
 				<v-text style="color: #9e9e9e">|</v-text>
-				<!-- <find-pw></find-pw> -->
+				<find-password-comp />
 			</v-sheet>
 		</v-sheet>
 	</v-dialog>
@@ -60,8 +60,11 @@
 
 <script>
 import { mapActions } from "vuex";
+import FindLoginIdComp from "@/components/User/FindLoginIdComp.vue";
+import FindPasswordComp from "@/components/User/FindPasswordComp.vue";
 
 export default {
+	components: { FindLoginIdComp, FindPasswordComp },
 	name: "LoginComp",
 	data() {
 		return {

@@ -25,14 +25,19 @@ function validateEmail(email) {
 	return API.get("/users/duplication-email/" + email);
 }
 
-function findPassword(findPasswordRequestDto) {
+function findLoginIdByEmail(email) {
+	console.log("로그인ID 찾기 API");
+	return API.get("/users/loginId/" + email);
+}
+
+function findPasswordByLoginIdAndEmail(findPasswordRequestDto) {
 	console.log("비밀번호 찾기 API");
-	return API.post("/users/password", findPasswordRequestDto);
+	return API.post("/users/new-password", findPasswordRequestDto);
 }
 
 function updatePassword(updatePasswordRequestDto) {
 	console.log("비밀번호 변경 API");
-	return API.post("/users/new-password", updatePasswordRequestDto);
+	return API.post("/users/password", updatePasswordRequestDto);
 }
 
 function unlockAccount(unlockAccountRequestDto) {
@@ -56,7 +61,8 @@ export {
 	joinUser,
 	validateLoginId,
 	validateEmail,
-	findPassword,
+	findLoginIdByEmail,
+	findPasswordByLoginIdAndEmail,
 	updatePassword,
 	unlockAccount,
 	updateProfileImage,
