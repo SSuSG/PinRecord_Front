@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<v-app full-height="false">
 		<header-component></header-component>
 		<router-view />
 	</v-app>
@@ -21,6 +21,9 @@ export default {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
+	height: 100vh;
+	padding-top: 70px; // 헤더 높이
+	box-sizing: border-box;
 }
 
 nav {

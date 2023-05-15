@@ -74,8 +74,8 @@ export default {
 	display: flex;
 	flex-direction: column;
 	width: 50%;
-	height: 100%;
-	min-height: 100vh;
+	/* height: 100%;
+	min-height: 100vh; */
 	padding: 20px;
 	gap: 20px;
 	background-color: whitesmoke;

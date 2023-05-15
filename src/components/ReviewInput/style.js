@@ -12,6 +12,10 @@ export const TextInput = styled.input`
 	border: 1px solid black;
 	border-radius: 5px;
 	padding: 10px;
+	::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
 `;
 export const CommentInput = styled.textarea`
 	width: 100%;
