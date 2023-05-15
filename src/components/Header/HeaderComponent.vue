@@ -13,6 +13,9 @@
 			<ButtonLi>
 				<logout-comp></logout-comp>
 			</ButtonLi>
+			<ButtonLi>
+				<v-btn @click="toMyPage"><v-icon> mdi-account</v-icon></v-btn>
+			</ButtonLi>
 		</ButtonList>
 	</StyledHeader>
 </template>
@@ -35,7 +38,12 @@ export default {
 		LogoutComp,
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserNickname"]),
+		...mapGetters("userStore", ["getLoginUserNickname", "getLoginUserUserId"]),
+	},
+	methods: {
+		toMyPage() {
+			this.$router.push("/user/" + this.getLoginUserUserId);
+		},
 	},
 };
 </script>
