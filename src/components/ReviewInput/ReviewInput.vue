@@ -17,7 +17,7 @@
 		<button @click="onSubmit()">작성하기</button>
 		<div id="pin_container" ref="pinScroll">
 			<h3>장소를 추가해주세요!</h3>
-			<div id="pin_data" v-for="data in pinList" :key="data.id">
+			<div id="pin_data" v-for="data in pinList" :key="data.id" @click="removePin(data)">
 				{{ data.place_name }}
 			</div>
 		</div>
@@ -70,15 +70,8 @@ export default {
 			}
 			return true;
 		},
-	},
-	watch: {
-		pinScroll() {
-			// 화면에 추가된 후 동작하도록
-			this.$nextTick(() => {
-				let pinScroll = this.$refs.pinScroll;
-				console.log(pinScroll);
-				pinScroll.scrollTo({ top: pinScroll.scrollHeight, behavior: "smooth" });
-			});
+		removePin(data) {
+			this.$emit("removePin", data.id);
 		},
 	},
 };

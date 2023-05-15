@@ -1,6 +1,6 @@
 <template>
 	<div id="post_page">
-		<review-input :pinList="pinList"></review-input>
+		<review-input :pinList="pinList" @removePin="removePinList"></review-input>
 		<kakao-map @addPin="setPinList" />
 	</div>
 </template>
@@ -21,6 +21,9 @@ export default {
 	methods: {
 		setPinList(value) {
 			this.pinList = [...this.pinList, value];
+		},
+		removePinList(value) {
+			this.pinList = [...this.pinList].filter((e) => e.id !== value);
 		},
 	},
 };
