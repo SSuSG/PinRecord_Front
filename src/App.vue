@@ -1,7 +1,7 @@
 <template>
 	<v-app>
 		<header-component></header-component>
-		<router-view id="view" />
+		<router-view :key="$route.fullPath" />
 	</v-app>
 </template>
 

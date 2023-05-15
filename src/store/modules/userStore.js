@@ -8,6 +8,7 @@ import {
 	getUserByUserId,
 	findLoginIdByEmail,
 	findPasswordByLoginIdAndEmail,
+	updateProfileImage,
 } from "@/apis/user";
 
 const userStore = {
@@ -15,7 +16,7 @@ const userStore = {
 	state: {
 		login_user: {
 			userId: "",
-			loginid: "",
+			loginId: "",
 			nickname: "",
 		},
 	},
@@ -33,7 +34,7 @@ const userStore = {
 		},
 		REMOVE_LOGIN_USER(state) {
 			state.login_user.userId = "";
-			state.login_user.loginid = "";
+			state.login_user.loginId = "";
 			state.login_user.nickname = "";
 		},
 	},
@@ -81,8 +82,12 @@ const userStore = {
 			return findLoginIdByEmail(email);
 		},
 		findPasswordByLoginIdAndEmail({ commit }, findPasswordRequestDto) {
-			console.log(findPasswordRequestDto);
 			return findPasswordByLoginIdAndEmail(findPasswordRequestDto);
+		},
+
+		updateProfileImage({ commit }, dto) {
+			console.log(dto.userId);
+			return updateProfileImage(dto);
 		},
 	},
 };
