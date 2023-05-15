@@ -3,7 +3,7 @@
 		<div id="map"></div>
 		<div id="result_container">
 			<div id="result_wrapper">
-				<div id="result" v-for="result in searchResults" :key="result.id">
+				<div id="result" v-for="result in searchResults" :key="result.id" @click="addPin(result)">
 					<span>{{ result.place_name }}</span>
 					<span>{{ result.address_name }}</span>
 				</div>
@@ -48,16 +48,14 @@ export default {
 				level: 5,
 			};
 			this.map = new kakao.maps.Map(mapContainer, mapOptions);
-
 			const marker = new kakao.maps.Marker({
 				position: null,
 			});
-
 			marker.setMap(this.map);
-			const root = this;
-			kakao.maps.event.addListener(this.map, "click", function (event) {
-				root.addMarker(event.latLng);
-			});
+			// const root = this;
+			// kakao.maps.event.addListener(this.map, "click", function (event) {
+			// 	root.addMarker(event.latLng);
+			// });
 		},
 
 		searchPlaces() {
@@ -67,12 +65,10 @@ export default {
 
 		searchCallback(datas, status) {
 			if (status === kakao.maps.services.Status.OK && datas.length > 0) {
-				console.log(datas);
 				let bounds = new kakao.maps.LatLngBounds();
 				this.resetSearchResults();
 				this.resetMarker();
 				datas.forEach((data) => {
-					console.log(data);
 					const position = new kakao.maps.LatLng(data.y, data.x);
 					this.addMarker(position);
 					bounds.extend(new kakao.maps.LatLng(data.y, data.x));
@@ -94,13 +90,11 @@ export default {
 			this.markers.push(newMarker);
 			this.setMarkers();
 		},
-
 		setMarkers() {
 			this.markers.forEach((marker) => {
 				marker.setMap(this.map);
 			});
 		},
-
 		resetMarker() {
 			this.markers.forEach((marker) => {
 				marker.setMap(null);
@@ -109,6 +103,9 @@ export default {
 		},
 		resetSearchResults() {
 			this.searchResults = [];
+		},
+		addPin(result) {
+			this.$emit("addPin", { ...result });
 		},
 	},
 };
@@ -140,8 +137,8 @@ export default {
 	justify-content: center;
 	gap: 15px;
 	position: absolute;
-	right: 20px;
-	top: 100px;
+	right: 30px;
+	top: 50px;
 	z-index: 2;
 	background-color: white;
 	padding: 10px;

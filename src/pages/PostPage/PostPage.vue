@@ -1,7 +1,7 @@
 <template>
 	<div id="post_page">
-		<review-input></review-input>
-		<kakao-map />
+		<review-input :pinList="pinList"></review-input>
+		<kakao-map @addPin="setPinList" />
 	</div>
 </template>
 
@@ -13,12 +13,16 @@ export default {
 	name: "PostPage",
 
 	data() {
-		return {};
+		return {
+			pinList: [],
+		};
 	},
 
-	mounted() {},
-
-	methods: {},
+	methods: {
+		setPinList(value) {
+			this.pinList = [...this.pinList, value];
+		},
+	},
 };
 </script>
 

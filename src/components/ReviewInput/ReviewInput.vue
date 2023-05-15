@@ -15,6 +15,12 @@
 		<label>여행은 어떠셨나요?</label>
 		<CommentInput type="text" v-model="travelInfo.comment" ref="comment" />
 		<button @click="onSubmit()">작성하기</button>
+		<div id="pin_container" ref="pinScroll">
+			<h3>장소를 추가해주세요!</h3>
+			<div id="pin_data" v-for="data in pinList" :key="data.id">
+				{{ data.place_name }}
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -39,13 +45,14 @@ export default {
 			},
 		};
 	},
-
-	mounted() {},
+	props: {
+		pinList: [],
+	},
 
 	methods: {
 		onSubmit() {
 			if (this.validate()) {
-				console.log({ ...this.travelInfo });
+				console.log({ ...this.travelInfo, pinList: this.pinList });
 			}
 		},
 		validate() {
@@ -64,8 +71,16 @@ export default {
 			return true;
 		},
 	},
-
-	computed: {},
+	watch: {
+		pinScroll() {
+			// 화면에 추가된 후 동작하도록
+			this.$nextTick(() => {
+				let pinScroll = this.$refs.pinScroll;
+				console.log(pinScroll);
+				pinScroll.scrollTo({ top: pinScroll.scrollHeight, behavior: "smooth" });
+			});
+		},
+	},
 };
 </script>
 
@@ -74,8 +89,6 @@ export default {
 	display: flex;
 	flex-direction: column;
 	width: 50%;
-	/* height: 100%;
-	min-height: 100vh; */
 	padding: 20px;
 	gap: 20px;
 	background-color: whitesmoke;
@@ -92,5 +105,27 @@ label {
 	display: flex;
 	justify-content: center;
 	gap: 30px;
+}
+#pin_container {
+	background-color: lightgrey;
+	border-radius: 10px;
+	min-height: 300px;
+	max-height: 500px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	gap: 10px;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+}
+#pin_container::-webkit-scrollbar {
+	display: none;
+}
+#pin_data {
+	border-radius: 10px;
+	min-height: 80px;
+	padding: 5px;
+	background-color: white;
 }
 </style>
