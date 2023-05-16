@@ -9,6 +9,7 @@ import {
 	findLoginIdByEmail,
 	findPasswordByLoginIdAndEmail,
 	updateProfileImage,
+	getUserProfileImage,
 } from "@/apis/user";
 
 const userStore = {
@@ -86,8 +87,11 @@ const userStore = {
 		},
 
 		updateProfileImage({ commit }, dto) {
-			console.log(dto.userId);
 			return updateProfileImage(dto);
+		},
+
+		getUserProfileImage({ commit }, userId) {
+			return getUserProfileImage(userId);
 		},
 	},
 };

@@ -7,7 +7,13 @@
 				</v-btn>
 			</template>
 			<v-sheet color="white" elevation="1">
-				<v-file-input prepend-icon="mdi-camera" v-model="image" show-size label="File input"></v-file-input>
+				<v-file-input
+					prepend-icon="mdi-camera"
+					v-model="image"
+					@change="handleFileSelect"
+					show-size
+					label="File input"
+				></v-file-input>
 				<v-btn dark class="ma-2 white--text" @click="updateImage()">
 					Upload
 					<v-icon right dark> mdi-cloud-upload </v-icon>
@@ -36,8 +42,7 @@ export default {
 	methods: {
 		...mapActions("userStore", ["updateProfileImage"]),
 		async updateImage() {
-			/*
-			base64기반 이미지 변경
+			//base64기반 이미지 변경
 			var updateProfileImageRequestDto = {
 				userId: this.userId,
 				profileImage: this.base64Image,
@@ -51,38 +56,38 @@ export default {
 				this.$emit("update-profile-image", this.base64Image);
 				this.dialog = false;
 			}
-			*/
-			var dto = {
-				profileImage: null,
-				userId: null,
-			};
-			const formData = new FormData();
-			formData.append("profileImage", this.image);
-			dto.profileImage = formData;
-			dto.userId = this.userId;
-			let res = await this.updateProfileImage(dto);
-			if (res.data.statusCode !== 200) {
-				alert(res.data.developerMessage);
-			} else {
-				alert("이미지 변경에 성공하였습니다!");
-				this.$emit("update-profile-image", this.image);
-				this.dialog = false;
-			}
+
+			// var dto = {
+			// 	profileImage: null,
+			// 	userId: null,
+			// };
+			// const formData = new FormData();
+			// formData.append("profileImage", this.image);
+			// dto.profileImage = formData;
+			// dto.userId = this.userId;
+			// let res = await this.updateProfileImage(dto);
+			// if (res.data.statusCode !== 200) {
+			// 	alert(res.data.developerMessage);
+			// } else {
+			// 	alert("이미지 변경에 성공하였습니다!");
+			// 	this.$emit("update-profile-image", this.image);
+			// 	this.dialog = false;
+			// }
 		},
-		// handleFileSelect() {
-		// 	const file = this.image;
-		// 	const reader = new FileReader();
+		handleFileSelect() {
+			const file = this.image;
+			const reader = new FileReader();
 
-		// 	// 파일 읽기가 완료되었을 때 호출되는 이벤트 핸들러
-		// 	reader.onload = (event) => {
-		// 		this.base64Image = event.target.result;
-		// 		console.log(this.base64Image);
-		// 		// base64Data를 사용하여 원하는 처리 수행
-		// 	};
+			// 파일 읽기가 완료되었을 때 호출되는 이벤트 핸들러
+			reader.onload = (event) => {
+				this.base64Image = event.target.result;
+				//console.log(this.base64Image);
+				// base64Data를 사용하여 원하는 처리 수행
+			};
 
-		// 	// 파일을 Base64로 인코딩하여 읽기 시작
-		// 	reader.readAsDataURL(file);
-		// },
+			// 파일을 Base64로 인코딩하여 읽기 시작
+			reader.readAsDataURL(file);
+		},
 	},
 };
 </script>

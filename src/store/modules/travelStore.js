@@ -1,4 +1,9 @@
-import { getTravelListByUserId, getZzimTravelListByUserId } from "@/apis/travel";
+import {
+	getTravelListByUserId,
+	getZzimTravelListByUserId,
+	getTravelListForHomeView,
+	getTravelListByCity,
+} from "@/apis/travel";
 
 const travelStore = {
 	namespaced: true,
@@ -12,6 +17,14 @@ const travelStore = {
 
 		getTravelListByUserId({ commit }, userId) {
 			return getTravelListByUserId(userId);
+		},
+
+		getTravelListForHomeView({ commit }) {
+			return getTravelListForHomeView();
+		},
+
+		getTravelListByCity({ commit }, dto) {
+			return getTravelListByCity(dto);
 		},
 	},
 };

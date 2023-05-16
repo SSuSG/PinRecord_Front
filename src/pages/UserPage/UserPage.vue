@@ -18,7 +18,7 @@
 				</v-row>
 			</v-col>
 			<v-col cols="12" lg="8" class="pl-2">
-				<user-page-map-comp />
+				<user-page-map-comp :travelList="writeTravelList" />
 			</v-col>
 		</v-row>
 	</v-container>

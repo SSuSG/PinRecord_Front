@@ -60,6 +60,7 @@ export default {
 	},
 	methods: {
 		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId"]),
+		//...mapActions("userStore", ["getUserProfileImage"]),
 		async getUserFollowInfo(userId) {
 			let res1 = await this.findFollowerByUserId(userId);
 			console.log(res1);
@@ -72,6 +73,12 @@ export default {
 		updateProfileimage(image) {
 			this.$emit("update-profile-image", image);
 		},
+		// async getProfileImage(userId) {
+		// 	console.log("유저 프로필 이미지 조회!!" + userId);
+		// 	let res = await this.getUserProfileImage(userId);
+		// 	console.log(res.data.data);
+		// 	return res;
+		// },
 	},
 	computed: {
 		...mapGetters("userStore", ["getLoginUserNickname"]),

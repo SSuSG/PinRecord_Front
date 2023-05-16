@@ -13,6 +13,7 @@
 					{{ data.name }}
 				</option>
 			</select>
+			<v-btn @click="searchTravelByCity()">검색</v-btn>
 		</div>
 		<grid-component></grid-component>
 	</div>
@@ -21,6 +22,7 @@
 <script>
 import GridComponent from "@/components/Grid/GridComponent.vue";
 import { getSido, getGu } from "@/apis/sido";
+import { mapActions } from "vuex";
 export default {
 	name: "HomePage",
 	data() {
@@ -29,6 +31,8 @@ export default {
 			selectedSi: String,
 			gu: [],
 			selectedGu: String,
+			state: null,
+			city: null,
 		};
 	},
 	components: {
@@ -39,6 +43,7 @@ export default {
 	},
 
 	methods: {
+		...mapActions("travelStore", ["getTravelListByCity"]),
 		async setSi() {
 			const response = await getSido();
 			this.si = [...response];
@@ -54,12 +59,33 @@ export default {
 		setSelectedSi(e) {
 			this.selectedSi = e.target.value;
 			const siCode = this.selectedSi[0] + this.selectedSi[1];
+			for (let i = 0; i < this.si.length; i++) {
+				if (this.si[i].code === this.selectedSi) {
+					this.state = this.si[i].name;
+					break;
+				}
+			}
+
 			this.setGu(siCode);
 		},
 
 		setSelectedGu(e) {
 			this.selectedGu = e.target.value;
-			console.log(this.selectedSi, this.selectedGu);
+			for (let i = 0; i < this.gu.length; i++) {
+				if (this.gu[i].code === this.selectedGu) {
+					const temp = this.gu[i].name.split(" ");
+					this.state = temp[0];
+					this.city = temp[1];
+					break;
+				}
+			}
+		},
+		async searchTravelByCity() {
+			var dto = {
+				state: this.state,
+				city: this.city,
+			};
+			let res = await this.getTravelListByCity(dto);
 		},
 	},
 };
