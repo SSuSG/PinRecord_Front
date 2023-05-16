@@ -25,3 +25,42 @@ export const CommentInput = styled.textarea`
 	padding: 10px;
 	resize: none;
 `;
+export const PinContainer = styled.div`
+	background-color: lightgrey;
+	border-radius: 10px;
+	min-height: 300px;
+	max-height: 500px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	gap: 10px;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+	::-webkit-scrollbar {
+		display: none;
+	}
+`;
+export const PinData = styled.div`
+	border-radius: 10px;
+	min-height: 80px;
+	padding: 10px;
+	background-color: white;
+	font-weight: bold;
+	animation: slide 0.4s;
+	@keyframes slide {
+		from {
+			transform: translateX(-300px);
+		}
+		to {
+			transform: translateX(0px);
+		}
+	}
+	::-webkit-scrollbar {
+		display: none;
+	}
+`;
+export const PinDataInfo = styled.div`
+	display: flex;
+	justify-content: space-between;
+`;

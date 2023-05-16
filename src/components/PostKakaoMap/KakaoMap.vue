@@ -10,8 +10,13 @@
 					:style="[clickedMarker == result.id ? clickedStyle : null]"
 					@click="moveMap(result)"
 				>
-					<span @click="addPin(result)">{{ result.place_name }}</span>
-					<span>{{ result.address_name }}</span>
+					<ResultInfo>
+						<span id="place_name">{{ result.place_name }}</span>
+						<span id="place_address">{{ result.address_name }}</span>
+					</ResultInfo>
+					<!-- <div id="plus_btn" :style="[clickedMarker == result.id ? anti : null]"> -->
+					<v-icon @click="addPin(result)">mdi-plus-thick</v-icon>
+					<!-- </div> -->
 				</Result>
 			</ResultWrapper>
 		</ResultContainer>
@@ -24,7 +29,7 @@
 </template>
 
 <script>
-import { Result, ButtonGroup, ResultContainer, ResultWrapper, SearchButton, KeywordInput } from "./style";
+import { Result, ButtonGroup, ResultContainer, ResultWrapper, SearchButton, KeywordInput, ResultInfo } from "./style";
 export default {
 	name: "KakaoMap",
 	data() {
@@ -39,6 +44,10 @@ export default {
 				"background-color": "royalblue",
 				"color": "white",
 			},
+			anti: {
+				"background-color": "white",
+				"color": "royalblue",
+			},
 		};
 	},
 	components: {
@@ -48,6 +57,7 @@ export default {
 		ResultWrapper,
 		SearchButton,
 		KeywordInput,
+		ResultInfo,
 	},
 	mounted() {
 		if (window.kakao && window.kakao.maps) {
@@ -151,13 +161,13 @@ export default {
 			this.setClick(data);
 
 			// overlay.setMap(null);
-			const overlay = new kakao.maps.CustomOverlay({
-				content: "<div>HiHi</div>",
-				map: this.map,
-				position: movePosition,
-			});
-			console.log(overlay);
-			overlay.setMap(this.map);
+			// const overlay = new kakao.maps.CustomOverlay({
+			// 	content: "<div>HiHi</div>",
+			// 	map: this.map,
+			// 	position: movePosition,
+			// });
+			// console.log(overlay);
+			// overlay.setMap(this.map);
 		},
 	},
 };
@@ -178,4 +188,28 @@ export default {
 	width: 100%;
 	height: 100%;
 }
+#place_name {
+	font-weight: 700;
+	text-align: left;
+}
+#place_address {
+	font-weight: 400;
+	text-align: left;
+	font-size: medium;
+}
+/* #plus_btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	padding: 5px;
+	width: 30px;
+	height: 30px;
+	font-size: 20px;
+	font-weight: bold;
+	transition: all 0.1s;
+}
+#plus_btn:hover {
+	transform: scale(0.95);
+} */
 </style>

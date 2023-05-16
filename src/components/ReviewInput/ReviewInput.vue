@@ -15,25 +15,33 @@
 		<label>여행은 어떠셨나요?</label>
 		<CommentInput type="text" v-model="travelInfo.comment" ref="comment" />
 		<button @click="onSubmit()">작성하기</button>
-		<div id="pin_container" ref="pinScroll">
+
+		<PinContainer ref="pinScroll">
 			<h3>장소를 추가해주세요!</h3>
-			<div id="pin_data" v-for="data in pinList" :key="data.id" @click="removePin(data)">
-				{{ data.place_name }}
-			</div>
-		</div>
+			<PinData v-for="data in pinList" :key="data.id">
+				<PinDataInfo>
+					{{ data.place_name }}
+					<v-icon size="x-large" color="red lighten-2" @click="removePin(data)">mdi-delete-forever</v-icon>
+				</PinDataInfo>
+				<v-icon size="x-large" color="" @click="addPhoto(data)">mdi-camera</v-icon>
+				<input
+					type="file"
+					accept="image/*"
+					@change="onFileChange"
+					label="사진을 등록해주세요"
+					ref="imageRef"
+					style="display: none"
+					multiple
+				/>
+			</PinData>
+		</PinContainer>
 	</div>
 </template>
 
 <script>
-import { DateInput, TextInput, CommentInput } from "./style";
+import { DateInput, TextInput, CommentInput, PinContainer, PinData, PinDataInfo } from "./style";
 export default {
 	name: "ReviewInput",
-
-	components: {
-		DateInput,
-		TextInput,
-		CommentInput,
-	},
 
 	data() {
 		return {
@@ -47,6 +55,14 @@ export default {
 	},
 	props: {
 		pinList: [],
+	},
+	components: {
+		DateInput,
+		TextInput,
+		CommentInput,
+		PinContainer,
+		PinData,
+		PinDataInfo,
 	},
 
 	methods: {
@@ -73,6 +89,11 @@ export default {
 		removePin(data) {
 			this.$emit("removePin", data.id);
 		},
+		addPhoto(data) {
+			this.$refs.imageRef[0].click();
+			// this.$emit("addImageList", { imageList: [data.place_name], id: data.id });
+		},
+		onFileChange() {},
 	},
 };
 </script>
@@ -99,27 +120,5 @@ label {
 	display: flex;
 	justify-content: center;
 	gap: 30px;
-}
-#pin_container {
-	background-color: lightgrey;
-	border-radius: 10px;
-	min-height: 300px;
-	max-height: 500px;
-	padding: 10px;
-	display: flex;
-	flex-direction: column;
-	overflow: auto;
-	gap: 10px;
-	-ms-overflow-style: none; /* IE and Edge */
-	scrollbar-width: none; /* Firefox */
-}
-#pin_container::-webkit-scrollbar {
-	display: none;
-}
-#pin_data {
-	border-radius: 10px;
-	min-height: 80px;
-	padding: 5px;
-	background-color: white;
 }
 </style>

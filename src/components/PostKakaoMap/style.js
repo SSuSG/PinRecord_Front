@@ -25,8 +25,8 @@ export const ResultContainer = styled.div`
 	z-index: 2;
 	overflow: auto;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	flex-direction: column;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 	z-index: 1;
@@ -58,17 +58,22 @@ export const Result = styled.div`
 	width: 100%;
 	min-height: 55px;
 	border-radius: 5px;
-	padding: 5px;
+	padding: 5px 15px;
 	font-weight: bold;
 	font-size: 15px;
-	text-align: center;
+	box-shadow: 0px 1px 1px 2px rgba(0, 0, 0, 0.1);
 	display: flex;
-	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 	cursor: pointer;
 	transition: all 0.3s;
 	:hover {
 		transform: scale(1.03);
 	}
+`;
+export const ResultInfo = styled.div`
+	display: flex;
+	flex-direction: column;
 `;
 export const SearchButton = styled.button`
 	background-color: white;
