@@ -1,7 +1,7 @@
 <template>
 	<v-app full-height="false">
 		<header-component></header-component>
-		<router-view id="view" />
+		<router-view />
 	</v-app>
 </template>
 

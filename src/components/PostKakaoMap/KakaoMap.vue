@@ -1,7 +1,7 @@
 <template>
 	<div id="kakao_map">
 		<div id="map"></div>
-		<div id="result_container">
+		<div id="result_container" v-if="toogle">
 			<div id="result_wrapper">
 				<div id="result" v-for="result in searchResults" :key="result.id" @click="addPin(result)">
 					<span>{{ result.place_name }}</span>
@@ -26,6 +26,7 @@ export default {
 			searchResults: [],
 			markers: [],
 			infowindow: null,
+			toogle: false,
 		};
 	},
 	mounted() {
@@ -33,7 +34,6 @@ export default {
 			this.initMap();
 		} else {
 			const script = document.createElement("script");
-			/* global kakao */
 			script.onload = () => kakao.maps.load(this.initMap);
 			script.src =
 				"//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=1c5e9cd2b6c4bf84ba35470e216b0a63&libraries=services";
@@ -44,18 +44,10 @@ export default {
 		initMap() {
 			const mapContainer = document.getElementById("map");
 			const mapOptions = {
-				center: new kakao.maps.LatLng(33.450701, 126.570667),
+				center: new kakao.maps.LatLng(37.5012860931305, 127.039604663862),
 				level: 5,
 			};
 			this.map = new kakao.maps.Map(mapContainer, mapOptions);
-			const marker = new kakao.maps.Marker({
-				position: null,
-			});
-			marker.setMap(this.map);
-			// const root = this;
-			// kakao.maps.event.addListener(this.map, "click", function (event) {
-			// 	root.addMarker(event.latLng);
-			// });
 		},
 
 		searchPlaces() {
@@ -65,6 +57,7 @@ export default {
 
 		searchCallback(datas, status) {
 			if (status === kakao.maps.services.Status.OK && datas.length > 0) {
+				this.changeToggle(true);
 				let bounds = new kakao.maps.LatLngBounds();
 				this.resetSearchResults();
 				this.resetMarker();
@@ -85,6 +78,11 @@ export default {
 			const newMarker = new kakao.maps.Marker({
 				map: this.map,
 				position: position,
+				clickable: true,
+			});
+			// 마커에 클릭이벤트를 등록합니다
+			kakao.maps.event.addListener(newMarker, "click", function () {
+				console.log(newMarker);
 			});
 
 			this.markers.push(newMarker);
@@ -107,6 +105,9 @@ export default {
 		addPin(result) {
 			this.$emit("addPin", { ...result });
 		},
+		changeToggle(status) {
+			this.toogle = status;
+		},
 	},
 };
 </script>
@@ -118,7 +119,7 @@ export default {
 	box-sizing: border-box;
 }
 #kakao_map {
-	/* height: 100%; */
+	height: 100%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -164,10 +165,21 @@ export default {
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: center;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
+	/* transition: all 1s; */
+	/* transform: translateX(-300px); */
+	z-index: 1;
+	animation: slide 1s;
+}
+@keyframes slide {
+	from {
+		transform: translateX(-300px);
+	}
+	to {
+		transform: translateX(0px);
+	}
 }
 #result_container::-webkit-scrollbar {
 	display: none;
@@ -183,7 +195,7 @@ export default {
 #result {
 	background-color: whitesmoke;
 	width: 100%;
-	height: 50px;
+	min-height: 55px;
 	border-radius: 5px;
 	padding: 5px;
 	font-weight: bold;
@@ -192,6 +204,10 @@ export default {
 	display: flex;
 	flex-direction: column;
 	cursor: pointer;
+	transition: all 0.3s;
+}
+#result:hover {
+	transform: scale(1.03);
 }
 #keyword_input {
 	background-color: lightgrey;

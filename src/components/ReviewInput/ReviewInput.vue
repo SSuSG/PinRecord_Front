@@ -85,6 +85,7 @@ export default {
 	padding: 20px;
 	gap: 20px;
 	background-color: whitesmoke;
+	z-index: 2;
 }
 label {
 	font-weight: bold;
