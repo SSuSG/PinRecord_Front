@@ -34,5 +34,6 @@ export default {
 	display: flex;
 	flex-direction: row;
 	height: 100%;
+	padding-top: 70px; // 헤더 높이
 }
 </style>

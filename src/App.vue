@@ -22,7 +22,6 @@ export default {
 	text-align: center;
 	color: #2c3e50;
 	height: 100vh;
-	padding-top: 70px; // 헤더 높이
 	box-sizing: border-box;
 }
 
