@@ -1,9 +1,16 @@
 <template>
-	<v-card class="d-flex flex-column" outlined>
-		<v-sheet color="white" elevation="1" class="d-flex flex-column mx-auto" width="100%">
+	<v-card class="flex-column" outlined>
+		<v-sheet color="white" elevation="1" class="d-flex flex-column" width="100%">
 			<v-row justify="center" class="mt-4">
-				<v-avatar size="130">
-					<v-img v-bind:src="'data:image/jpeg;base64,' + user.profileImage"></v-img>
+				<v-avatar size="130" style="position: relative">
+					<v-img v-if="user.profileImage" :src="user.profileImage"></v-img>
+					<v-img v-else src="@/assets/default.png"></v-img>
+					<upload-image-comp
+						:userId="user.userId"
+						v-if="getLoginUserNickname === user.nickname"
+						@update-profile-image="updateProfileimage"
+						class="overlay-icon"
+					/>
 				</v-avatar>
 			</v-row>
 
@@ -31,7 +38,8 @@
 <script>
 import FollowerComp from "./FollowerComp.vue";
 import FollowingComp from "./FollowingComp.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+import UploadImageComp from "./UploadImageComp.vue";
 
 export default {
 	name: "UserInfoComp",
@@ -40,6 +48,7 @@ export default {
 	},
 	data() {
 		return {
+			profileImage: null,
 			followerList: null,
 			followingList: null,
 		};
@@ -47,9 +56,11 @@ export default {
 	components: {
 		FollowerComp,
 		FollowingComp,
+		UploadImageComp,
 	},
 	methods: {
 		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId"]),
+		//...mapActions("userStore", ["getUserProfileImage"]),
 		async getUserFollowInfo(userId) {
 			let res1 = await this.findFollowerByUserId(userId);
 			console.log(res1);
@@ -59,6 +70,18 @@ export default {
 			console.log(res2);
 			this.followingList = res2.data.data;
 		},
+		updateProfileimage(image) {
+			this.$emit("update-profile-image", image);
+		},
+		// async getProfileImage(userId) {
+		// 	console.log("유저 프로필 이미지 조회!!" + userId);
+		// 	let res = await this.getUserProfileImage(userId);
+		// 	console.log(res.data.data);
+		// 	return res;
+		// },
+	},
+	computed: {
+		...mapGetters("userStore", ["getLoginUserNickname"]),
 	},
 	created() {
 		this.getUserFollowInfo(this.$route.params.userId);
@@ -66,4 +89,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.overlay-icon {
+	position: absolute;
+	top: 90%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+</style>

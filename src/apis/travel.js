@@ -10,4 +10,21 @@ function getZzimTravelListByUserId(userId) {
 	return API.get("/travels/" + userId + "/zzims");
 }
 
-export { getTravelListByUserId, getZzimTravelListByUserId };
+function getTravelListForHomeView() {
+	console.log("메인화면에 보여줄 여행리스트 API");
+	return API.get("/travels");
+}
+
+function getTravelListByCity(dto) {
+	console.log("도시로 검색결과 여행리스트 API");
+	const state = dto.state;
+	const city = dto.city;
+	return API.get("/travels/location", {
+		params: {
+			state,
+			city,
+		},
+	});
+}
+
+export { getTravelListByUserId, getZzimTravelListByUserId, getTravelListForHomeView, getTravelListByCity };

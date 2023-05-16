@@ -1,4 +1,12 @@
 import API from "./index";
+import axios from "axios";
+const IMAGE_API = axios.create({
+	baseURL: "/api",
+	withCredentials: true,
+	headers: {
+		"Content-Type": "multipart/form-data",
+	},
+});
 
 function login(loginRequestDto) {
 	console.log("로그인 API");
@@ -45,14 +53,24 @@ function unlockAccount(unlockAccountRequestDto) {
 	return API.post("/users/unlock", unlockAccountRequestDto);
 }
 
-function updateProfileImage(updateProfileImageRequestDto) {
+// function updateProfileImage(dto) {
+// 	console.log("유저 프로필 이미지 변경 API");
+// 	return IMAGE_API.post("/users/images/" + dto.userId, dto.profileImage);
+// }
+
+function updateProfileImage(dto) {
 	console.log("유저 프로필 이미지 변경 API");
-	return API.post("/users/images", updateProfileImageRequestDto);
+	return API.post("/users/images", dto);
 }
 
 function getUserByUserId(userId) {
 	console.log("유저페이지의 유저 정보 API");
 	return API.get("/users/" + userId);
+}
+
+function getUserProfileImage(userId) {
+	console.log("유저페이지의 유저 프로필 이미지 API");
+	return API.get("/users/profile-image/" + userId);
 }
 
 export {
@@ -67,4 +85,5 @@ export {
 	unlockAccount,
 	updateProfileImage,
 	getUserByUserId,
+	getUserProfileImage,
 };

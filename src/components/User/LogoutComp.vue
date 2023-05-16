@@ -13,6 +13,7 @@ export default {
 	methods: {
 		...mapActions("userStore", ["logout"]),
 		doLogout() {
+			console.log("로그아웃 성공");
 			if (this.logout()) {
 				if (this.$route.path !== "/") {
 					this.$router.push("/");

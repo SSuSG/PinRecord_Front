@@ -4,7 +4,7 @@
 			<v-col cols="12" lg="4">
 				<v-row no-gutters>
 					<v-col>
-						<user-info-comp :user="user" />
+						<user-info-comp :user="user" @update-profile-image="updateProfileimage" />
 					</v-col>
 				</v-row>
 				<v-row no-gutters>
@@ -18,7 +18,7 @@
 				</v-row>
 			</v-col>
 			<v-col cols="12" lg="8" class="pl-2">
-				<user-page-map-comp />
+				<user-page-map-comp :travelList="writeTravelList" />
 			</v-col>
 		</v-row>
 	</v-container>
@@ -49,6 +49,7 @@ export default {
 		};
 	},
 	created() {
+		console.log("유저id : " + this.$route.params.userId);
 		this.getUserInfo(this.$route.params.userId);
 		this.getUserTravelList(this.$route.params.userId);
 		this.getUserZzimTravelList(this.$route.params.userId);
@@ -68,6 +69,9 @@ export default {
 		async getUserZzimTravelList(userId) {
 			let res = await this.getZzimTravelListByUserId(userId);
 			this.zzimTravelList = res.data.data;
+		},
+		updateProfileimage(image) {
+			this.user.profileImage = image;
 		},
 	},
 };

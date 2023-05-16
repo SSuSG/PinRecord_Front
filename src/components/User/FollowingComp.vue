@@ -5,10 +5,10 @@
 		</template>
 
 		<v-card>
-			<v-list subheader two-line>
+			<v-list subheader>
 				<v-subheader>Following List</v-subheader>
-
-				<v-list-item v-for="following in followingList" :key="following.name" ripple>
+				<v-divider></v-divider>
+				<v-list-item v-for="following in followingList" :key="following.nickname">
 					<v-list-item-avatar>
 						<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
 					</v-list-item-avatar>
@@ -19,7 +19,9 @@
 					</v-list-item-content>
 
 					<v-list-item-icon>
-						<v-icon> mdi-message-outline </v-icon>
+						<v-btn @click="toUserPage(following.followingUserId)">
+							<v-icon> mdi-message-outline </v-icon>
+						</v-btn>
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
@@ -40,23 +42,16 @@ export default {
 	props: {
 		followingList: Array,
 	},
+	methods: {
+		toUserPage(userId) {
+			this.dialog = false;
+			console.log(userId);
+			this.$router.replace({ name: "user", params: { userId: userId } });
+		},
+	},
 	data() {
 		return {
 			dialog: false,
-			recent: [
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-				},
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-				},
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-				},
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-				},
-			],
 		};
 	},
 };

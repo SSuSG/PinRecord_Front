@@ -7,27 +7,21 @@
 			<v-list subheader two-line>
 				<v-subheader>Follower List</v-subheader>
 
-				<v-list-item v-for="follower in followerList" :key="follower.name" ripple>
-					<v-row>
-						<v-col cols="12" md="4">
-							<v-list-item-avatar>
-								<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
-							</v-list-item-avatar>
-						</v-col>
+				<v-list-item v-for="follower in followerList" :key="follower.followerUserId" ripple>
+					<v-list-item-avatar>
+						<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
+					</v-list-item-avatar>
 
-						<v-col cols="12" md="6">
-							<v-list-item-content>
-								<v-list-item-title>{{ follower.nickname }}</v-list-item-title>
-								<v-list-item-subtitle>{{ follower.name }}</v-list-item-subtitle>
-							</v-list-item-content>
-						</v-col>
+					<v-list-item-content>
+						<v-list-item-title>{{ follower.nickname }}</v-list-item-title>
+						<v-list-item-subtitle>{{ follower.name }}</v-list-item-subtitle>
+					</v-list-item-content>
 
-						<v-col cols="12" md="2">
-							<v-list-item-icon>
-								<v-icon> mdi-message-outline </v-icon>
-							</v-list-item-icon>
-						</v-col>
-					</v-row>
+					<v-list-item-icon>
+						<v-btn @click="toUserPage(follower.followerUserId)">
+							<v-icon> mdi-message-outline </v-icon>
+						</v-btn>
+					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
 
@@ -47,23 +41,16 @@ export default {
 	props: {
 		followerList: Array,
 	},
+	methods: {
+		toUserPage(userId) {
+			this.dialog = false;
+			console.log(userId);
+			this.$router.replace({ name: "user", params: { userId: userId } });
+		},
+	},
 	data() {
 		return {
 			dialog: false,
-			recent: [
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-				},
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-				},
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-				},
-				{
-					avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-				},
-			],
 		};
 	},
 };
