@@ -2,7 +2,8 @@
 	<v-dialog v-model="dialog" persistent max-width="600">
 		<template v-slot:activator="{ on, attrs }">
 			<v-btn v-bind="attrs" v-on="on" icon darks>
-				<v-icon> mdi-account-arrow-right </v-icon>
+				<!-- <v-icon> mdi-account-arrow-right </v-icon> -->
+				로그인
 			</v-btn>
 		</template>
 
@@ -55,6 +56,7 @@
 				<find-password-comp />
 			</v-sheet>
 		</v-sheet>
+		<auth-comp :dialogVisible="myAuthDialog" :loginId="form.loginId" @close="myAuthDialogClose" />
 	</v-dialog>
 </template>
 
@@ -62,9 +64,10 @@
 import { mapActions } from "vuex";
 import FindLoginIdComp from "@/components/User/FindLoginIdComp.vue";
 import FindPasswordComp from "@/components/User/FindPasswordComp.vue";
+import AuthComp from "./AuthComp.vue";
 
 export default {
-	components: { FindLoginIdComp, FindPasswordComp },
+	components: { FindLoginIdComp, FindPasswordComp, AuthComp },
 	name: "LoginComp",
 	data() {
 		return {
@@ -74,6 +77,7 @@ export default {
 			},
 			errorMessage: "",
 			dialog: false,
+			myAuthDialog: false,
 			counter: 5,
 			options: {
 				passwordShow: false,
@@ -93,8 +97,10 @@ export default {
 	methods: {
 		async doLogin() {
 			let loginResult = await this.login(this.form);
-			if (loginResult) {
+			if (loginResult === true) {
 				this.dialog = false;
+			} else if (loginResult === "lock") {
+				this.myAuthDialog = true;
 			}
 		},
 		initForm() {
@@ -102,6 +108,9 @@ export default {
 			this.password = "";
 		},
 		...mapActions("userStore", ["login"]),
+		myAuthDialogClose() {
+			this.myAuthDialog = false;
+		},
 	},
 	computed: {
 		form1OK() {

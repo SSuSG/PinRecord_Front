@@ -13,9 +13,19 @@ function login(loginRequestDto) {
 	return API.post("/users/login", loginRequestDto);
 }
 
-function logout() {
+function logout(loginId) {
 	console.log("로그아웃 API");
-	return API.get("/users/logout");
+	return API.get("/users/logout/" + loginId);
+}
+
+function findLoginUserByloginId(loginId) {
+	API.defaults.headers["access-token"] = sessionStorage.getItem("access-token");
+	return API.get(`/users/info/${loginId}`);
+}
+
+function tokenRegeneration(loginId) {
+	API.defaults.headers["refresh-token"] = sessionStorage.getItem("refresh-token"); //axios header에 refresh-token 셋팅
+	return API.get(`/users/refresh/${loginId}`);
 }
 
 function joinUser(createUserAccountRequestDto) {
@@ -86,4 +96,6 @@ export {
 	updateProfileImage,
 	getUserByUserId,
 	getUserProfileImage,
+	findLoginUserByloginId,
+	tokenRegeneration,
 };

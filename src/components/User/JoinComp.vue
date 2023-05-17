@@ -2,7 +2,8 @@
 	<v-dialog v-model="dialog" max-width="600">
 		<template v-slot:activator="{ on, attrs }">
 			<v-btn v-bind="attrs" v-on="on" icon darks>
-				<v-icon>mdi-account-plus</v-icon>
+				<!-- <v-icon>mdi-account-plus</v-icon> -->
+				회원가입
 			</v-btn>
 		</template>
 
