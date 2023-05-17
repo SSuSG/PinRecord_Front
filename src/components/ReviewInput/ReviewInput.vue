@@ -20,7 +20,7 @@
 			<h3>장소를 추가해주세요!</h3>
 			<PinData v-for="(data, index) in getPinList" :key="data.id">
 				<PinDataInfo>
-					{{ data.place_name }}
+					{{ data.placeName }}
 					<v-icon size="x-large" color="red lighten-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
 				<v-icon size="x-large" color="" @click="doPhotoEvent(index)">mdi-camera</v-icon>
@@ -51,6 +51,9 @@ export default {
 				endDate: "",
 				cost: "",
 				content: "",
+				state: "test",
+				title: "test",
+				userId: 0,
 			},
 			selectedImages: [],
 		};
@@ -65,12 +68,16 @@ export default {
 	},
 
 	methods: {
-		onSubmit() {
-			// console.log(this.$store.commit("travelStore/SET_POST_INPUT"));
+		async onSubmit() {
 			if (this.validate()) {
-				const postData = { ...this.travelInfo, pinList: this.pinList };
-				// this.$store.commit("travelStore/SET_POST_INPUT", postData);
-				this.$store.dispatch("travelStore/postTravel", this.travelInfo);
+				const response = await this.$store.dispatch("travelStore/postTravel", {
+					...this.travelInfo,
+					userId: this.getLoginUserUserId,
+				});
+				console.log("response:", response);
+				if (response == 200) {
+					alert("작성 완료");
+				}
 			}
 		},
 		validate() {
@@ -122,6 +129,7 @@ export default {
 	},
 	computed: {
 		...mapGetters("travelStore", ["getPinList"]),
+		...mapGetters("userStore", ["getLoginUserUserId"]),
 	},
 };
 </script>

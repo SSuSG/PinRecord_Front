@@ -18,9 +18,6 @@ const travelStore = {
 			mentionList: [0],
 			pinList: [],
 			startDate: "",
-			state: "",
-			title: "",
-			userId: 0,
 		},
 	},
 	getters: {
@@ -73,12 +70,11 @@ const travelStore = {
 		async postTravel({ commit, state }, data) {
 			// console.log("postTravel", data);
 			commit("SET_POST_INPUT", data);
+
 			try {
 				const res = await postTravel(state.travelData);
-				console.log(res);
-				return res;
+				return res.data.statusCode;
 			} catch (e) {
-				console.log(e.response.data.message);
 				return e;
 			}
 		},

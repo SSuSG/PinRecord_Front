@@ -130,7 +130,23 @@ export default {
 			this.searchResults = [];
 		},
 		addPin(result) {
-			this.$store.commit("travelStore/ADD_PIN_LIST", { ...result, imageList: [], tagList: [] });
+			const pin = {
+				addressName: result.address_name,
+				categoryGroupCode: result.category_group_code,
+				categoryGroupName: result.category_group_name,
+				categoryName: result.category_name,
+				content: "content",
+				imageList: [],
+				phone: result.phone,
+				placeName: result.place_name,
+				placeUrl: result.place_url,
+				roadAddressName: result.road_address_name,
+				tagList: [],
+				x: result.x,
+				y: result.y,
+			};
+
+			this.$store.commit("travelStore/ADD_PIN_LIST", { ...pin });
 		},
 		changeToggle(status) {
 			this.toogle = status;
