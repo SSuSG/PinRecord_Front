@@ -26,5 +26,9 @@ function getTravelListByCity(dto) {
 		},
 	});
 }
+function postTravel(data) {
+	console.log("여핼 게시글 작성");
+	return API.post("/travels", data);
+}
 
-export { getTravelListByUserId, getZzimTravelListByUserId, getTravelListForHomeView, getTravelListByCity };
+export { getTravelListByUserId, getZzimTravelListByUserId, getTravelListForHomeView, getTravelListByCity, postTravel };

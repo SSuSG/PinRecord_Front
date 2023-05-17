@@ -84,7 +84,6 @@ export default {
 				//console.log(this.base64Image);
 				// base64Data를 사용하여 원하는 처리 수행
 			};
-
 			// 파일을 Base64로 인코딩하여 읽기 시작
 			reader.readAsDataURL(file);
 		},

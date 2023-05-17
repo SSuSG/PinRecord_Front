@@ -3,33 +3,33 @@
 		<div id="date_wrapper">
 			<div id="cal_wrapper">
 				<label>시작일</label>
-				<DateInput type="date" v-model="travelInfo.startDate" />
+				<DateInput type="date" @change="changeStartDateFormat" />
 			</div>
 			<div id="cal_wrapper">
 				<label>종료일</label>
-				<DateInput type="date" v-model="travelInfo.endDate" />
+				<DateInput type="date" @change="changeEndDateFormat" />
 			</div>
 		</div>
 		<label>비용</label>
 		<TextInput type="number" v-model="travelInfo.cost" ref="cost" />
 		<label>여행은 어떠셨나요?</label>
-		<CommentInput type="text" v-model="travelInfo.comment" ref="comment" />
+		<CommentInput type="text" v-model="travelInfo.content" ref="content" />
 		<button @click="onSubmit()">작성하기</button>
 
 		<PinContainer ref="pinScroll">
 			<h3>장소를 추가해주세요!</h3>
-			<PinData v-for="data in pinList" :key="data.id">
+			<PinData v-for="(data, index) in getPinList" :key="data.id">
 				<PinDataInfo>
 					{{ data.place_name }}
-					<v-icon size="x-large" color="red lighten-2" @click="removePin(data)">mdi-delete-forever</v-icon>
+					<v-icon size="x-large" color="red lighten-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
-				<v-icon size="x-large" color="" @click="addPhoto(data)">mdi-camera</v-icon>
+				<v-icon size="x-large" color="" @click="doPhotoEvent(index)">mdi-camera</v-icon>
 				<input
 					type="file"
 					accept="image/*"
-					@change="onFileChange"
+					@change="onFileChange($event, index, data)"
 					label="사진을 등록해주세요"
-					ref="imageRef"
+					ref="getPinList"
 					style="display: none"
 					multiple
 				/>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { DateInput, TextInput, CommentInput, PinContainer, PinData, PinDataInfo } from "./style";
 export default {
 	name: "ReviewInput",
@@ -49,12 +50,10 @@ export default {
 				startDate: "",
 				endDate: "",
 				cost: "",
-				comment: "",
+				content: "",
 			},
+			selectedImages: [],
 		};
-	},
-	props: {
-		pinList: [],
 	},
 	components: {
 		DateInput,
@@ -67,8 +66,11 @@ export default {
 
 	methods: {
 		onSubmit() {
+			// console.log(this.$store.commit("travelStore/SET_POST_INPUT"));
 			if (this.validate()) {
-				console.log({ ...this.travelInfo, pinList: this.pinList });
+				const postData = { ...this.travelInfo, pinList: this.pinList };
+				// this.$store.commit("travelStore/SET_POST_INPUT", postData);
+				this.$store.dispatch("travelStore/postTravel", this.travelInfo);
 			}
 		},
 		validate() {
@@ -79,21 +81,47 @@ export default {
 				alert("여행비용을 입력해주세요.");
 				this.$refs.cost.$el.focus();
 				return false;
-			} else if (this.travelInfo.comment === "") {
+			} else if (this.travelInfo.content === "") {
 				alert("코멘트를 입력해주세요.");
-				this.$refs.comment.$el.focus();
+				this.$refs.content.$el.focus();
 				return false;
 			}
 			return true;
 		},
-		removePin(data) {
-			this.$emit("removePin", data.id);
+		removePin(id) {
+			this.$store.commit("travelStore/REMOVE_PIN_LIST", id);
 		},
-		addPhoto(data) {
-			this.$refs.imageRef[0].click();
-			// this.$emit("addImageList", { imageList: [data.place_name], id: data.id });
+		doPhotoEvent(index) {
+			this.$refs.getPinList[index].click();
 		},
-		onFileChange() {},
+		onFileChange(event, index, data) {
+			const imageList = this.$refs.getPinList[index].files;
+			const dataId = data.id;
+			let base64Images = [];
+
+			[...imageList].forEach((file) => {
+				const reader = new FileReader();
+				let result;
+				reader.onload = () => {
+					result = reader.result;
+					base64Images.push(result);
+				};
+				reader.readAsDataURL(file);
+			});
+
+			this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { base64Images, dataId });
+		},
+		changeStartDateFormat(event) {
+			const date = new Date(event.target.value);
+			this.travelInfo.startDate = date;
+		},
+		changeEndDateFormat(event) {
+			const date = new Date(event.target.value);
+			this.travelInfo.endDate = date;
+		},
+	},
+	computed: {
+		...mapGetters("travelStore", ["getPinList"]),
 	},
 };
 </script>

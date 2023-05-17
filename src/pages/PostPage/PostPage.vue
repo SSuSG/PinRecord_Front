@@ -1,7 +1,7 @@
 <template>
 	<div id="post_page">
-		<review-input :pinList="pinList" @removePin="removePinList" @addImageList="addImageList"></review-input>
-		<kakao-map @addPin="setPinList" />
+		<review-input></review-input>
+		<kakao-map />
 	</div>
 </template>
 
@@ -13,25 +13,10 @@ export default {
 	name: "PostPage",
 
 	data() {
-		return {
-			pinList: [],
-		};
+		return {};
 	},
 
-	methods: {
-		setPinList(value) {
-			this.pinList = [...this.pinList, value];
-		},
-		removePinList(value) {
-			this.pinList = [...this.pinList].filter((e) => e.id !== value);
-		},
-		addImageList(value) {
-			this.pinList = [...this.pinList].map((e) => {
-				if (e.id === value.id) return { ...e, imageList: value.imageList };
-				else return { ...e };
-			});
-		},
-	},
+	methods: {},
 };
 </script>
 

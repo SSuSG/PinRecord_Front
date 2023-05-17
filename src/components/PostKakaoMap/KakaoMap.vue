@@ -130,7 +130,7 @@ export default {
 			this.searchResults = [];
 		},
 		addPin(result) {
-			this.$emit("addPin", { ...result });
+			this.$store.commit("travelStore/ADD_PIN_LIST", { ...result, imageList: [], tagList: [] });
 		},
 		changeToggle(status) {
 			this.toogle = status;
