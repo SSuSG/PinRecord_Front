@@ -92,6 +92,9 @@ export default {
 </script>
 
 <style scoped>
+#home_page {
+	padding-top: 70px;
+}
 #select_container {
 	width: 500px;
 	margin: 50px auto;

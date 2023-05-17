@@ -55,6 +55,7 @@
 				<find-password-comp />
 			</v-sheet>
 		</v-sheet>
+		<auth-comp :dialogVisible="myAuthDialog" :email="form.loginId" @close="myAuthDialogClose" />
 	</v-dialog>
 </template>
 
@@ -62,9 +63,10 @@
 import { mapActions } from "vuex";
 import FindLoginIdComp from "@/components/User/FindLoginIdComp.vue";
 import FindPasswordComp from "@/components/User/FindPasswordComp.vue";
+import AuthComp from "./AuthComp.vue";
 
 export default {
-	components: { FindLoginIdComp, FindPasswordComp },
+	components: { FindLoginIdComp, FindPasswordComp, AuthComp },
 	name: "LoginComp",
 	data() {
 		return {
@@ -74,6 +76,7 @@ export default {
 			},
 			errorMessage: "",
 			dialog: false,
+			myAuthDialog: false,
 			counter: 5,
 			options: {
 				passwordShow: false,
@@ -102,6 +105,9 @@ export default {
 			this.password = "";
 		},
 		...mapActions("userStore", ["login"]),
+		myAuthDialogClose() {
+			this.myAuthDialog = false;
+		},
 	},
 	computed: {
 		form1OK() {

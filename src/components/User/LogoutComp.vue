@@ -6,23 +6,17 @@
 	</div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
 	name: "LogoutComp",
+	computed: {
+		...mapGetters("userStore", ["getLoginUserUserId"]),
+	},
 	methods: {
 		...mapActions("userStore", ["logout"]),
-		doLogout() {
-			console.log("로그아웃 성공");
-			if (this.logout()) {
-				if (this.$route.path !== "/") {
-					this.$router.push("/");
-				} else {
-					this.$router.go();
-				}
-			} else {
-				alert("로그아웃 실패");
-			}
+		async doLogout() {
+			await this.logout(this.getLoginUserUserId);
 		},
 	},
 };

@@ -1,7 +1,7 @@
 <template>
 	<StyledHeader>
 		<div>로고</div>
-		<ButtonList v-if="getLoginUserNickname === ''">
+		<ButtonList v-if="isLogin === false">
 			<ButtonLi>
 				<login-comp></login-comp>
 			</ButtonLi>
@@ -24,7 +24,7 @@
 import { StyledHeader, ButtonLi, ButtonList } from "@/components/Header/style";
 import LoginComp from "../User/LoginComp.vue";
 import JoinComp from "../User/JoinComp.vue";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import LogoutComp from "../User/LogoutComp.vue";
 
 export default {
@@ -38,7 +38,7 @@ export default {
 		LogoutComp,
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserNickname", "getLoginUserUserId"]),
+		...mapState("userStore", ["isLogin"]),
 	},
 	methods: {
 		toMyPage() {
