@@ -244,14 +244,14 @@ export default {
 
 <style>
 #map {
-	width: 95%;
+	width: 100%;
 	height: 850px;
 }
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
 	.map {
 		height: 600px;
 	}
-}
+} */
 
 .wrap {
 	position: absolute;

@@ -1,27 +1,27 @@
 <template>
-	<v-container fluid>
-		<v-row no-gutters>
-			<v-col cols="12" lg="4">
-				<v-row no-gutters>
-					<v-col>
-						<user-info-comp :user="user" @update-profile-image="updateProfileimage" />
-					</v-col>
-				</v-row>
-				<v-row no-gutters>
-					<v-col>
-						<user-tabs-info-comp
-							:userNickname="user.nickname"
-							:travelList="writeTravelList"
-							:zzimTravelList="zzimTravelList"
-						/>
-					</v-col>
-				</v-row>
-			</v-col>
-			<v-col cols="12" lg="8" class="pl-2">
-				<user-page-map-comp :travelList="writeTravelList" />
-			</v-col>
-		</v-row>
-	</v-container>
+	<div id="user_page">
+		<!-- <v-row no-gutters> -->
+		<v-col cols="12" lg="4">
+			<v-row no-gutters>
+				<v-col>
+					<user-info-comp :user="user" @update-profile-image="updateProfileimage" />
+				</v-col>
+			</v-row>
+			<v-row no-gutters>
+				<v-col>
+					<user-tabs-info-comp
+						:userNickname="user.nickname"
+						:travelList="writeTravelList"
+						:zzimTravelList="zzimTravelList"
+					/>
+				</v-col>
+			</v-row>
+		</v-col>
+		<v-col cols="12" lg="8" class="pl-2">
+			<user-page-map-comp :travelList="writeTravelList" />
+		</v-col>
+		<!-- </v-row> -->
+	</div>
 </template>
 
 <script>
@@ -77,4 +77,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
