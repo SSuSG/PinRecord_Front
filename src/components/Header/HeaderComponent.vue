@@ -11,10 +11,13 @@
 		</ButtonList>
 		<ButtonList v-else>
 			<ButtonLi>
+				<update-password-comp />
+			</ButtonLi>
+			<ButtonLi>
 				<logout-comp></logout-comp>
 			</ButtonLi>
 			<ButtonLi>
-				<v-btn @click="toMyPage"><v-icon> mdi-account</v-icon></v-btn>
+				<v-btn @click="toMyPage" darks icon class="ma-2" text small> 마이페이지 </v-btn>
 			</ButtonLi>
 		</ButtonList>
 	</StyledHeader>
@@ -24,8 +27,9 @@
 import { StyledHeader, ButtonLi, ButtonList } from "@/components/Header/style";
 import LoginComp from "../User/LoginComp.vue";
 import JoinComp from "../User/JoinComp.vue";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import LogoutComp from "../User/LogoutComp.vue";
+import UpdatePasswordComp from "../User/UpdatePasswordComp.vue";
 
 export default {
 	name: "HeaderComponent",
@@ -36,9 +40,11 @@ export default {
 		ButtonLi,
 		ButtonList,
 		LogoutComp,
+		UpdatePasswordComp,
 	},
 	computed: {
 		...mapState("userStore", ["isLogin"]),
+		...mapGetters("userStore", ["getLoginUserUserId"]),
 	},
 	methods: {
 		toMyPage() {

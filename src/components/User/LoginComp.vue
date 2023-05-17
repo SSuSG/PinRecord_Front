@@ -2,7 +2,8 @@
 	<v-dialog v-model="dialog" persistent max-width="600">
 		<template v-slot:activator="{ on, attrs }">
 			<v-btn v-bind="attrs" v-on="on" icon darks>
-				<v-icon> mdi-account-arrow-right </v-icon>
+				<!-- <v-icon> mdi-account-arrow-right </v-icon> -->
+				로그인
 			</v-btn>
 		</template>
 
@@ -55,7 +56,7 @@
 				<find-password-comp />
 			</v-sheet>
 		</v-sheet>
-		<auth-comp :dialogVisible="myAuthDialog" :email="form.loginId" @close="myAuthDialogClose" />
+		<auth-comp :dialogVisible="myAuthDialog" :loginId="form.loginId" @close="myAuthDialogClose" />
 	</v-dialog>
 </template>
 
@@ -96,8 +97,10 @@ export default {
 	methods: {
 		async doLogin() {
 			let loginResult = await this.login(this.form);
-			if (loginResult) {
+			if (loginResult === true) {
 				this.dialog = false;
+			} else if (loginResult === "lock") {
+				this.myAuthDialog = true;
 			}
 		},
 		initForm() {

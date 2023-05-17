@@ -14,7 +14,7 @@ const onlyAuthUser = async (to, from, next) => {
 	let token = sessionStorage.getItem("access-token");
 	console.log("로그인 처리 전", checkUserInfo, token);
 
-	if (checkUserInfo != null && token) {
+	if (checkUserInfo != null && token && token !== "undefined") {
 		console.log("토큰 유효성 체크하러 가자!!!!");
 		await store.dispatch("userStore/getLoginUserInfo", token);
 	}

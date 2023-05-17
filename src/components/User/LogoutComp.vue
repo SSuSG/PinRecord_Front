@@ -1,9 +1,8 @@
 <template>
-	<div>
-		<v-btn icon darks @click="doLogout">
-			<v-icon>mdi-logout</v-icon>
-		</v-btn>
-	</div>
+	<v-btn icon darks @click="doLogout" class="ma-2" text small>
+		<!-- <v-icon>mdi-logout</v-icon> -->
+		로그아웃
+	</v-btn>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";

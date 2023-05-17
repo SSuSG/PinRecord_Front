@@ -13,6 +13,7 @@ import {
 	unlockAccount,
 	findLoginUserByloginId,
 	tokenRegeneration,
+	updatePassword,
 } from "@/apis/user";
 import router from "@/router";
 
@@ -61,7 +62,6 @@ const userStore = {
 	actions: {
 		async login({ commit }, loginRequestDto) {
 			let res = await login(loginRequestDto);
-			console.log(res);
 
 			if (res.data.statusCode == 200) {
 				alert("로그인 성공");
@@ -74,6 +74,9 @@ const userStore = {
 				sessionStorage.setItem("access-token", accessToken);
 				sessionStorage.setItem("refresh-token", refreshToken);
 				return true;
+			} else if (res.data.statusCode == 423) {
+				alert(res.data.developerMessage);
+				return "lock";
 			}
 			alert(res.data.developerMessage);
 			return false;
@@ -87,10 +90,11 @@ const userStore = {
 				commit("REMOVE_LOGIN_USER");
 				commit("SET_IS_LOGIN", false);
 				commit("SET_IS_VALID_TOKEN", false);
-				if (router.path !== "/") {
+				console.log(router.currentRoute.fullPath);
+				if (router.currentRoute.fullPath !== "/") {
 					router.push("/");
 				} else {
-					router.go(router.currentRoute);
+					router.go(router.currentRoute.fullPath);
 				}
 
 				return true;
@@ -100,13 +104,9 @@ const userStore = {
 
 		async getLoginUserInfo({ commit, dispatch }, token) {
 			let decodeToken = jwtDecode(token);
-			console.log("2. getUserInfo() decodeToken :: ", decodeToken);
-
 			let res = await findLoginUserByloginId(decodeToken.loginId);
-			console.log(res.data);
 
 			if (res.data.statusCode !== 200) {
-				console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ");
 				commit("SET_IS_VALID_TOKEN", false);
 				await dispatch("tokenRegeneration");
 			} else {
@@ -116,16 +116,12 @@ const userStore = {
 
 		async tokenRegeneration({ commit, dispatch, state }) {
 			console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
-			console.log(state);
 			let res = await tokenRegeneration(state.login_user.loginId);
-			console.log(res.data);
 			if (res.data.statusCode === 200) {
 				let accessToken = res.headers["access-token"];
-				console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
 				sessionStorage.setItem("access-token", accessToken);
 				commit("SET_IS_VALID_TOKEN", true);
 			} else {
-				console.log("갱신 실패");
 				// 다시 로그인 전 DB에 저장된 RefreshToken 제거.
 				await dispatch("logout", state.login_user.loginId);
 			}
@@ -164,6 +160,10 @@ const userStore = {
 
 		unlockAccount({ commit }, unlockAccountRequestDto) {
 			return unlockAccount(unlockAccountRequestDto);
+		},
+
+		updatePassword({ commit }, updatePasswordRequestDto) {
+			return updatePassword(updatePasswordRequestDto);
 		},
 	},
 };

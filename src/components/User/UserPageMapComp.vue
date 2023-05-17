@@ -188,7 +188,7 @@ export default {
 						console.log(this.clusterer);
 					}
 				}
-			}, 300);
+			}, 500);
 		},
 		makeOverListner(map, marker, customOverlay) {
 			return () => {
