@@ -3,14 +3,9 @@
 		<v-sheet color="white" elevation="1" class="d-flex flex-column" width="100%">
 			<v-row justify="center" class="mt-4">
 				<v-avatar size="130" style="position: relative">
-					<v-img v-if="user.profileImage" :src="user.profileImage"></v-img>
+					<v-img v-if="user.urlProfileImage" :src="'data:image/png;base64,' + user.urlProfileImage"></v-img>
 					<v-img v-else src="@/assets/default.png"></v-img>
-					<upload-image-comp
-						:userId="user.userId"
-						v-if="getLoginUserNickname === user.nickname"
-						@update-profile-image="updateProfileimage"
-						class="overlay-icon"
-					/>
+					<upload-image-comp :userId="user.userId" @update-profile-image="updateProfileimage" class="overlay-icon" />
 				</v-avatar>
 			</v-row>
 
@@ -60,7 +55,7 @@ export default {
 	},
 	methods: {
 		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId"]),
-		//...mapActions("userStore", ["getUserProfileImage"]),
+		...mapActions("userStore", ["getUserProfileImage"]),
 		async getUserFollowInfo(userId) {
 			let res1 = await this.findFollowerByUserId(userId);
 			console.log(res1);
@@ -73,12 +68,12 @@ export default {
 		updateProfileimage(image) {
 			this.$emit("update-profile-image", image);
 		},
-		// async getProfileImage(userId) {
-		// 	console.log("유저 프로필 이미지 조회!!" + userId);
-		// 	let res = await this.getUserProfileImage(userId);
-		// 	console.log(res.data.data);
-		// 	return res;
-		// },
+		async getProfileImage(userId) {
+			console.log("유저 프로필 이미지 조회!!" + userId);
+			let res = await this.getUserProfileImage(userId);
+			console.log(res.data.data);
+			return res;
+		},
 	},
 	computed: {
 		...mapGetters("userStore", ["getLoginUserNickname"]),

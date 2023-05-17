@@ -1,17 +1,17 @@
 import API from "./index";
 
 function getTravelListByUserId(userId) {
-	console.log("유저페이지의 유저가 작성한 여행후기 API");
+	// console.log("유저페이지의 유저가 작성한 여행후기 API");
 	return API.get("/travels/users/" + userId);
 }
 
 function getZzimTravelListByUserId(userId) {
-	console.log("유저페이지의 유저가 찜한 여행후기 API");
+	// console.log("유저페이지의 유저가 찜한 여행후기 API");
 	return API.get("/travels/" + userId + "/zzims");
 }
 
 function getTravelListForHomeView() {
-	console.log("메인화면에 보여줄 여행리스트 API");
+	// console.log("메인화면에 보여줄 여행리스트 API");
 	return API.get("/travels");
 }
 

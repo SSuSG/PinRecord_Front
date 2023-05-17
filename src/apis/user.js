@@ -9,12 +9,12 @@ const IMAGE_API = axios.create({
 });
 
 function login(loginRequestDto) {
-	console.log("로그인 API");
+	// console.log("로그인 API");
 	return API.post("/users/login", loginRequestDto);
 }
 
 function logout(loginId) {
-	console.log("로그아웃 API");
+	// console.log("로그아웃 API");
 	return API.get("/users/logout/" + loginId);
 }
 
@@ -29,52 +29,52 @@ function tokenRegeneration(loginId) {
 }
 
 function joinUser(createUserAccountRequestDto) {
-	console.log("회원가입 API");
+	// console.log("회원가입 API");
 	return API.post("/users", createUserAccountRequestDto);
 }
 
 function validateLoginId(loginId) {
-	console.log("로그인ID 중복 확인 API");
+	// console.log("로그인ID 중복 확인 API");
 	return API.get("/users/duplication-loginId/" + loginId);
 }
 
 function validateEmail(email) {
-	console.log("이메일 중복 확인 API");
+	// console.log("이메일 중복 확인 API");
 	return API.get("/users/duplication-email/" + email);
 }
 
 function findLoginIdByEmail(email) {
-	console.log("로그인ID 찾기 API");
+	// console.log("로그인ID 찾기 API");
 	return API.get("/users/loginId/" + email);
 }
 
 function findPasswordByLoginIdAndEmail(findPasswordRequestDto) {
-	console.log("비밀번호 찾기 API");
+	// console.log("비밀번호 찾기 API");
 	return API.post("/users/new-password", findPasswordRequestDto);
 }
 
 function updatePassword(updatePasswordRequestDto) {
-	console.log("비밀번호 변경 API");
+	// console.log("비밀번호 변경 API");
 	return API.post("/users/password", updatePasswordRequestDto);
 }
 
 function unlockAccount(unlockAccountRequestDto) {
-	console.log("계정잠금해제 인증번호 인증 API");
+	// console.log("계정잠금해제 인증번호 인증 API");
 	return API.post("/users/unlock", unlockAccountRequestDto);
+}
+
+function updateProfileImage(dto) {
+	console.log("유저 프로필 이미지 변경 API");
+	return IMAGE_API.post("/users/images/" + dto.userId, dto.profileImage);
 }
 
 // function updateProfileImage(dto) {
 // 	console.log("유저 프로필 이미지 변경 API");
-// 	return IMAGE_API.post("/users/images/" + dto.userId, dto.profileImage);
+// 	return API.post("/users/images", dto);
 // }
 
-function updateProfileImage(dto) {
-	console.log("유저 프로필 이미지 변경 API");
-	return API.post("/users/images", dto);
-}
-
 function getUserByUserId(userId) {
-	console.log("유저페이지의 유저 정보 API");
+	// console.log("유저페이지의 유저 정보 API");
 	return API.get("/users/" + userId);
 }
 
