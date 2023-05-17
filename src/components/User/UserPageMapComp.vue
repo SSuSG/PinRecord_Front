@@ -61,7 +61,7 @@ export default {
 						var x = this.travelList[i].pinList[j].x;
 						var y = this.travelList[i].pinList[j].y;
 
-						console.log(this.travelList[i].pinList[j]);
+						// console.log(this.travelList[i].pinList[j]);
 						// 마커가 표시될 위치입니다
 						var markerPosition = new kakao.maps.LatLng(y, x);
 
@@ -185,10 +185,10 @@ export default {
 						kakao.maps.event.addListener(marker, "mouseout", this.makeOutListner(customOverlay));
 						kakao.maps.event.addListener(marker, "click", this.makeClickListner(this.map, marker, customOverlayMore));
 						this.clusterer.addMarker(marker);
-						console.log(this.clusterer);
+						// console.log(this.clusterer);
 					}
 				}
-			}, 500);
+			}, 1000);
 		},
 		makeOverListner(map, marker, customOverlay) {
 			return () => {

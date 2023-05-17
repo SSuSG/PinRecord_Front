@@ -41,6 +41,7 @@ export default {
 				nickname: "",
 				name: "",
 				profileImage: "",
+				urlProfileImage: null,
 				followerCnt: null,
 				followingCnt: null,
 			},
@@ -60,6 +61,7 @@ export default {
 		...mapActions("travelStore", ["getTravelListByUserId", "getZzimTravelListByUserId"]),
 		async getUserInfo(userId) {
 			let res = await this.getUserByUserId(userId);
+			console.log(res);
 			this.user = res.data.data;
 		},
 		async getUserTravelList(userId) {
