@@ -34,7 +34,8 @@ export default {
 	name: "KakaoMap",
 	data() {
 		return {
-			searchKeyword: "강남역",
+			currentPosition: [37.50131674626866, 127.13954813425226],
+			searchKeyword: "해운대",
 			searchResults: [],
 			markers: [],
 			infowindow: null,
@@ -61,7 +62,10 @@ export default {
 	},
 	mounted() {
 		if (window.kakao && window.kakao.maps) {
-			this.initMap();
+			this.getCurrentPosition().then((pos) => {
+				this.currentPosition = [pos.coords.latitude, pos.coords.longitude];
+				this.initMap(this.currentPosition[0], this.currentPosition[1]);
+			});
 		} else {
 			const script = document.createElement("script");
 			script.onload = () => kakao.maps.load(this.initMap);
@@ -71,10 +75,15 @@ export default {
 		}
 	},
 	methods: {
-		initMap() {
+		getCurrentPosition(options) {
+			return new Promise(function (resolve, reject) {
+				navigator.geolocation.getCurrentPosition(resolve, reject, options);
+			});
+		},
+		initMap(latitude, longitude) {
 			const mapContainer = document.getElementById("map");
 			const mapOptions = {
-				center: new kakao.maps.LatLng(37.5012860931305, 127.039604663862),
+				center: new kakao.maps.LatLng(latitude, longitude),
 				level: 5,
 			};
 			this.map = new kakao.maps.Map(mapContainer, mapOptions);
@@ -130,7 +139,23 @@ export default {
 			this.searchResults = [];
 		},
 		addPin(result) {
-			this.$store.commit("travelStore/ADD_PIN_LIST", { ...result, imageList: [], tagList: [] });
+			const pin = {
+				addressName: result.address_name,
+				categoryGroupCode: result.category_group_code,
+				categoryGroupName: result.category_group_name,
+				categoryName: result.category_name,
+				content: "content",
+				imageList: [],
+				phone: result.phone,
+				placeName: result.place_name,
+				placeUrl: result.place_url,
+				roadAddressName: result.road_address_name,
+				tagList: [],
+				x: result.x,
+				y: result.y,
+			};
+
+			this.$store.commit("travelStore/ADD_PIN_LIST", { ...pin });
 		},
 		changeToggle(status) {
 			this.toogle = status;
