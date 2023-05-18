@@ -7,16 +7,14 @@
 					v-for="result in searchResults"
 					:key="result.id"
 					:ref="'result' + result.id"
-					:style="[clickedMarker == result.id ? clickedStyle : null]"
+					:style="[clickedMarkerData == result.id ? clickedStyle : null]"
 					@click="moveMap(result)"
 				>
 					<ResultInfo>
 						<span id="place_name">{{ result.place_name }}</span>
 						<span id="place_address">{{ result.address_name }}</span>
 					</ResultInfo>
-					<!-- <div id="plus_btn" :style="[clickedMarker == result.id ? anti : null]"> -->
 					<v-icon @click="addPin(result)">mdi-plus-thick</v-icon>
-					<!-- </div> -->
 				</Result>
 			</ResultWrapper>
 		</ResultContainer>
@@ -40,7 +38,7 @@ export default {
 			markers: [],
 			infowindow: null,
 			toogle: false,
-			clickedMarker: 0,
+			clickedMarkerData: 0,
 			clickedStyle: {
 				"background-color": "royalblue",
 				"color": "white",
@@ -84,14 +82,21 @@ export default {
 			const mapContainer = document.getElementById("map");
 			const mapOptions = {
 				center: new kakao.maps.LatLng(latitude, longitude),
-				level: 5,
+				level: 4,
 			};
 			this.map = new kakao.maps.Map(mapContainer, mapOptions);
+			this.overlay = new kakao.maps.CustomOverlay({
+				content: "",
+				// content: `<div style="margin-bottom: 100px; background-color:pink">${data.place_name}</div>`,
+				map: this.map,
+				position: null,
+			});
 		},
 
 		searchPlaces() {
 			const search = new kakao.maps.services.Places();
 			search.keywordSearch(this.searchKeyword, this.searchCallback);
+			this.overlay.setMap(null);
 		},
 
 		searchCallback(datas, status) {
@@ -154,7 +159,6 @@ export default {
 				x: result.x,
 				y: result.y,
 			};
-
 			this.$store.commit("travelStore/ADD_PIN_LIST", { ...pin });
 		},
 		changeToggle(status) {
@@ -162,9 +166,8 @@ export default {
 		},
 		addMarkerEvent(marker, data) {
 			kakao.maps.event.addListener(marker, "click", () => {
-				const movePosition = new kakao.maps.LatLng(data.y, data.x);
-				this.setPanTo(movePosition);
-				this.setClick(data);
+				this.moveMap(data);
+
 				// const target = `result${data.id}`;
 				// console.log(this.$refs[target][0]);
 				// if (this.$refs[target]) {
@@ -175,7 +178,7 @@ export default {
 			});
 		},
 		setClick(data) {
-			this.clickedMarker = data.id;
+			this.clickedMarkerData = data.id;
 		},
 		setPanTo(movePosition) {
 			this.map.panTo(movePosition);
@@ -183,16 +186,18 @@ export default {
 		moveMap(data) {
 			const movePosition = new kakao.maps.LatLng(data.y, data.x);
 			this.setPanTo(movePosition);
+			this.showInfo(data, movePosition);
 			this.setClick(data);
-
-			// overlay.setMap(null);
-			// const overlay = new kakao.maps.CustomOverlay({
-			// 	content: "<div>HiHi</div>",
-			// 	map: this.map,
-			// 	position: movePosition,
-			// });
-			// console.log(overlay);
-			// overlay.setMap(this.map);
+		},
+		showInfo(data, position) {
+			const content = `<div style="margin-bottom: 120px; background-color:whitesmoke; color:#238CFA; padding:5px; border-radius: 5px; font-weight:bold"; box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.9);>${data.place_name}</div>`;
+			this.overlay.setPosition(position);
+			this.overlay.setContent(content);
+			this.overlay.setZIndex(3);
+			this.overlay.setMap(this.map);
+		},
+		setLevel(movePosition) {
+			this.map.setLevel(3, { animate: true }, { anchor: movePosition });
 		},
 	},
 };
