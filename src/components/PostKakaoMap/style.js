@@ -7,7 +7,7 @@ export const ButtonGroup = styled.div`
 	position: absolute;
 	right: 30px;
 	top: 50px;
-	z-index: 2;
+	z-index: 1;
 	background-color: white;
 	padding: 10px;
 	border-radius: 5px;
