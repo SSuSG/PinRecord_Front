@@ -1,17 +1,23 @@
 <template>
 	<div id="review_input">
+		<label>어디를 여행하셨나요?</label>
+		<TextInput type="number" v-model="travelInfo.title" ref="cost" />
+
 		<div id="date_wrapper">
-			<div id="cal_wrapper">
+			<div id="input_wrapper">
 				<label>시작일</label>
 				<DateInput type="date" @change="changeStartDateFormat" />
 			</div>
-			<div id="cal_wrapper">
+			<div id="input_wrapper">
 				<label>종료일</label>
 				<DateInput type="date" @change="changeEndDateFormat" />
 			</div>
+			<div id="input_wrapper">
+				<label>비용</label>
+				<TextInput type="number" v-model="travelInfo.cost" ref="cost" />
+			</div>
 		</div>
-		<label>비용</label>
-		<TextInput type="number" v-model="travelInfo.cost" ref="cost" />
+
 		<label>여행은 어떠셨나요?</label>
 		<CommentInput type="text" v-model="travelInfo.content" ref="content" />
 		<button @click="onSubmit()">작성하기</button>
@@ -52,7 +58,7 @@ export default {
 				cost: "",
 				content: "",
 				state: "test",
-				title: "test",
+				title: "",
 				userId: 0,
 			},
 			selectedImages: [],
@@ -140,7 +146,7 @@ export default {
 	flex-direction: column;
 	width: 50%;
 	padding: 20px;
-	gap: 20px;
+	gap: 18px;
 	background-color: whitesmoke;
 	z-index: 2;
 }
@@ -148,7 +154,7 @@ label {
 	font-weight: bold;
 	font-size: large;
 }
-#cal_wrapper {
+#input_wrapper {
 	display: flex;
 	flex-direction: column;
 }
