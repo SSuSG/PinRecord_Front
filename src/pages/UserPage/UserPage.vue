@@ -1,6 +1,5 @@
 <template>
 	<div id="user_page">
-		<!-- <v-row no-gutters> -->
 		<v-col cols="12" lg="4">
 			<v-row no-gutters>
 				<v-col>
@@ -17,10 +16,7 @@
 				</v-col>
 			</v-row>
 		</v-col>
-		<v-col cols="12" lg="8" class="pl-2">
-			<user-page-map-comp :travelList="writeTravelList" />
-		</v-col>
-		<!-- </v-row> -->
+		<user-page-map-comp :travelList="writeTravelList" />
 	</div>
 </template>
 
@@ -79,4 +75,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+#user_page {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	padding-top: 70px; // 헤더 높이
+}
+</style>

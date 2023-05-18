@@ -245,7 +245,7 @@ export default {
 <style>
 #map {
 	width: 100%;
-	height: 850px;
+	height: 100%;
 }
 /* @media (min-width: 768px) {
 	.map {
