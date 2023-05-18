@@ -35,6 +35,9 @@ const userStore = {
 		getLoginUserUserId(state) {
 			return state.login_user.userId;
 		},
+		getLoginUserLoginId(state) {
+			return state.login_user.loginId;
+		},
 		checkToken: function (state) {
 			return state.isValidToken;
 		},
@@ -163,6 +166,7 @@ const userStore = {
 		},
 
 		updatePassword({ commit }, updatePasswordRequestDto) {
+			console.log(updatePasswordRequestDto);
 			return updatePassword(updatePasswordRequestDto);
 		},
 	},

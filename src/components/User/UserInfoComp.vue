@@ -5,7 +5,12 @@
 				<v-avatar size="130" style="position: relative">
 					<v-img v-if="user.urlProfileImage" :src="'data:image/png;base64,' + user.urlProfileImage"></v-img>
 					<v-img v-else src="@/assets/default.png"></v-img>
-					<upload-image-comp :userId="user.userId" @update-profile-image="updateProfileimage" class="overlay-icon" />
+					<upload-image-comp
+						:userId="user.userId"
+						v-if="user.nickname === getLoginUserNickname"
+						@update-profile-image="updateProfileimage"
+						class="overlay-icon"
+					/>
 				</v-avatar>
 			</v-row>
 
