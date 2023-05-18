@@ -36,23 +36,27 @@
 
 	<v-container>
 		<v-row class="ml-10 fill-height" justify="center">
-			<template v-for="(item, i) in items">
+			<template v-for="(travel, i) in travelList">
 				<v-col :key="i" cols="12" md="4">
 					<v-hover v-slot="{ hover }">
 						<v-card height="300px" width="500px" :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
-							<v-img :src="item.img" height="300px" width="500px">
-								<v-card-title class="text-h6 white--text">
+							<v-img
+								:src="'data:image/png;base64,' + travel.pinList[0].imageList[0].image"
+								height="300px"
+								width="500px"
+							>
+								<v-card-title class="text-h6">
 									<v-row class="fill-height flex-column" justify="space-between">
 										<p class="mt-4 subheading text-left">
-											{{ item.title }}
+											{{ travel.title }}
 										</p>
 
 										<div>
 											<p class="ma-0 text-body-1 font-weight-bold font-italic text-left">
-												{{ item.text }}
+												{{ travel.state }} {{ travel.city }}
 											</p>
 											<p class="text-caption font-weight-medium font-italic text-left">
-												{{ item.subtext }}
+												{{ travel.content }}
 											</p>
 										</div>
 
@@ -86,6 +90,7 @@ export default {
 
 	data() {
 		return {
+			travelList: null,
 			overlay: false,
 			icons: ["mdi-rewind", "mdi-play", "mdi-fast-forward"],
 			items: [
@@ -159,6 +164,7 @@ export default {
 		...mapActions("travelStore", ["getTravelListForHomeView"]),
 		async getTravelList() {
 			let res = await this.getTravelListForHomeView();
+			this.travelList = res.data.data;
 		},
 		toTravelPage() {
 			console.log("toTravelPage");

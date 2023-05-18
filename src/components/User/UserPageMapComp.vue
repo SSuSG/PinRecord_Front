@@ -94,83 +94,32 @@ export default {
 						});
 
 						var content3 =
-							'<div class="wrap">' +
+							'<div class="wrap" >' +
 							'    <div class="info">' +
 							'        <div class="title">' +
-							"            카카오 스페이스닷원" +
+							this.travelList[i].pinList[j].placeName +
 							'            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
 							"        </div>" +
-							'        <div class="body">' +
+							'        <div class="body" style="background-color:white;">' +
 							'            <div class="img">' +
-							'                <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">' +
+							'                <img src="data:image/png;base64,' +
+							this.travelList[i].pinList[j].imageList[0].image +
+							'" width="73" height="70">' +
 							"           </div>" +
 							'            <div class="desc">' +
-							'                <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>' +
-							'                <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>' +
-							'                <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>' +
+							'                <div class="ellipsis">' +
+							this.travelList[i].pinList[j].addressName +
+							"</div>" +
+							'                <div class="jibun ellipsis">' +
+							this.travelList[i].pinList[j].categoryName +
+							"</div>" +
+							'                <div><a href="' +
+							this.travelList[i].pinList[j].placeUrl +
+							'" target="_blank" class="link">홈페이지</a></div>' +
 							"            </div>" +
 							"        </div>" +
 							"    </div>" +
 							"</div>";
-
-						var moreInfo =
-							`<div class="store-card-item-map">
-                            <div
-                            class="thumbnail"
-                            style="background-image: url('data:image/jpeg;base64,` +
-							this.travelList[i].pinList[j].imageList[0].encodedBase64 +
-							`');
-                                        background-position:center;">
-                            </div>
-                            <div class="info">
-                            <div class="left-side">
-                                <div class="first-line">
-                                    <div class="title">
-                                        ` +
-							this.travelList[i].pinList[j].placeName +
-							`
-                                    </div>
-                                    <div class="subtitle">
-                                        ` +
-							this.travelList[i].pinList[j].categoryGroupName +
-							`
-                                    </div>          
-                                </div>
-                                <div class="address">
-                                    ` +
-							this.travelList[i].pinList[j].addressName +
-							`
-                                </div>
-                            </div>
-                            </div>
-                        </div>`;
-
-						var content2 =
-							`<div class="wrap"> 
-							    <div class="info"> 
-							        <div class="title"> 
-							            ` +
-							this.travelList[i].pinList[j].placeName +
-							`
-							            <div class="close" onclick="resetMarker()" title="닫기"></div> 
-							        </div>
-							        <div class="body">
-							            <div class="img"><img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">
-                            </div> 
-							            <div class="desc"> 
-							                <div class="ellipsis">` +
-							this.travelList[i].pinList[j].placeName +
-							`</div> 
-							                <div class="jibun ellipsis">` +
-							this.travelList[i].pinList[j].addressName +
-							`</div> 
-							<div><a href="" target="_blank" class="link">` +
-							this.travelList[i].pinList[j].placeUrl +
-							`</a></div> 
-							            </div> 
-							        </div> 
-							    </div> 
-							</div>`;
 
 						var customOverlayMore = new kakao.maps.CustomOverlay({
 							clickable: true,
@@ -257,8 +206,8 @@ export default {
 	position: absolute;
 	left: 0;
 	bottom: 40px;
-	width: 288px;
-	height: 132px;
+	width: 350px;
+	height: 150px;
 	margin-left: -144px;
 	text-align: left;
 	overflow: hidden;
@@ -285,7 +234,7 @@ export default {
 }
 .info .title {
 	padding: 5px 0 0 10px;
-	height: 30px;
+	height: 40px;
 	background: #eee;
 	border-bottom: 1px solid #ddd;
 	font-size: 18px;
@@ -311,6 +260,7 @@ export default {
 	position: relative;
 	margin: 13px 0 0 90px;
 	height: 75px;
+	background-color: white;
 }
 .desc .ellipsis {
 	overflow: hidden;
