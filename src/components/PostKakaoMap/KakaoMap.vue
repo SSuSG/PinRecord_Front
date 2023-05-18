@@ -156,6 +156,7 @@ export default {
 				placeUrl: result.place_url,
 				roadAddressName: result.road_address_name,
 				tagList: [],
+				id: result.id,
 				x: result.x,
 				y: result.y,
 			};

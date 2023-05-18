@@ -27,6 +27,13 @@ const travelStore = {
 		getPinList(state) {
 			return state.travelData.pinList;
 		},
+		// getTagList(state, id) {
+		// 	let result = [];
+		// 	state.travelData.pinList.forEach((e) => {
+		// 		if (e.id === id) result = [...e.tagList];
+		// 	});
+		// 	return result;
+		// },
 	},
 	mutations: {
 		SET_POST_INPUT(state, data) {
@@ -49,6 +56,14 @@ const travelStore = {
 			});
 			// console.log(state.travelData.pinList);
 			// state.travelData.pinList = [];
+		},
+		ADD_TAGS_TO_PIN(state, data) {
+			const tagList = data.submitData;
+			const dataId = data.dataId;
+			state.travelData.pinList = [...state.travelData.pinList].map((e) => {
+				if (e.id === dataId) return { ...e, tagList: tagList };
+				else return e;
+			});
 		},
 	},
 	actions: {

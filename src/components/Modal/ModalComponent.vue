@@ -1,33 +1,41 @@
 <template>
 	<div>
-		<div @click="open">{{ buttonName }}</div>
-		<div class="black_bg" v-if="show === true" @click="close"></div>
-		<div class="white_bg" v-if="show === true">
-			<slot></slot>
+		<div id="modal_button" @click="$emit('open')">{{ buttonName }}</div>
+		<div class="black_bg" v-if="showModal === true" @click="$emit('close')"></div>
+		<div class="white_bg" v-if="showModal === true">
+			<slot :buttonName="buttonName"></slot>
 		</div>
 	</div>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
 	name: "ModalComponent",
 	data() {
-		return { show: false };
+		return {
+			test: "asd",
+		};
 	},
 	props: {
 		buttonName: String,
+		showModal: Boolean,
 	},
-	methods: {
-		close(e) {
-			this.show = false;
-		},
-		open() {
-			this.show = true;
-		},
+
+	computed: {
+		...mapGetters("modalStore", ["getShow"]),
 	},
 };
 </script>
 
 <style>
+#modal_button {
+	display: inline;
+	padding: 8px 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	font-size: 15px;
+	background-color: lightcoral;
+}
 .black_bg {
 	width: 100%;
 	height: 100%;
@@ -41,9 +49,6 @@ export default {
 	z-index: 99;
 }
 .white_bg {
-	/* width: 800px; */
-	/* height: 400px; */
-	/* background: white; */
 	position: fixed;
 	top: 50%;
 	left: 50%;
@@ -53,5 +58,3 @@ export default {
 	z-index: 100;
 }
 </style>
-<!-- 사용법  -->
-<!-- <modal-component buttonName="버튼이름">modal test</modal-component> -->

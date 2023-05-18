@@ -30,8 +30,8 @@
 					<v-icon size="x-large" color="red darken-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
 				<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
-				<modal-component buttonName="# Tag">
-					<hash-tag></hash-tag>
+				<modal-component buttonName="# Tag" :showModal="showModal" @open="open" @close="close">
+					<hash-tag :data="data" @close="close"></hash-tag>
 				</modal-component>
 				<input
 					type="file"
@@ -66,6 +66,7 @@ export default {
 				userId: 0,
 			},
 			selectedImages: [],
+			showModal: false,
 		};
 	},
 	components: {
@@ -138,10 +139,20 @@ export default {
 			const date = new Date(event.target.value);
 			this.travelInfo.endDate = date;
 		},
+		// 모달
+		close(e) {
+			console.log("modal close");
+			this.showModal = false;
+			// this.$store.commit("modalStore/CLOSE");
+		},
+		open() {
+			this.showModal = true;
+			// this.$store.commit("modalStore/OPEN");
+		},
 	},
 	computed: {
 		...mapGetters("travelStore", ["getPinList"]),
-		...mapGetters("userStore", ["getLoginUserUserId"]),
+		...mapGetters("travelStore", ["getTagList"]),
 	},
 };
 </script>
