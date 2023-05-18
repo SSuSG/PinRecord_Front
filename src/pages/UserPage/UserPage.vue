@@ -4,7 +4,7 @@
 		<v-col cols="12" lg="4">
 			<v-row no-gutters>
 				<v-col>
-					<user-info-comp :user="user" @update-profile-image="updateProfileimage" />
+					<user-info-comp :user="user" @update-profile-base64Image="updateProfileimage" />
 				</v-col>
 			</v-row>
 			<v-row no-gutters>
@@ -36,7 +36,7 @@ export default {
 	data() {
 		return {
 			user: {
-				userId: "",
+				userId: Number,
 				email: "",
 				nickname: "",
 				name: "",
@@ -73,7 +73,7 @@ export default {
 			this.zzimTravelList = res.data.data;
 		},
 		updateProfileimage(image) {
-			this.user.profileImage = image;
+			this.user.urlProfileImage = image;
 		},
 	},
 };

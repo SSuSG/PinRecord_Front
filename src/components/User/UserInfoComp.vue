@@ -58,15 +58,13 @@ export default {
 		...mapActions("userStore", ["getUserProfileImage"]),
 		async getUserFollowInfo(userId) {
 			let res1 = await this.findFollowerByUserId(userId);
-			console.log(res1);
 			this.followerList = res1.data.data;
 
 			let res2 = await this.findFollowingByUserId(userId);
-			console.log(res2);
 			this.followingList = res2.data.data;
 		},
 		updateProfileimage(image) {
-			this.$emit("update-profile-image", image);
+			this.$emit("update-profile-base64Image", image);
 		},
 		async getProfileImage(userId) {
 			console.log("유저 프로필 이미지 조회!!" + userId);
