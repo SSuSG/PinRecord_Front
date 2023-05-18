@@ -4,6 +4,7 @@ import {
 	getTravelListForHomeView,
 	getTravelListByCity,
 	postTravel,
+	searchTravelByTag,
 } from "@/apis/travel";
 import lodash from "lodash";
 
@@ -82,6 +83,12 @@ const travelStore = {
 		getTravelListByCity({ commit }, dto) {
 			return getTravelListByCity(dto);
 		},
+
+		searchTravelByTag({ commit }, tagList) {
+			console.log(tagList);
+			return searchTravelByTag(tagList);
+		},
+
 		async postTravel({ commit, state }, data) {
 			// console.log("postTravel", data);
 			commit("SET_POST_INPUT", data);

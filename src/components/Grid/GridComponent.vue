@@ -1,41 +1,6 @@
 <template>
-	<!-- <GridWrapper> -->
-	<!-- <div v-for="(data, index) in dummy" v-bind:key="index">
-				<router-link :to="{ name: 'detail', params: { postId: index } }">
-					{{ index }}
-				</router-link>
-			</div> -->
-	<!-- </GridWrapper> -->
-
-	<!-- <v-item-group>
-		<v-container>
-			<v-row v-for="k in 3" :key="k" justify="center">
-				<v-col v-for="n in 3" :key="n" cols="3">
-					<v-hover>
-						<template v-slot:default="{ hover }">
-							<v-card>
-								<v-img
-									:src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-									:lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-									aspect-ratio="1"
-									class="grey lighten-2"
-									max-height="300px"
-									max-width="300px"
-								>
-									<v-overlay v-if="hover" absolute color="#036358">
-										<v-btn @click="toTravelPage()">보기</v-btn>
-									</v-overlay>
-								</v-img>
-							</v-card>
-						</template>
-					</v-hover>
-				</v-col>
-			</v-row>
-		</v-container>
-	</v-item-group> -->
-
 	<v-container>
-		<v-row class="ml-10 fill-height" justify="center">
+		<v-row class="ml-10 fill-height" justify="center" v-if="travelList">
 			<template v-for="(travel, i) in travelList">
 				<v-col :key="i" cols="12" md="4">
 					<v-hover v-slot="{ hover }">
@@ -78,6 +43,11 @@
 				</v-col>
 			</template>
 		</v-row>
+		<v-row v-if="travelList.length === 0">
+			<v-col>
+				<v-alert border="right" colored-border type="info" elevation="2"> 검색 결과가 없습니다. </v-alert>
+			</v-col>
+		</v-row>
 	</v-container>
 </template>
 
@@ -87,88 +57,17 @@ import { mapActions } from "vuex";
 
 export default {
 	name: "GridComponent",
-
+	props: {
+		travelList: Array,
+	},
 	data() {
 		return {
-			travelList: null,
 			overlay: false,
-			icons: ["mdi-rewind", "mdi-play", "mdi-fast-forward"],
-			items: [
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1429514513361-8fa32282fd5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3264&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2100&q=80",
-				},
-				{
-					title: "타이틀",
-					text: `경상북도 안동시`,
-					subtext: "태그1 태그2 태그3 태그4",
-					img: "https://images.unsplash.com/photo-1542320868-f4d80389e1c4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3750&q=80",
-				},
-			],
 			transparent: "rgba(255, 255, 255, 0)",
 		};
 	},
 	components: {
 		// GridWrapper,
-	},
-	created() {
-		this.getTravelList();
-	},
-	mounted() {},
-
-	methods: {
-		...mapActions("travelStore", ["getTravelListForHomeView"]),
-		async getTravelList() {
-			let res = await this.getTravelListForHomeView();
-			this.travelList = res.data.data;
-		},
-		toTravelPage() {
-			console.log("toTravelPage");
-		},
 	},
 };
 </script>

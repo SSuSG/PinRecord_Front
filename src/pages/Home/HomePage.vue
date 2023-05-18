@@ -1,21 +1,27 @@
 <template>
 	<div id="home_page">
 		<div id="select_container">
-			<select name="특별/광역시, 도" class="select" @change="setSelectedSi">
+			<select v-if="isPlaceSearch" name="특별/광역시, 도" class="select" @change="setSelectedSi">
 				<option value="none">시/도 선택</option>
 				<option v-for="data in si" v-bind:key="data.code" :value="data.code">
 					{{ data.name }}
 				</option>
 			</select>
-			<select name="구/동" class="select" @change="setSelectedGu">
+			<select v-if="isPlaceSearch" name="구/동" class="select" @change="setSelectedGu">
 				<!-- <option value="none">구, 동</option> -->
 				<option v-for="data in gu" v-bind:key="data.code" :value="data.code">
 					{{ data.name }}
 				</option>
 			</select>
-			<v-btn @click="searchTravelByCity()">검색</v-btn>
+			<v-btn v-if="isPlaceSearch" @click="searchTravelByCity()">검색</v-btn>
+
+			<vue-tags-input v-if="!isPlaceSearch" v-model="tag" :tags="tags" @tags-changed="(newTags) => (tags = newTags)" />
+			<v-btn v-if="!isPlaceSearch" @click="searchTravelListByTag()">검색</v-btn>
+
+			<v-btn v-if="isPlaceSearch" @click="change()">태그 검색</v-btn>
+			<v-btn v-else @click="change()">장소 검색</v-btn>
 		</div>
-		<grid-component></grid-component>
+		<grid-component :travelList="travelList"></grid-component>
 	</div>
 </template>
 
@@ -23,27 +29,37 @@
 import GridComponent from "@/components/Grid/GridComponent.vue";
 import { getSido, getGu } from "@/apis/sido";
 import { mapActions } from "vuex";
+import VueTagsInput from "@johmun/vue-tags-input";
+
 export default {
 	name: "HomePage",
 	data() {
 		return {
+			isPlaceSearch: true,
 			si: [],
 			selectedSi: String,
 			gu: [],
 			selectedGu: String,
 			state: null,
 			city: null,
+			tag: "",
+			tags: [],
+			travelList: null,
 		};
 	},
 	components: {
 		GridComponent,
+		VueTagsInput,
+	},
+	created() {
+		this.getTravelList();
 	},
 	mounted() {
 		this.setSi();
 	},
 
 	methods: {
-		...mapActions("travelStore", ["getTravelListByCity"]),
+		...mapActions("travelStore", ["getTravelListByCity", "getTravelListForHomeView", "searchTravelByTag"]),
 		async setSi() {
 			const response = await getSido();
 			this.si = [...response];
@@ -80,12 +96,37 @@ export default {
 				}
 			}
 		},
+
+		async getTravelList() {
+			let res = await this.getTravelListForHomeView();
+			this.travelList = res.data.data;
+		},
+
+		toTravelPage() {
+			console.log("toTravelPage");
+		},
+
+		change() {
+			this.isPlaceSearch = !this.isPlaceSearch;
+		},
+
 		async searchTravelByCity() {
 			var dto = {
 				state: this.state,
 				city: this.city,
 			};
 			let res = await this.getTravelListByCity(dto);
+			this.travelList = res.data.data;
+		},
+
+		async searchTravelListByTag() {
+			const submitData = [];
+			this.tags.forEach((e) => {
+				submitData.push(e.text);
+			});
+
+			let res = await this.searchTravelByTag(submitData);
+			this.travelList = res.data.data;
 		},
 	},
 };
@@ -111,5 +152,14 @@ export default {
 	border-radius: 5px;
 	text-align: center;
 	font-weight: bold;
+}
+
+.vue-tags-input {
+	background: white;
+	padding: 5px;
+	border-radius: 5px;
+	min-width: 500px;
+	font-weight: 500;
+	letter-spacing: 1px;
 }
 </style>
