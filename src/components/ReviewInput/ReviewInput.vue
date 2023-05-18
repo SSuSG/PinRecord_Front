@@ -27,14 +27,16 @@
 			<PinData v-for="(data, index) in getPinList" :key="data.id">
 				<PinDataInfo>
 					{{ data.placeName }}
-					<v-icon size="x-large" color="red lighten-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
+					<v-icon size="x-large" color="red darken-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
-				<v-icon size="x-large" color="" @click="doPhotoEvent(index)">mdi-camera</v-icon>
+				<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
+				<modal-component buttonName="# Tag">
+					<hash-tag></hash-tag>
+				</modal-component>
 				<input
 					type="file"
 					accept="image/*"
 					@change="onFileChange($event, index, data)"
-					label="사진을 등록해주세요"
 					ref="getPinList"
 					style="display: none"
 					multiple
@@ -47,6 +49,8 @@
 <script>
 import { mapGetters } from "vuex";
 import { DateInput, TextInput, CommentInput, PinContainer, PinData, PinDataInfo } from "./style";
+import ModalComponent from "@/components/Modal/ModalComponent.vue";
+import HashTag from "@/components/HashTag/HashTag.vue";
 export default {
 	name: "ReviewInput",
 
@@ -71,6 +75,8 @@ export default {
 		PinContainer,
 		PinData,
 		PinDataInfo,
+		ModalComponent,
+		HashTag,
 	},
 
 	methods: {
