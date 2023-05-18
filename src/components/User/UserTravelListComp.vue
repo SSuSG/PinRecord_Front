@@ -9,9 +9,9 @@
 							<v-avatar size="180" width="90%" style="border-radius: 15%">
 								<v-carousel hide-delimiters show-arrows-on-hover height="180">
 									<v-carousel-item
-										v-for="(item, i) in items"
+										v-for="(image, i) in travel.pinList[0].imageList"
 										:key="i"
-										:src="item.src"
+										:src="'data:image/png;base64,' + image.image"
 										reverse-transition="fade-transition"
 									>
 									</v-carousel-item>

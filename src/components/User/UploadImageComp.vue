@@ -7,7 +7,13 @@
 				</v-btn>
 			</template>
 			<v-sheet color="white" elevation="1">
-				<v-file-input prepend-icon="mdi-camera" v-model="image" show-size label="File input"></v-file-input>
+				<v-file-input
+					prepend-icon="mdi-camera"
+					v-model="image"
+					@change="handleFileSelect"
+					show-size
+					label="File input"
+				></v-file-input>
 				<v-btn dark class="ma-2 white--text" @click="updateImage()">
 					Upload
 					<v-icon right dark> mdi-cloud-upload </v-icon>
@@ -64,23 +70,23 @@ export default {
 				alert(res.data.developerMessage);
 			} else {
 				alert("이미지 변경에 성공하였습니다!");
-				this.$emit("update-profile-image", this.image);
+				this.$emit("update-profile-image", this.base64Image);
 				this.dialog = false;
 			}
 		},
-		// handleFileSelect() {
-		// 	const file = this.image;
-		// 	const reader = new FileReader();
+		handleFileSelect(event) {
+			const file = this.image;
+			const reader = new FileReader();
 
-		// 	// 파일 읽기가 완료되었을 때 호출되는 이벤트 핸들러
-		// 	reader.onload = (event) => {
-		// 		this.base64Image = event.target.result;
-		// 		//console.log(this.base64Image);
-		// 		// base64Data를 사용하여 원하는 처리 수행
-		// 	};
-		// 	// 파일을 Base64로 인코딩하여 읽기 시작
-		// 	reader.readAsDataURL(file);
-		// },
+			// 파일 읽기가 완료되었을 때 호출되는 이벤트 핸들러
+			reader.onload = (event) => {
+				this.base64Image = event.target.result;
+				this.base64Image = this.base64Image.split(",")[1];
+				// base64Data를 사용하여 원하는 처리 수행
+			};
+			// 파일을 Base64로 인코딩하여 읽기 시작
+			reader.readAsDataURL(file);
+		},
 	},
 };
 </script>
