@@ -10,7 +10,8 @@
 				<v-divider></v-divider>
 				<v-list-item v-for="following in followingList" :key="following.nickname">
 					<v-list-item-avatar>
-						<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
+						<v-img v-if="following.image" :src="'data:image/png;base64,' + following.image"></v-img>
+						<v-img v-else src="@/assets/default.png"></v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-content>

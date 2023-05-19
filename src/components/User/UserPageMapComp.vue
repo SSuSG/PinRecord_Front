@@ -98,7 +98,6 @@ export default {
 							'    <div class="info">' +
 							'        <div class="title">' +
 							this.travelList[i].pinList[j].placeName +
-							'            <div class="close" onclick="closeOverlay()" title="닫기"></div>' +
 							"        </div>" +
 							'        <div class="body" style="background-color:white;">' +
 							'            <div class="img">' +

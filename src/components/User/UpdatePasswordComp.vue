@@ -23,6 +23,14 @@
 							placeholder=" "
 							required
 						></v-text-field>
+						<v-text-field
+							v-model="password2"
+							ref="password"
+							:rules="valid.password"
+							label="Password 확인"
+							placeholder=" "
+							required
+						></v-text-field>
 					</v-form>
 				</v-card>
 				<v-sheet class="text-center">
@@ -51,6 +59,7 @@ export default {
 			dialog: false,
 			stage: 1,
 			password: "",
+			password2: "",
 			valid: {
 				password: [
 					(v) => !!v || "패스워드를 입력하세요.",
@@ -63,7 +72,7 @@ export default {
 		...mapGetters("userStore", ["getLoginUserLoginId"]),
 		formFirst() {
 			let ok = false;
-			if (this.password) {
+			if (this.password && this.password2 && this.password === this.password2) {
 				ok = true;
 			}
 			return ok;

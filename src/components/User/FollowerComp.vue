@@ -9,7 +9,8 @@
 
 				<v-list-item v-for="follower in followerList" :key="follower.followerUserId" ripple>
 					<v-list-item-avatar>
-						<v-img src="https://cdn.vuetifyjs.com/images/lists/1.jpg"></v-img>
+						<v-img v-if="follower.image" :src="'data:image/png;base64,' + follower.image"></v-img>
+						<v-img v-else src="@/assets/default.png"></v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-content>

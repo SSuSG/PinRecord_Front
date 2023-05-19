@@ -21,7 +21,7 @@
 			<v-btn v-if="isPlaceSearch" @click="change()">태그 검색</v-btn>
 			<v-btn v-else @click="change()">장소 검색</v-btn>
 		</div>
-		<grid-component :travelList="travelList"></grid-component>
+		<grid-component :travelList="travelList" @to-travel-page="toTravelPage"></grid-component>
 	</div>
 </template>
 
@@ -102,8 +102,9 @@ export default {
 			this.travelList = res.data.data;
 		},
 
-		toTravelPage() {
+		toTravelPage(travelId) {
 			console.log("toTravelPage");
+			this.$router.push("/detail/" + travelId);
 		},
 
 		change() {
