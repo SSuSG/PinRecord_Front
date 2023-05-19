@@ -1,7 +1,7 @@
 <template>
 	<div id="review_input">
 		<label>어디를 여행하셨나요?</label>
-		<TextInput type="number" v-model="travelInfo.title" ref="cost" />
+		<TextInput type="text" v-model="travelInfo.title" ref="cost" />
 
 		<div id="date_wrapper">
 			<div id="input_wrapper">
@@ -30,8 +30,15 @@
 					<v-icon size="x-large" color="red darken-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
 				<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
-				<modal-component buttonName="# Tag" :showModal="showModal" @open="open" @close="close">
-					<hash-tag :data="data" @close="close"></hash-tag>
+				<button @click="open(data.id)">OPEN</button>
+				<modal-component
+					v-if="showModal && data.id === selectedPin"
+					buttonName="# Tag"
+					:showModal="showModal"
+					@open="open"
+					@close="close"
+				>
+					<hash-tag :prop="data" @close="close"></hash-tag>
 				</modal-component>
 				<input
 					type="file"
@@ -66,6 +73,7 @@ export default {
 				userId: 0,
 			},
 			selectedImages: [],
+			selectedPin: "",
 			showModal: false,
 		};
 	},
@@ -76,8 +84,8 @@ export default {
 		PinContainer,
 		PinData,
 		PinDataInfo,
-		ModalComponent,
 		HashTag,
+		ModalComponent,
 	},
 
 	methods: {
@@ -141,13 +149,15 @@ export default {
 		},
 		// 모달
 		close(e) {
-			console.log("modal close");
 			this.showModal = false;
-			// this.$store.commit("modalStore/CLOSE");
 		},
-		open() {
+		open(PinId) {
+			this.selectedPin = PinId;
 			this.showModal = true;
-			// this.$store.commit("modalStore/OPEN");
+		},
+		// 태그로 데이터 전덜
+		copyData(data) {
+			return { ...data };
 		},
 	},
 	computed: {
