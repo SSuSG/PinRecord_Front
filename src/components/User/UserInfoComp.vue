@@ -24,10 +24,10 @@
 			</v-row>
 
 			<v-row justify="center" class="pb-6">
-				<v-btn text>
+				<v-btn text @click="doFollow(user.userId)">
 					<v-icon>mdi-account-plus</v-icon>
 				</v-btn>
-				<v-btn text>
+				<v-btn text @click="doCancelFollow(user.userId)">
 					<v-icon>mdi-account-remove</v-icon>
 				</v-btn>
 			</v-row>
@@ -59,7 +59,7 @@ export default {
 		UploadImageComp,
 	},
 	methods: {
-		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId"]),
+		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId", "follow", "cancelFollow"]),
 		...mapActions("userStore", ["getUserProfileImage"]),
 		async getUserFollowInfo(userId) {
 			let res1 = await this.findFollowerByUserId(userId);
@@ -77,9 +77,58 @@ export default {
 			console.log(res.data.data);
 			return res;
 		},
+		async doFollow(userId) {
+			console.log("doFollow");
+			if (this.getLoginUserUserId === userId) {
+				alert("자기 자신은 팔로우가 불가능 합니다!");
+				return;
+			}
+			var followRequestDto = {
+				userIdFrom: this.getLoginUserUserId,
+				userIdTo: userId,
+			};
+
+			let res = await this.follow(followRequestDto);
+
+			if (res.data.statusCode === 200) {
+				alert("팔로우 성공!");
+
+				var loginUser = {
+					followerUserId: this.getLoginUser.userId,
+					image: this.getLoginUser.image,
+					name: this.getLoginUser.name,
+					nickname: this.getLoginUser.nickname,
+				};
+
+				this.followerList.push(loginUser);
+			} else {
+				alert(res.data.developerMessage);
+			}
+		},
+		async doCancelFollow(userId) {
+			console.log("cancelFollow");
+			if (this.getLoginUserUserId === userId) {
+				alert("자기 자신을 팔로우 취소 할 수 없습니다!");
+				return;
+			}
+			var followRequestDto = {
+				userIdFrom: this.getLoginUserUserId,
+				userIdTo: userId,
+			};
+			console.log(followRequestDto);
+			let res = await this.cancelFollow(followRequestDto);
+			console.log(res.data);
+
+			if (res.data.statusCode === 200) {
+				alert("팔로우 취소 성공!");
+				this.followerList = this.followerList.filter((o) => o.followerUserId !== this.getLoginUserUserId);
+			} else {
+				alert(res.data.developerMessage);
+			}
+		},
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserNickname"]),
+		...mapGetters("userStore", ["getLoginUserNickname", "getLoginUserUserId", "getLoginUser"]),
 	},
 	created() {
 		this.getUserFollowInfo(this.$route.params.userId);
