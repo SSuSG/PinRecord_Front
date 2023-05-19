@@ -73,8 +73,13 @@ function getUserByUserId(userId) {
 }
 
 function getUserProfileImage(userId) {
-	console.log("유저페이지의 유저 프로필 이미지 API");
+	// console.log("유저페이지의 유저 프로필 이미지 API");
 	return API.get("/users/profile-image/" + userId);
+}
+
+function authAccount(authAccountRequestDto) {
+	// console.log("회원가입 후 첫 본인 인증 API");
+	return API.post("/users/auth", authAccountRequestDto);
 }
 
 export {
@@ -92,4 +97,5 @@ export {
 	getUserProfileImage,
 	findLoginUserByloginId,
 	tokenRegeneration,
+	authAccount,
 };

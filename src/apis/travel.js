@@ -37,7 +37,7 @@ function searchTravelByTag(tags) {
 
 function postTravel(data) {
 	console.log("여핼 게시글 작성");
-	return IMAGE_API.post("/travels", data);
+	return API.post("/travels", data);
 }
 
 function getTravelDetail(postId) {
