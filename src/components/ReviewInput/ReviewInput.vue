@@ -122,14 +122,31 @@ export default {
 			this.$refs.getPinList[index].click();
 		},
 		onFileChange(event, index, data) {
-			const fileList = this.$refs.getPinList[index].files;
+			// const fileList = this.$refs.getPinList[index].files;
+			const imageList = this.$refs.getPinList[index].files;
 			const dataId = data.id;
-			const imageList = new FormData();
-			[...fileList].forEach((file) => {
-				imageList.append(file.name, file);
+
+			let base64Images = [];
+
+			[...imageList].forEach((file) => {
+				const reader = new FileReader();
+				let result;
+				reader.onload = () => {
+					result = reader.result;
+					result = result.split(",/")[1];
+					base64Images.push({ image: result, uploadName: file.name });
+				};
+				reader.readAsDataURL(file);
 			});
 
-			this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { imageList, dataId });
+			this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { base64Images, dataId });
+
+			// const imageList = new FormData();
+			// [...fileList].forEach((file) => {
+			// 	imageList.append(file.name, file);
+			// });
+
+			// this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { imageList, dataId });
 		},
 
 		changeStartDateFormat(event) {

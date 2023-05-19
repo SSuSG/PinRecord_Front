@@ -44,12 +44,13 @@ const travelStore = {
 		},
 		ADD_IMAGELIST_TO_PIN(state, data) {
 			// console.log("ADD_IMAGELIST_TO_PIN");
-			const { imageList, dataId } = { ...data };
+			const { base64Images, dataId } = { ...data };
+			console.log(base64Images);
 			state.travelData.pinList = [...state.travelData.pinList].map((e) => {
-				if (e.id === dataId) return { ...e, imageList: imageList };
+				if (e.id === dataId) return { ...e, imageList: base64Images };
 				else return e;
 			});
-			// console.log(state.travelData.pinList);
+			console.log(state.travelData.pinList);
 			// state.travelData.pinList = [];
 		},
 		ADD_TAGS_TO_PIN(state, data) {

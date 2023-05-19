@@ -4,6 +4,7 @@ import travelStore from "@/store/modules/travelStore";
 import userStore from "@/store/modules/userStore";
 import followStore from "@/store/modules/followStore";
 import modalStore from "@/store/modules/modalStore";
+import detailStore from "@/store/modules/detailStore";
 import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ export default new Vuex.Store({
 		travelStore,
 		followStore,
 		modalStore,
+		detailStore,
 	},
 	//vuex plugin 명시
 	plugins: [
