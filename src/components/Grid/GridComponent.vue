@@ -26,13 +26,8 @@
 										</div>
 
 										<div class="align-self-center">
-											<!-- <v-btn :class="{ 'show-btns': hover }" :color="transparent" icon>
-													<v-icon :class="{ 'show-btns': hover }">
-														{{ icons[1] }}
-													</v-icon>
-												</v-btn> -->
 											<v-overlay v-if="hover" absolute :color="transparent">
-												<v-btn @click="toTravelPage()">보기</v-btn>
+												<v-btn @click="toTravelPage(travel.travelId)">보기</v-btn>
 											</v-overlay>
 										</div>
 									</v-row>
@@ -52,9 +47,6 @@
 </template>
 
 <script>
-import { GridWrapper } from "./style";
-import { mapActions } from "vuex";
-
 export default {
 	name: "GridComponent",
 	props: {
@@ -66,8 +58,10 @@ export default {
 			transparent: "rgba(255, 255, 255, 0)",
 		};
 	},
-	components: {
-		// GridWrapper,
+	methods: {
+		toTravelPage(travelId) {
+			this.$emit("to-travel-page", travelId);
+		},
 	},
 };
 </script>

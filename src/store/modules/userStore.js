@@ -26,6 +26,8 @@ const userStore = {
 			userId: "",
 			loginId: "",
 			nickname: "",
+			name: "",
+			image: null,
 		},
 	},
 	getters: {
@@ -37,6 +39,9 @@ const userStore = {
 		},
 		getLoginUserLoginId(state) {
 			return state.login_user.loginId;
+		},
+		getLoginUser(state) {
+			return state.login_user;
 		},
 		checkToken: function (state) {
 			return state.isValidToken;
