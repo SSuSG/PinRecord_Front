@@ -3,25 +3,26 @@ import { getTravelDetail, deleteTravelDetail } from "@/apis/travel";
 const detailStore = {
 	namespaced: true,
 	state: {
-		travelData: {
-			// city: "",
-			// content: "",
-			// cost: 0,
-			// endDate: "",
-			// mentionList: [0],
-			// pinList: [],
-			// startDate: "",
-			// userId: 0,
+		detailData: {},
+	},
+	getters: {
+		getDetailData(state) {
+			return state.detailData;
+		},
+		getDetailPinList(state) {
+			return state.detailData.pinList;
 		},
 	},
-	getters: {},
-	mutations: {},
+	mutations: {
+		SET_Detail(state, data) {
+			state.detailData = { ...state.detailData, ...data };
+		},
+	},
 	actions: {
-		async getTravel({ commit, state }, postId) {
-			// console.log("postTravel", data);
+		async getDetail({ commit, state }, postId) {
 			try {
 				const res = await getTravelDetail(postId);
-				console.log(res.data);
+				commit("SET_Detail", res.data.data);
 				return res.data.statusCode;
 			} catch (e) {
 				return e;

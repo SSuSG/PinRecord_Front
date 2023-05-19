@@ -87,7 +87,6 @@ const travelStore = {
 		async postTravel({ commit, state }, data) {
 			// console.log("postTravel", data);
 			commit("SET_POST_INPUT", data);
-			console.log(state.travelData);
 			try {
 				const res = await postTravel(state.travelData);
 				return res.data.statusCode;

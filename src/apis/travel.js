@@ -41,11 +41,11 @@ function postTravel(data) {
 }
 
 function getTravelDetail(postId) {
-	console.log(`${postId}번 게시물 조회`);
+	// console.log(`${postId}번 게시물 조회`);
 	return API.get(`/travels/${postId}`);
 }
 function deleteTravelDetail(postId) {
-	console.log(`${postId}번 게시물 삭제`);
+	// console.log(`${postId}번 게시물 삭제`);
 	return API.delete(`/travels/${postId}`);
 }
 
