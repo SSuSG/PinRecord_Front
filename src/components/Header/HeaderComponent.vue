@@ -1,6 +1,6 @@
 <template>
 	<StyledHeader>
-		<div>로고</div>
+		<router-link to="/">홈화면</router-link>
 		<ButtonList v-if="isLogin === false">
 			<ButtonLi>
 				<login-comp></login-comp>

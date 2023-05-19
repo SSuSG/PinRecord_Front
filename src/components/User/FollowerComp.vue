@@ -6,7 +6,7 @@
 		<v-card>
 			<v-list subheader two-line>
 				<v-subheader>Follower List</v-subheader>
-
+				<v-divider></v-divider>
 				<v-list-item v-for="follower in followerList" :key="follower.followerUserId" ripple>
 					<v-list-item-avatar>
 						<v-img v-if="follower.image" :src="'data:image/png;base64,' + follower.image"></v-img>

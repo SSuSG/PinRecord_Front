@@ -57,6 +57,7 @@
 			</v-sheet>
 		</v-sheet>
 		<auth-comp :dialogVisible="myAuthDialog" :loginId="form.loginId" @close="myAuthDialogClose" />
+		<first-auth-comp />
 	</v-dialog>
 </template>
 
@@ -65,9 +66,10 @@ import { mapActions } from "vuex";
 import FindLoginIdComp from "@/components/User/FindLoginIdComp.vue";
 import FindPasswordComp from "@/components/User/FindPasswordComp.vue";
 import AuthComp from "./AuthComp.vue";
+import FirstAuthComp from "./FirstAuthComp.vue";
 
 export default {
-	components: { FindLoginIdComp, FindPasswordComp, AuthComp },
+	components: { FindLoginIdComp, FindPasswordComp, AuthComp, FirstAuthComp },
 	name: "LoginComp",
 	data() {
 		return {
@@ -78,6 +80,7 @@ export default {
 			errorMessage: "",
 			dialog: false,
 			myAuthDialog: false,
+			myFirstAuthDialog: false,
 			counter: 5,
 			options: {
 				passwordShow: false,
@@ -100,6 +103,8 @@ export default {
 			if (loginResult === true) {
 				this.dialog = false;
 			} else if (loginResult === "lock") {
+				this.myAuthDialog = true;
+			} else if (loginResult === "noAuth") {
 				this.myAuthDialog = true;
 			}
 		},

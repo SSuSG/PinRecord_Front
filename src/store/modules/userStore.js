@@ -14,6 +14,7 @@ import {
 	findLoginUserByloginId,
 	tokenRegeneration,
 	updatePassword,
+	authAccount,
 } from "@/apis/user";
 import router from "@/router";
 
@@ -85,6 +86,9 @@ const userStore = {
 			} else if (res.data.statusCode == 423) {
 				alert(res.data.developerMessage);
 				return "lock";
+			} else if (res.data.statusCode == 418) {
+				alert(res.data.developerMessage);
+				return "noAuth";
 			}
 			alert(res.data.developerMessage);
 			return false;
@@ -173,6 +177,10 @@ const userStore = {
 		updatePassword({ commit }, updatePasswordRequestDto) {
 			console.log(updatePasswordRequestDto);
 			return updatePassword(updatePasswordRequestDto);
+		},
+
+		authAccount({ commit }, authAccountRequestDto) {
+			return authAccount(authAccountRequestDto);
 		},
 	},
 };
