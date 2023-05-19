@@ -1,4 +1,4 @@
-import API from "./index";
+import { API } from "./index";
 
 function findFollowingByUserId(userId) {
 	// console.log("유저의 팔로잉 리스트 API");

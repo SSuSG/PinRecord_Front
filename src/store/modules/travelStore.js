@@ -19,6 +19,7 @@ const travelStore = {
 			mentionList: [0],
 			pinList: [],
 			startDate: "",
+			userId: 0,
 		},
 	},
 	getters: {
@@ -28,13 +29,6 @@ const travelStore = {
 		getPinList(state) {
 			return state.travelData.pinList;
 		},
-		// getTagList(state, id) {
-		// 	let result = [];
-		// 	state.travelData.pinList.forEach((e) => {
-		// 		if (e.id === id) result = [...e.tagList];
-		// 	});
-		// 	return result;
-		// },
 	},
 	mutations: {
 		SET_POST_INPUT(state, data) {
@@ -50,9 +44,9 @@ const travelStore = {
 		},
 		ADD_IMAGELIST_TO_PIN(state, data) {
 			// console.log("ADD_IMAGELIST_TO_PIN");
-			const { base64Images, dataId } = { ...data };
+			const { imageList, dataId } = { ...data };
 			state.travelData.pinList = [...state.travelData.pinList].map((e) => {
-				if (e.id === dataId) return { ...e, imageList: base64Images };
+				if (e.id === dataId) return { ...e, imageList: imageList };
 				else return e;
 			});
 			// console.log(state.travelData.pinList);
@@ -92,7 +86,7 @@ const travelStore = {
 		async postTravel({ commit, state }, data) {
 			// console.log("postTravel", data);
 			commit("SET_POST_INPUT", data);
-
+			console.log(state.travelData);
 			try {
 				const res = await postTravel(state.travelData);
 				return res.data.statusCode;

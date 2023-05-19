@@ -1,13 +1,13 @@
 <template>
 	<div id="hashtag">
-		<h3>{{ data.placeName }}</h3>
+		<h3>{{ prop.placeName }}</h3>
 		<vue-tags-input
 			placeholder=" 태그를 입력하세요."
 			v-model="tag"
 			:tags="tags"
 			@tags-changed="(newTags) => (tags = newTags)"
 		/>
-		<button id="submit_button" @click="submitTags(data)">입력완료</button>
+		<button id="submit_button" @click="submitTags(prop)">입력완료</button>
 	</div>
 </template>
 
@@ -25,18 +25,15 @@ export default {
 		};
 	},
 	props: {
-		data: Object,
-		buttonName: String,
+		prop: Object,
 	},
-	mounted() {},
+
+	mounted() {
+		[...this.prop.tagList].forEach((e) => this.tags.push({ text: e }));
+	},
 
 	methods: {
 		submitTags(data) {
-			console.log(this.buttonName);
-			if (this.tags.length == 0) {
-				alert("ENTER를 눌러 태그를 입력해주세요.");
-				return;
-			}
 			const submitData = [];
 			const dataId = data.id;
 			this.tags.forEach((e) => {

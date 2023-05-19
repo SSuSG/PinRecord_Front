@@ -1,14 +1,13 @@
 <template>
 	<div>
-		<div id="modal_button" @click="$emit('open')">{{ buttonName }}</div>
+		<!-- <div id="modal_button" @click="$emit('open')">{{ buttonName }}</div> -->
 		<div class="black_bg" v-if="showModal === true" @click="$emit('close')"></div>
 		<div class="white_bg" v-if="showModal === true">
-			<slot :buttonName="buttonName"></slot>
+			<slot></slot>
 		</div>
 	</div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 export default {
 	name: "ModalComponent",
 	data() {
@@ -19,10 +18,6 @@ export default {
 	props: {
 		buttonName: String,
 		showModal: Boolean,
-	},
-
-	computed: {
-		...mapGetters("modalStore", ["getShow"]),
 	},
 };
 </script>

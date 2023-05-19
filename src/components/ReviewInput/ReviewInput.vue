@@ -1,7 +1,7 @@
 <template>
 	<div id="review_input">
 		<label>어디를 여행하셨나요?</label>
-		<TextInput type="number" v-model="travelInfo.title" ref="cost" />
+		<TextInput type="text" v-model="travelInfo.title" ref="cost" />
 
 		<div id="date_wrapper">
 			<div id="input_wrapper">
@@ -30,8 +30,15 @@
 					<v-icon size="x-large" color="red darken-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
 				<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
-				<modal-component buttonName="# Tag" :showModal="showModal" @open="open" @close="close">
-					<hash-tag :data="data" @close="close"></hash-tag>
+				<button @click="open(data.id)"># 태그입력</button>
+				<modal-component
+					v-if="showModal && data.id === selectedPin"
+					buttonName="# Tag"
+					:showModal="showModal"
+					@open="open"
+					@close="close"
+				>
+					<hash-tag :prop="data" @close="close"></hash-tag>
 				</modal-component>
 				<input
 					type="file"
@@ -66,6 +73,7 @@ export default {
 				userId: 0,
 			},
 			selectedImages: [],
+			selectedPin: "",
 			showModal: false,
 		};
 	},
@@ -76,8 +84,8 @@ export default {
 		PinContainer,
 		PinData,
 		PinDataInfo,
-		ModalComponent,
 		HashTag,
+		ModalComponent,
 	},
 
 	methods: {
@@ -85,7 +93,6 @@ export default {
 			if (this.validate()) {
 				const response = await this.$store.dispatch("travelStore/postTravel", {
 					...this.travelInfo,
-					userId: this.getLoginUserUserId,
 				});
 				console.log("response:", response);
 				if (response == 200) {
@@ -115,40 +122,43 @@ export default {
 			this.$refs.getPinList[index].click();
 		},
 		onFileChange(event, index, data) {
-			const imageList = this.$refs.getPinList[index].files;
+			const fileList = this.$refs.getPinList[index].files;
 			const dataId = data.id;
-			let base64Images = [];
-
-			[...imageList].forEach((file) => {
-				const reader = new FileReader();
-				let result;
-				reader.onload = () => {
-					result = reader.result;
-					base64Images.push(result);
-				};
-				reader.readAsDataURL(file);
+			const imageList = new FormData();
+			[...fileList].forEach((file) => {
+				imageList.append(file.name, file);
 			});
 
-			this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { base64Images, dataId });
+			this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { imageList, dataId });
 		},
+
 		changeStartDateFormat(event) {
 			const date = new Date(event.target.value);
 			this.travelInfo.startDate = date;
 		},
+
 		changeEndDateFormat(event) {
 			const date = new Date(event.target.value);
 			this.travelInfo.endDate = date;
 		},
+		getUserId() {
+			return this.$store.getters["userStore/getLoginUserUserId"];
+		},
 		// 모달
 		close(e) {
-			console.log("modal close");
 			this.showModal = false;
-			// this.$store.commit("modalStore/CLOSE");
 		},
-		open() {
+		open(PinId) {
+			this.selectedPin = PinId;
 			this.showModal = true;
-			// this.$store.commit("modalStore/OPEN");
 		},
+		// 태그로 데이터 전덜
+		copyData(data) {
+			return { ...data };
+		},
+	},
+	mounted() {
+		this.travelInfo.userId = this.getUserId();
 	},
 	computed: {
 		...mapGetters("travelStore", ["getPinList"]),
