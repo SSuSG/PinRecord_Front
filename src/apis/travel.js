@@ -40,6 +40,15 @@ function postTravel(data) {
 	return IMAGE_API.post("/travels", data);
 }
 
+function getTravelDetail(postId) {
+	console.log(`${postId}번 게시물 조회`);
+	return API.get(`/travels/${postId}`);
+}
+function deleteTravelDetail(postId) {
+	console.log(`${postId}번 게시물 삭제`);
+	return API.delete(`/travels/${postId}`);
+}
+
 export {
 	getTravelListByUserId,
 	getZzimTravelListByUserId,
@@ -47,4 +56,6 @@ export {
 	getTravelListByCity,
 	postTravel,
 	searchTravelByTag,
+	getTravelDetail,
+	deleteTravelDetail,
 };

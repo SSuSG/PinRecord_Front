@@ -1,5 +1,5 @@
 <template>
-	<div>detail{{ $route.params.postId }}</div>
+	<div id="detail_page">detail{{ $route.params.postId }}</div>
 </template>
 
 <script>
@@ -12,13 +12,22 @@ export default {
 		};
 	},
 
-	mounted() {
+	async mounted() {
 		const postId = this.$route.params.postId;
-		console.log(postId);
+		const response = await this.$store.dispatch("travelStore/postTravel", {
+			...this.travelInfo,
+		});
 	},
 
 	methods: {},
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#detail_page {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	padding-top: 70px; // 헤더 높이
+}
+</style>
