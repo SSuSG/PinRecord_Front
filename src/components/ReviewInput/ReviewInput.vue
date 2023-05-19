@@ -133,7 +133,7 @@ export default {
 				let result;
 				reader.onload = () => {
 					result = reader.result;
-					result = result.split(",/")[1];
+					result = result.split(",")[1];
 					base64Images.push({ image: result, uploadName: file.name });
 				};
 				reader.readAsDataURL(file);
