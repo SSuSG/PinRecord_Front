@@ -1,12 +1,6 @@
-import API from "./index";
+import { API } from "./index";
 import axios from "axios";
-const IMAGE_API = axios.create({
-	baseURL: "/api",
-	withCredentials: true,
-	headers: {
-		"Content-Type": "multipart/form-data",
-	},
-});
+import { IMAGE_API } from "./index";
 
 function login(loginRequestDto) {
 	// console.log("로그인 API");

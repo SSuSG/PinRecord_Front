@@ -1,5 +1,5 @@
-import API from "./index";
-
+import { API } from "./index";
+import { IMAGE_API } from "./index";
 function getTravelListByUserId(userId) {
 	// console.log("유저페이지의 유저가 작성한 여행후기 API");
 	return API.get("/travels/users/" + userId);
@@ -37,7 +37,7 @@ function searchTravelByTag(tags) {
 
 function postTravel(data) {
 	console.log("여핼 게시글 작성");
-	return API.post("/travels", data);
+	return IMAGE_API.post("/travels", data);
 }
 
 export {
