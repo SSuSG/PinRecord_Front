@@ -16,13 +16,13 @@ const detailStore = {
 	mutations: {
 		SET_Detail(state, data) {
 			state.detailData = { ...state.detailData, ...data };
+			console.log(state.detailData.commentList);
 		},
 	},
 	actions: {
 		async getDetail({ commit, state }, postId) {
 			try {
 				const res = await getTravelDetail(postId);
-				// console.log(res.data);
 				commit("SET_Detail", res.data.data);
 				return res.data.statusCode;
 			} catch (e) {
@@ -32,7 +32,6 @@ const detailStore = {
 		async postComment({ commit, state }, data) {
 			try {
 				const res = await postComment(data);
-				console.log(res.data);
 				return res.data.statusCode;
 			} catch (e) {
 				return e;

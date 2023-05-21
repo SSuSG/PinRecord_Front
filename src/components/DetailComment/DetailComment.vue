@@ -49,12 +49,15 @@ export default {
 			};
 
 			const response = await this.$store.dispatch("detailStore/postComment", newComment);
-			console.log(response);
 			this.comment.content = "";
+			await this.$store.dispatch("detailStore/getDetail", this.postId);
 		},
 		async deleteComment(commentId) {
-			const response = await this.$store.dispatch("detailStore/deleeteComment", commentId);
-			console.log(response);
+			if (confirm("댓글을 삭제하겠습니까?")) {
+				await this.$store.dispatch("detailStore/deleeteComment", commentId);
+			} else {
+				return;
+			}
 		},
 	},
 };

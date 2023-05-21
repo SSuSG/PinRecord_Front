@@ -5,6 +5,13 @@ export const CommentListWrapper = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 5px;
+	max-height: 300px;
+	overflow: auto;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 export const CommentWrapper = styled.div`
