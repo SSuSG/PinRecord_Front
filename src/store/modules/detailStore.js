@@ -1,4 +1,4 @@
-import { getTravelDetail, deleteTravelDetail } from "@/apis/travel";
+import { getTravelDetail, deleteTravelDetail, postComment, deleteComment } from "@/apis/travel";
 
 const detailStore = {
 	namespaced: true,
@@ -22,8 +22,26 @@ const detailStore = {
 		async getDetail({ commit, state }, postId) {
 			try {
 				const res = await getTravelDetail(postId);
-				console.log(res.data);
+				// console.log(res.data);
 				commit("SET_Detail", res.data.data);
+				return res.data.statusCode;
+			} catch (e) {
+				return e;
+			}
+		},
+		async postComment({ commit, state }, data) {
+			try {
+				const res = await postComment(data);
+				console.log(res.data);
+				return res.data.statusCode;
+			} catch (e) {
+				return e;
+			}
+		},
+		async deleeteComment({ commit, state }, commentId) {
+			try {
+				const res = await deleteComment(commentId);
+				console.log(res.data);
 				return res.data.statusCode;
 			} catch (e) {
 				return e;

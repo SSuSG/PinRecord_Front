@@ -2,7 +2,8 @@
 	<div id="detail_page">
 		<div id="detail_left">
 			<detail-travel :prop="getDetailData" />
-			<detail-comment :prop="getDetailData.commentList" />
+			<hr />
+			<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
 		</div>
 		<detail-kakao-map :pinList="getDetailPinList" />
 	</div>
@@ -23,13 +24,13 @@ export default {
 
 	data() {
 		return {
-			postId: Number,
+			postId: String,
 		};
 	},
 
 	async mounted() {
-		const postId = this.$route.params.postId;
-		const response = await this.$store.dispatch("detailStore/getDetail", postId);
+		this.postId = this.$route.params.postId;
+		const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
 		if (response !== 200) alert("불러오기 실패");
 	},
 
@@ -37,6 +38,7 @@ export default {
 	computed: {
 		...mapGetters("detailStore", ["getDetailData"]),
 		...mapGetters("detailStore", ["getDetailPinList"]),
+		...mapGetters("userStore", ["getLoginUser"]),
 	},
 };
 </script>
