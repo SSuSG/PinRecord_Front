@@ -1,7 +1,33 @@
 <template>
 	<div id="detailTravel">
 		<div id="writer_info">
-			{{ prop.writer }}
+			<span>작성자</span>
+			<span>
+				{{ prop.writer }}
+			</span>
+		</div>
+		<div id="travel_info">
+			<div class="info_wrapper">
+				<span>지역</span>
+				<span>{{ prop.city }}</span>
+			</div>
+			<div class="info_wrapper">
+				<span>지역</span>
+				<span>{{ prop.city }}</span>
+			</div>
+			<div class="info_wrapper">
+				<span>여행 기간</span>
+				<span>{{ prop.startDate }}</span>
+				<span>{{ prop.endDate }}</span>
+			</div>
+			<div class="info_wrapper">
+				<span>비용</span>
+				<span>{{ prop.cost }}</span>
+			</div>
+			<div class="info_wrapper">
+				<span>여행 후기</span>
+				<span>{{ prop.content }}</span>
+			</div>
 		</div>
 		<comment-comp :commentList="travelInfo.commentList" />
 	</div>
@@ -22,13 +48,13 @@ export default {
 
 			travelInfo: {
 				city: "",
-				commentList: "",
+				state: "",
+				title: "",
 				content: "",
 				cost: "",
 				endDate: "",
 				startDate: "",
-				state: "",
-				title: "",
+				commentList: "",
 				travelId: "",
 				zzimCnt: "",
 			},
@@ -70,5 +96,21 @@ export default {
 #detailTravel {
 	width: 100%;
 	background-color: whitesmoke;
+}
+#travel_info {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.info_wrapper {
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	background-color: white;
+	border-radius: 5px;
+}
+.info_wrapper > span {
+	font-weight: bold;
 }
 </style>
