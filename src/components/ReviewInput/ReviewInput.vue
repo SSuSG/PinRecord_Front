@@ -2,6 +2,7 @@
 	<div id="review_input">
 		<label>어디를 여행하셨나요?</label>
 		<TextInput type="text" v-model="travelInfo.title" ref="cost" />
+		<mention-comp />
 
 		<div id="date_wrapper">
 			<div id="input_wrapper">
@@ -54,10 +55,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { DateInput, TextInput, CommentInput, PinContainer, PinData, PinDataInfo } from "./style";
 import ModalComponent from "@/components/Modal/ModalComponent.vue";
 import HashTag from "@/components/HashTag/HashTag.vue";
+import MentionComp from "./MentionComp.vue";
 export default {
 	name: "ReviewInput",
 
@@ -86,9 +88,14 @@ export default {
 		PinDataInfo,
 		HashTag,
 		ModalComponent,
+		MentionComp,
+	},
+	created() {
+		this.findFollowerByUserId(this.$store.getters["userStore/getLoginUserUserId"]);
 	},
 
 	methods: {
+		...mapActions("travelStore", ["findFollowerByUserId"]),
 		async onSubmit() {
 			if (this.validate()) {
 				const response = await this.$store.dispatch("travelStore/postTravel", {

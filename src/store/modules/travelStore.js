@@ -6,6 +6,9 @@ import {
 	postTravel,
 	searchTravelByTag,
 } from "@/apis/travel";
+
+import { findFollowerByUserId } from "@/apis/follow";
+
 import lodash from "lodash";
 
 const travelStore = {
@@ -16,11 +19,13 @@ const travelStore = {
 			content: "",
 			cost: 0,
 			endDate: "",
-			mentionList: [0],
+			mentionList: [],
 			pinList: [],
 			startDate: "",
 			userId: 0,
 		},
+		followerList: [],
+		preMentionList: [],
 	},
 	getters: {
 		getTravelData(state) {
@@ -28,6 +33,12 @@ const travelStore = {
 		},
 		getPinList(state) {
 			return state.travelData.pinList;
+		},
+		getFollowerList(state) {
+			return state.followerList;
+		},
+		getPreMentionList(state) {
+			return state.preMentionList;
 		},
 	},
 	mutations: {
@@ -61,6 +72,19 @@ const travelStore = {
 				else return e;
 			});
 		},
+		SET_FOLLOWER_LIST(state, data) {
+			console.log(data);
+			state.followerList = data;
+			console.log(state.followerList);
+		},
+		ADD_USER_TO_MENTION_LIST(state, data) {
+			state.preMentionList.push(state.followerList[data]);
+			state.followerList.splice(data, 1);
+		},
+		ADD_USER_TO_FOLLOWER_LIST(state, data) {
+			state.followerList.push(state.preMentionList[data]);
+			state.preMentionList.splice(data, 1);
+		},
 	},
 	actions: {
 		getZzimTravelListByUserId({ commit }, userId) {
@@ -88,11 +112,20 @@ const travelStore = {
 			// console.log("postTravel", data);
 			commit("SET_POST_INPUT", data);
 			try {
+				for (var i = 0; i < state.preMentionList.length; i++) {
+					state.travelData.mentionList.push(state.preMentionList[i].followerUserId);
+				}
+
 				const res = await postTravel(state.travelData);
 				return res.data.statusCode;
 			} catch (e) {
 				return e;
 			}
+		},
+
+		async findFollowerByUserId({ commit }, userId) {
+			const res = await findFollowerByUserId(userId);
+			commit("SET_FOLLOWER_LIST", res.data.data);
 		},
 	},
 };

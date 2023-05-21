@@ -3,11 +3,14 @@
 		<div id="writer_info">
 			{{ prop.writer }}
 		</div>
+		<comment-comp :commentList="travelInfo.commentList" />
 	</div>
 </template>
 
 <script>
+import CommentComp from "./CommentComp.vue";
 export default {
+	components: { CommentComp },
 	name: "DetailTravel",
 
 	data() {
