@@ -49,6 +49,13 @@ function deleteTravelDetail(postId) {
 	return API.delete(`/travels/${postId}`);
 }
 
+function postComment(data) {
+	return API.post("/comments", data);
+}
+function deleteComment(commentId) {
+	return API.delete(`/comments/${commentId}`);
+}
+
 export {
 	getTravelListByUserId,
 	getZzimTravelListByUserId,
@@ -58,4 +65,6 @@ export {
 	searchTravelByTag,
 	getTravelDetail,
 	deleteTravelDetail,
+	postComment,
+	deleteComment,
 };
