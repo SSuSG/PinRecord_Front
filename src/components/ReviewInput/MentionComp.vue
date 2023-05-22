@@ -66,11 +66,9 @@ export default {
 	methods: {
 		...mapMutations("travelStore", ["ADD_USER_TO_MENTION_LIST", "ADD_USER_TO_FOLLOWER_LIST"]),
 		add(index) {
-			console.log("추가");
 			this.ADD_USER_TO_MENTION_LIST(index);
 		},
 		remove(index) {
-			console.log("삭제");
 			this.ADD_USER_TO_FOLLOWER_LIST(index);
 		},
 	},

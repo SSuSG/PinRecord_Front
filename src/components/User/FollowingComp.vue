@@ -46,7 +46,6 @@ export default {
 	methods: {
 		toUserPage(userId) {
 			this.dialog = false;
-			console.log(userId);
 			this.$router.replace({ name: "user", params: { userId: userId } });
 		},
 	},

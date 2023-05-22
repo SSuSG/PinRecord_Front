@@ -36,6 +36,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import swal from "sweetalert";
 
 export default {
 	name: "FirstAuthComp",
@@ -64,10 +65,10 @@ export default {
 				let res = await this.authAccount(form);
 				console.log(res.data);
 				if (res.data.statusCode !== 200) {
-					alert(res.data.developerMessage);
+					swal("실패!", res.data.developerMessage, "error");
 					this.errorMessage = "인증에 실패했습니다. " + res.data.developerMessage;
 				} else {
-					alert("인증에 성공하였습니다. 다시 로그인 해주세요!");
+					swal("성공!", "인증에 성공하였습니다. 다시 로그인 해주세요!", "success");
 					this.authDialog = false;
 				}
 			} catch (error) {

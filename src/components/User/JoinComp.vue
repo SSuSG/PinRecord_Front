@@ -176,6 +176,7 @@
 <script>
 import { mapActions } from "vuex";
 import LoadingSpinnerComp from "./LoadingSpinnerComp.vue";
+import swal from "sweetalert";
 
 export default {
 	name: "JoinComp",
@@ -243,7 +244,6 @@ export default {
 				this.$refs.password2.validate() &&
 				this.$refs.email.validate()
 			) {
-				console.log("stage2 -> stage3");
 				this.stage = 3;
 			} else if (this.stage === 3 && this.$refs.name.validate() && this.$refs.nickname.validate()) {
 				console.log(this.form);
@@ -274,9 +274,9 @@ export default {
 				const response = await this.validateLoginId(this.form.loginId);
 
 				if (response.data.statusCode !== 200) {
-					alert("이미 존재하는 아이디 입니다.");
+					swal("실패!", "이미 존재하는 아이디 입니다.", "error");
 				} else {
-					alert("사용가능한 아이디 입니다.");
+					swal("성공!", "사용가능한 아이디 입니다.", "success");
 				}
 			} catch (error) {
 				console.log(error);
@@ -286,9 +286,9 @@ export default {
 			try {
 				const response = await this.validateEmail(this.form.email);
 				if (response.data.statusCode !== 200) {
-					alert("이미 존재하는 이메일 입니다.");
+					swal("실패!", "이미 존재하는 이메일 입니다.", "error");
 				} else {
-					alert("사용가능한 이메일 입니다.");
+					swal("성공!", "사용가능한 이메일 입니다.", "success");
 				}
 			} catch (error) {
 				console.log(error);
