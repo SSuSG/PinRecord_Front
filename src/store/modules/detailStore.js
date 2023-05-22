@@ -7,6 +7,7 @@ const detailStore = {
 	},
 	getters: {
 		getDetailData(state) {
+			console.log(state.detailData);
 			return state.detailData;
 		},
 		getDetailPinList(state) {
@@ -16,20 +17,18 @@ const detailStore = {
 	mutations: {
 		SET_Detail(state, data) {
 			state.detailData = { ...state.detailData, ...data };
-			// console.log(state.detailData.commentList);
 		},
 		SET_COMMENTLIST(state, data) {
 			state.detailData.commentList = { ...state.detailData.commentList, ...data };
 		},
 		DELETE_COMMENTLIST(state, data) {
-			state.detailData.commentList = { ...state.detailData.commentList, ...data };
+			state.detailData.commentList = [...state.detailData.commentList].filter((e) => e.commentId != data);
 		},
 	},
 	actions: {
 		async getDetail({ commit, state }, postId) {
 			try {
 				const res = await getTravelDetail(postId);
-
 				commit("SET_Detail", res.data.data);
 				return res.data.statusCode;
 			} catch (e) {
@@ -59,7 +58,7 @@ const detailStore = {
 			try {
 				const res = await deleteComment(commentId);
 				console.log(res.data);
-				commit("SET_COMMENTLIST", state.detailData.commentList);
+				commit("DELETE_COMMENTLIST", commentId);
 				return res.data.statusCode;
 			} catch (e) {
 				return e;
