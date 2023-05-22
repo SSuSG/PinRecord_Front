@@ -1,31 +1,51 @@
 <template>
 	<div id="detailTravel">
 		<div id="writer_info">
-			<span>작성자</span>
-			<span @click="toUserPage(prop.userId)">
-				{{ prop.writer }}
-			</span>
+			<div>
+				<span>
+					<v-icon size="x-large">mdi-account-search </v-icon>
+				</span>
+				<span @click="toUserPage(prop.userId)">
+					{{ prop.writer }}
+				</span>
+			</div>
+			<div id="zzim">
+				<v-icon size="x-large" color="orange darken-2">mdi-star-outline</v-icon>
+				<v-icon size="x-large" color="orange darken-2">mdi-star</v-icon>
+				<span> +{{ prop.zzimCnt }} </span>
+			</div>
 		</div>
 		<div id="travel_info">
 			<div class="info_wrapper">
-				<span>지역</span>
+				<span>
+					<v-icon size="xlarge">mdi-airplane </v-icon>
+				</span>
+				<span>{{ prop.title }}</span>
+			</div>
+			<div class="info_wrapper">
+				<span>
+					<v-icon size="xlarge">mdi-map-marker-outline </v-icon>
+				</span>
 				<span>{{ prop.city }}</span>
 			</div>
 			<div class="info_wrapper">
-				<span>지역</span>
-				<span>{{ prop.city }}</span>
+				<span>
+					<v-icon size="xlarge">mdi-calendar-range </v-icon>
+				</span>
+				<span v-if="prop.startDate">{{ this.convertDate(prop.startDate) }}</span>
+				<span v-if="prop.startDate">~</span>
+				<span v-if="prop.endDate">{{ this.convertDate(prop.endDate) }}</span>
 			</div>
 			<div class="info_wrapper">
-				<span>여행 기간</span>
-				<span>{{ prop.startDate }}</span>
-				<span>{{ prop.endDate }}</span>
+				<span>
+					<v-icon size="xlarge">mdi-currency-krw</v-icon>
+				</span>
+				<span v-if="prop.cost">{{ numberWithCommas }}</span>
 			</div>
 			<div class="info_wrapper">
-				<span>비용</span>
-				<span>{{ prop.cost }}</span>
-			</div>
-			<div class="info_wrapper">
-				<span>여행 후기</span>
+				<span>
+					<v-icon size="xlarge" color="red-darken-2">mdi-comment-processing-outline </v-icon>
+				</span>
 				<span>{{ prop.content }}</span>
 			</div>
 		</div>
@@ -72,6 +92,14 @@ export default {
 			// console.log(userId);
 			this.$router.push("/user/" + userId);
 		},
+		convertDate(dateString) {
+			const date = new Date(dateString);
+			const year = date.getFullYear();
+			const month = ("0" + (date.getMonth() + 1)).slice(-2);
+			const day = ("0" + date.getDate()).slice(-2);
+			const convertedDate = year + ". " + month + ". " + day;
+			return convertedDate;
+		},
 	},
 
 	watch: {
@@ -94,6 +122,11 @@ export default {
 			};
 		},
 	},
+	computed: {
+		numberWithCommas() {
+			return String(this.prop.cost).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		},
+	},
 };
 </script>
 
@@ -102,18 +135,34 @@ export default {
 	width: 100%;
 	background-color: whitesmoke;
 }
+#writer_info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 5px 10px 5px;
+}
 #travel_info {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
 }
+
+#zzim {
+	color: #f57c00;
+	font-size: 15px;
+	font-weight: 500;
+	text-align: center;
+}
 .info_wrapper {
 	padding: 5px;
 	display: flex;
-	flex-direction: column;
-	gap: 5px;
+	/* flex-direction: column; */
+	gap: 15px;
 	background-color: white;
 	border-radius: 5px;
+	font-size: 15px;
+	font-weight: 500;
+	color: #343434;
 }
 .info_wrapper > span {
 	font-weight: bold;

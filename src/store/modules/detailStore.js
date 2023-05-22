@@ -1,4 +1,11 @@
-import { getTravelDetail, deleteTravelDetail, postComment, deleteComment, getCommentList } from "@/apis/travel";
+import {
+	getTravelDetail,
+	deleteTravelDetail,
+	postComment,
+	deleteComment,
+	editComment,
+	getCommentList,
+} from "@/apis/travel";
 
 const detailStore = {
 	namespaced: true,
@@ -7,6 +14,7 @@ const detailStore = {
 	},
 	getters: {
 		getDetailData(state) {
+			// console.log("DETAIL DATA", state.detailData);
 			return state.detailData;
 		},
 		getDetailPinList(state) {
@@ -16,20 +24,25 @@ const detailStore = {
 	mutations: {
 		SET_Detail(state, data) {
 			state.detailData = { ...state.detailData, ...data };
-			// console.log(state.detailData.commentList);
 		},
 		SET_COMMENTLIST(state, data) {
 			state.detailData.commentList = { ...state.detailData.commentList, ...data };
 		},
 		DELETE_COMMENTLIST(state, data) {
-			state.detailData.commentList = { ...state.detailData.commentList, ...data };
+			state.detailData.commentList = [...state.detailData.commentList].filter((e) => e.commentId != data);
+		},
+		EDIT_COMMENT(state, editData) {
+			state.detailData.commentList = [...state.detailData.commentList].map((e) => {
+				if (e.commentId === editData.commentId) {
+					e = { ...e, content: editData.content };
+				}
+			});
 		},
 	},
 	actions: {
 		async getDetail({ commit, state }, postId) {
 			try {
 				const res = await getTravelDetail(postId);
-
 				commit("SET_Detail", res.data.data);
 				return res.data.statusCode;
 			} catch (e) {
@@ -38,9 +51,7 @@ const detailStore = {
 		},
 		async getCommentList({ commit, state }, postId) {
 			try {
-				console.log("getCommentList");
 				const res = await getCommentList(postId);
-				console.log(res.data);
 				commit("SET_COMMENTLIST", res.data.data);
 				return res.data.data;
 			} catch (e) {
@@ -58,8 +69,16 @@ const detailStore = {
 		async deleeteComment({ commit, state }, commentId) {
 			try {
 				const res = await deleteComment(commentId);
-				console.log(res.data);
-				commit("SET_COMMENTLIST", state.detailData.commentList);
+				commit("DELETE_COMMENTLIST", commentId);
+				return res.data.statusCode;
+			} catch (e) {
+				return e;
+			}
+		},
+		async editComment({ commit, state }, editData) {
+			try {
+				const res = await editComment(editData);
+				commit("EDIT_COMMENT", editData);
 				return res.data.statusCode;
 			} catch (e) {
 				return e;

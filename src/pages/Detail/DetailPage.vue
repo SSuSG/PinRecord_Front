@@ -53,6 +53,8 @@ export default {
 	flex-direction: row;
 	height: 100%;
 	padding-top: 70px; // 헤더 높이
+	color: #8a8a8a;
+	font-weight: bold;
 }
 #detail_left {
 	display: flex;

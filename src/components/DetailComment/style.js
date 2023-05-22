@@ -27,6 +27,7 @@ export const CommentWrapper = styled.div`
 `;
 
 export const CommentInputWrapper = styled.div`
+	padding: 5px 0;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
@@ -38,12 +39,52 @@ export const CommentInput = styled.input`
 	padding: 5px;
 	font-size: 15px;
 	height: 60px;
+	transition: 0.2s ease-in-out;
+	:focus {
+		border: 2px solid royalblue;
+	}
 `;
 
 export const SubmitButton = styled.button`
 	padding: 5px 10px;
 	border-radius: 5px;
-	background-color: green;
+	background-color: royalblue;
 	font-weight: 500;
 	color: white;
+`;
+
+export const EditButton = styled.button`
+	padding: 5px 10px;
+	background-color: Gainsboro;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	border-radius: 10px;
+	transition: 0.1s ease-in-out;
+	:hover {
+		background-color: green;
+		color: white;
+	}
+`;
+
+export const DeleteButton = styled.button`
+	padding: 5px 10px;
+	background-color: Gainsboro;
+	color: black;
+	font-size: 12px;
+	font-weight: bold;
+	border-radius: 10px;
+	transition: 0.1s ease-in-out;
+	:hover {
+		background-color: Orangered;
+		color: white;
+	}
+`;
+
+export const EditInput = styled.input`
+	border-radius: 2px;
+	padding: 5px;
+	height: 30px;
+	width: 150px;
+	border: 1px solid Gainsboro;
 `;
