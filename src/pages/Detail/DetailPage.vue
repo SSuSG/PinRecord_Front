@@ -4,6 +4,7 @@
 			<detail-travel :prop="getDetailData" />
 			<hr />
 			<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
+			<!-- <comment-comp :commentList="getDetailData.commentList" /> -->
 		</div>
 		<detail-kakao-map :pinList="getDetailPinList" />
 	</div>
@@ -14,12 +15,15 @@ import { mapGetters } from "vuex";
 import DetailKakaoMap from "@/components/DetailKakaoMap/DetailKakaoMap.vue";
 import DetailTravel from "@/components/DetailTravel/DetailTravel.vue";
 import DetailComment from "@/components/DetailComment/DetailComment.vue";
+// import CommentComp from "@/components/DetailTravel/CommentComp.vue";
+
 export default {
 	name: "DetailPage",
 	components: {
 		DetailKakaoMap,
 		DetailTravel,
 		DetailComment,
+		// CommentComp,
 	},
 
 	data() {
@@ -31,7 +35,7 @@ export default {
 	async mounted() {
 		this.postId = this.$route.params.postId;
 		const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
-		if (response !== 200) alert("불러오기 실패");
+		// if (response !== 200) alert("불러오기 실패");
 	},
 
 	methods: {},

@@ -2,10 +2,21 @@
 	<div id="detail_comment">
 		<CommentListWrapper>
 			<CommentWrapper v-for="item in prop" :key="item.commentId">
-				{{ item.content }}
-				<span v-if="item.userId === loginUser.userId" style="cursor: pointer" @click="deleteComment(item.commentId)">
-					<v-icon size="x-large" color="red darken-2">mdi-trash-can-outline</v-icon>
-				</span>
+				<div>
+					<v-avatar color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
+						<img v-bind:src="'data:image/jpeg;base64,' + item.image" />
+					</v-avatar>
+					{{ item.content }}
+				</div>
+				<div>
+					<span v-if="item.userId === loginUser.userId" style="cursor: pointer" @click="deleteComment(item.commentId)">
+						<v-icon size="x-large" color="red darken-2">mdi-trash-can-outline</v-icon>
+					</span>
+					&nbsp;
+					<span v-if="item.userId === loginUser.userId" style="cursor: pointer" @click="deleteComment(item.commentId)">
+						<v-icon size="x-large" color="blue darken-2">mdi-file-edit</v-icon>
+					</span>
+				</div>
 			</CommentWrapper>
 		</CommentListWrapper>
 		<CommentInputWrapper>
@@ -29,7 +40,7 @@ export default {
 		};
 	},
 	props: {
-		prop: Array,
+		prop: null,
 		loginUser: Object,
 		postId: null,
 	},
@@ -50,11 +61,12 @@ export default {
 
 			const response = await this.$store.dispatch("detailStore/postComment", newComment);
 			this.comment.content = "";
-			await this.$store.dispatch("detailStore/getDetail", this.postId);
+			await this.$store.dispatch("detailStore/getCommentList", this.postId);
 		},
 		async deleteComment(commentId) {
 			if (confirm("댓글을 삭제하겠습니까?")) {
-				await this.$store.dispatch("detailStore/deleeteComment", commentId);
+				const response = await this.$store.dispatch("detailStore/deleeteComment", commentId);
+				await this.$store.dispatch("detailStore/getCommentList", this.postId);
 			} else {
 				return;
 			}

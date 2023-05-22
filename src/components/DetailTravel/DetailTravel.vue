@@ -2,7 +2,7 @@
 	<div id="detailTravel">
 		<div id="writer_info">
 			<span>작성자</span>
-			<span>
+			<span @click="toUserPage(prop.userId)">
 				{{ prop.writer }}
 			</span>
 		</div>
@@ -29,14 +29,14 @@
 				<span>{{ prop.content }}</span>
 			</div>
 		</div>
-		<comment-comp :commentList="travelInfo.commentList" />
+		<!-- <comment-comp :commentList="travelInfo.commentList" /> -->
 	</div>
 </template>
 
 <script>
-import CommentComp from "./CommentComp.vue";
+// import CommentComp from "./CommentComp.vue";
 export default {
-	components: { CommentComp },
+	// components: { CommentComp },
 	name: "DetailTravel",
 
 	data() {
@@ -67,7 +67,12 @@ export default {
 
 	mounted() {},
 
-	methods: {},
+	methods: {
+		toUserPage(userId) {
+			// console.log(userId);
+			this.$router.push("/user/" + userId);
+		},
+	},
 
 	watch: {
 		prop() {
