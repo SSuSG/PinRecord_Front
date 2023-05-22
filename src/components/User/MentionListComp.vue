@@ -16,17 +16,17 @@
 			<v-container>
 				<v-row v-if="mentionList.length > 0">
 					<v-col v-for="mention in mentionList" :key="mention.mentionId" cols="12">
-						<v-card class="mx-auto" color="#26c6da" dark max-width="650">
-							<v-card-title>
+						<v-card class="mx-auto" max-width="650">
+							<v-card-title class="mention-title">
 								<v-icon large left> mdi-twitter </v-icon>
-								<span class="text-h6 font-weight-light">PinRecord</span>
+								<span>PinRecord</span>
 								<v-spacer></v-spacer>
-								<v-btn @click="toTravelPage(mention.travelId)">바로가기</v-btn>
+								<v-btn @click="toTravelPage(mention.travelId)" plain>바로가기</v-btn>
 							</v-card-title>
-
-							<v-card-text class="text-h5 font-weight-bold">
+							<v-spacer></v-spacer>
+							<v-card-subtitle class="mention-content">
 								[{{ mention.nickname }}]님이 [{{ mention.title }}] 을(를) 공유했어요!
-							</v-card-text>
+							</v-card-subtitle>
 						</v-card>
 					</v-col>
 				</v-row>
@@ -71,4 +71,21 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+@font-face {
+	font-family: "SUITE-Regular";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+}
+* {
+	font-family: "SUITE-Regular";
+}
+
+.mention-title {
+	font-size: 30px;
+}
+.mention-content {
+	font-size: 22px;
+}
+</style>

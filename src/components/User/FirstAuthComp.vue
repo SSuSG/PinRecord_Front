@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="authDialog" max-width="500px">
+	<v-dialog v-model="firstAuthDialog" max-width="500px">
 		<v-sheet min-height="500">
 			<div class="text-center">
 				<img src="@/assets/ssafy.svg" class="img-fluid pa-3 my-5" alt="Logo" width="250" height="150" />
@@ -25,7 +25,7 @@
 
 			<v-sheet class="headline mb-2 text-center">
 				<v-btn color="primary" @click="auth()" :disabled="!form1OK" class="mr-2">인증</v-btn>
-				<v-btn color="grey darken-2" @click.stop="authDialog = false" outlined>창닫기</v-btn>
+				<v-btn color="grey darken-2" @click.stop="firstAuthDialog = false" outlined>창닫기</v-btn>
 			</v-sheet>
 
 			<br />
@@ -41,7 +41,7 @@ import swal from "sweetalert";
 export default {
 	name: "FirstAuthComp",
 	props: {
-		email: String,
+		loginId: String,
 		dialogVisible: Boolean,
 	},
 	data: function () {
@@ -60,7 +60,7 @@ export default {
 				console.log("회원가입후 첫 번째 인증");
 				var form = {
 					authKey: this.authKey,
-					email: this.email,
+					loginId: this.loginId,
 				};
 				let res = await this.authAccount(form);
 				console.log(res.data);
@@ -69,7 +69,7 @@ export default {
 					this.errorMessage = "인증에 실패했습니다. " + res.data.developerMessage;
 				} else {
 					swal("성공!", "인증에 성공하였습니다. 다시 로그인 해주세요!", "success");
-					this.authDialog = false;
+					this.firstAuthDialog = false;
 				}
 			} catch (error) {
 				console.log(error);
@@ -78,7 +78,7 @@ export default {
 		},
 	},
 	computed: {
-		authDialog: {
+		firstAuthDialog: {
 			get() {
 				if (this.dialogVisible) {
 					// Some dialog initialization code could be placed here

@@ -130,7 +130,7 @@ const userStore = {
 		},
 
 		async tokenRegeneration({ commit, dispatch, state }) {
-			console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+			// console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
 			let res = await tokenRegeneration(state.login_user.loginId);
 			if (res.data.statusCode === 200) {
 				let accessToken = res.headers["access-token"];
