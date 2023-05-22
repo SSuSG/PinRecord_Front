@@ -52,6 +52,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import swal from "sweetalert";
 export default {
 	name: "UpdatePasswordComp",
 	data() {
@@ -86,12 +87,10 @@ export default {
 					loginId: this.getLoginUserLoginId,
 					newPassword: this.password,
 				};
-				console.log(dto);
 				let res = await this.updatePassword(dto);
 				this.stage = 2;
-				console.log(res);
 				if (res.data.statusCode !== 200) {
-					alert(res.data.developerMessage);
+					swal("실패!", res.data.developerMessage, "error");
 					this.stage = 1;
 				}
 			}

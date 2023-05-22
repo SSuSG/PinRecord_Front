@@ -1,4 +1,6 @@
 import jwtDecode from "jwt-decode";
+import swal from "sweetalert";
+
 import {
 	login,
 	logout,
@@ -15,6 +17,7 @@ import {
 	tokenRegeneration,
 	updatePassword,
 	authAccount,
+	getMentionListByUserId,
 } from "@/apis/user";
 import router from "@/router";
 
@@ -73,7 +76,7 @@ const userStore = {
 			let res = await login(loginRequestDto);
 
 			if (res.data.statusCode == 200) {
-				alert("로그인 성공");
+				swal("성공!", "로그인을 성공하였습니다!", "success");
 				let accessToken = res.headers["access-token"];
 				let refreshToken = res.headers["refresh-token"];
 
@@ -85,24 +88,24 @@ const userStore = {
 				return true;
 			} else if (res.data.statusCode == 423) {
 				alert(res.data.developerMessage);
+				swal("실패!", "계정이 잠금되었습니다!", "error");
 				return "lock";
 			} else if (res.data.statusCode == 418) {
-				alert(res.data.developerMessage);
+				swal("실패!", "계정이 인증되지 않았습니다!", "error");
 				return "noAuth";
 			}
-			alert(res.data.developerMessage);
+			swal("실패!", res.data.developerMessage, "error");
 			return false;
 		},
 
 		async logout({ commit }, loginId) {
 			let res = await logout(loginId);
 			if (res.data.statusCode == 200) {
-				alert("로그아웃 성공");
+				swal("성공!", "로그아웃을 성공하였습니다!", "success");
 				//document.cookie = "JSESSIONID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 				commit("REMOVE_LOGIN_USER");
 				commit("SET_IS_LOGIN", false);
 				commit("SET_IS_VALID_TOKEN", false);
-				console.log(router.currentRoute.fullPath);
 				if (router.currentRoute.fullPath !== "/") {
 					router.push("/");
 				} else {
@@ -127,7 +130,7 @@ const userStore = {
 		},
 
 		async tokenRegeneration({ commit, dispatch, state }) {
-			console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+			// console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
 			let res = await tokenRegeneration(state.login_user.loginId);
 			if (res.data.statusCode === 200) {
 				let accessToken = res.headers["access-token"];
@@ -181,6 +184,9 @@ const userStore = {
 
 		authAccount({ commit }, authAccountRequestDto) {
 			return authAccount(authAccountRequestDto);
+		},
+		getMentionListByUserId({ commit }, userId) {
+			return getMentionListByUserId(userId);
 		},
 	},
 };

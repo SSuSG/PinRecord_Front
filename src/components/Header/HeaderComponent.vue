@@ -14,6 +14,9 @@
 				<update-password-comp />
 			</ButtonLi>
 			<ButtonLi>
+				<mention-list-comp />
+			</ButtonLi>
+			<ButtonLi>
 				<logout-comp></logout-comp>
 			</ButtonLi>
 			<ButtonLi>
@@ -30,6 +33,7 @@ import JoinComp from "../User/JoinComp.vue";
 import { mapState, mapGetters } from "vuex";
 import LogoutComp from "../User/LogoutComp.vue";
 import UpdatePasswordComp from "../User/UpdatePasswordComp.vue";
+import MentionListComp from "../User/MentionListComp.vue";
 
 export default {
 	name: "HeaderComponent",
@@ -41,6 +45,7 @@ export default {
 		ButtonList,
 		LogoutComp,
 		UpdatePasswordComp,
+		MentionListComp,
 	},
 	computed: {
 		...mapState("userStore", ["isLogin"]),

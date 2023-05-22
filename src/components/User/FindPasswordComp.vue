@@ -71,6 +71,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import swal from "sweetalert";
 export default {
 	name: "FindPasswordComp",
 	data() {
@@ -105,9 +106,8 @@ export default {
 				this.$refs.name.validate()
 			) {
 				let res = await this.findPasswordByLoginIdAndEmail(this.form);
-				console.log(res);
 				if (res.data.statusCode !== 200) {
-					alert("일치하는 계정이 존재하지 않습니다.");
+					swal("실패!", "일치하는 계정이 존재하지 않습니다.", "error");
 				} else {
 					this.stage = 2;
 				}

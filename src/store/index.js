@@ -5,6 +5,7 @@ import userStore from "@/store/modules/userStore";
 import followStore from "@/store/modules/followStore";
 import modalStore from "@/store/modules/modalStore";
 import detailStore from "@/store/modules/detailStore";
+import zzimStore from "@/store/modules/zzimStore";
 import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
 		followStore,
 		modalStore,
 		detailStore,
+		zzimStore,
 	},
 	//vuex plugin 명시
 	plugins: [

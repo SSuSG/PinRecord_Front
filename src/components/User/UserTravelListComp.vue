@@ -20,10 +20,10 @@
 						</v-col>
 						<v-divider vertical></v-divider>
 						<v-col cols="12" md="6">
-							<v-btn class="mx-4 my-0 pa-0" plain text>
-								<div center class="ms-2">
+							<v-btn class="mx-4 my-0 pa-0" text @click="toTravelPage(travel.travelId)">
+								<v-card-text class="row">
 									{{ travel.title }}
-								</div>
+								</v-card-text>
 							</v-btn>
 
 							<v-divider class="row mx-4 my-0"></v-divider>
@@ -80,6 +80,11 @@ export default {
 	watch: {},
 	data() {
 		return {};
+	},
+	methods: {
+		toTravelPage(travelId) {
+			this.$router.push("/detail/" + travelId);
+		},
 	},
 	filters: {
 		formatDate(value) {

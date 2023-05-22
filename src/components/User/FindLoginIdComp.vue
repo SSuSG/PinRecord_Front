@@ -48,6 +48,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import swal from "sweetalert";
 export default {
 	name: "FindLoginIdComp",
 	data() {
@@ -82,7 +83,7 @@ export default {
 				this.stage = 2;
 				console.log(res);
 				if (res.data.statusCode !== 200) {
-					alert("일치하는 계정이 존재하지 않습니다.");
+					swal("실패!", "일치하는 계정이 존재하지 않습니다.", "error");
 					this.stage = 1;
 				} else {
 					this.loginId = res.data.data;

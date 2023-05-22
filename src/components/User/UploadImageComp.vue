@@ -26,6 +26,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import swal from "sweetalert";
 
 export default {
 	name: "UploadImageComp",
@@ -42,21 +43,6 @@ export default {
 	methods: {
 		...mapActions("userStore", ["updateProfileImage"]),
 		async updateImage() {
-			//base64기반 이미지 변경
-			// var updateProfileImageRequestDto = {
-			// 	userId: this.userId,
-			// 	profileImage: this.base64Image,
-			// };
-			// let res = await this.updateProfileImage(updateProfileImageRequestDto);
-
-			// if (res.data.statusCode !== 200) {
-			// 	alert(res.data.developerMessage);
-			// } else {
-			// 	alert("이미지 변경에 성공하였습니다!");
-			// 	this.$emit("update-profile-image", this.base64Image);
-			// 	this.dialog = false;
-			// }
-
 			var dto = {
 				profileImage: null,
 				userId: null,
@@ -69,7 +55,7 @@ export default {
 			if (res.data.statusCode !== 200) {
 				alert(res.data.developerMessage);
 			} else {
-				alert("이미지 변경에 성공하였습니다!");
+				swal("성공!", "프로필 이미지 변경에 성공하였습니다!", "success");
 				this.$emit("update-profile-image", this.base64Image);
 				this.dialog = false;
 			}

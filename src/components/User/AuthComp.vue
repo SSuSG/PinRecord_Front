@@ -36,6 +36,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import swal from "sweetalert";
 
 export default {
 	name: "AuthComp",
@@ -64,10 +65,10 @@ export default {
 				let res = await this.unlockAccount(form);
 				console.log(res.data);
 				if (res.data.statusCode !== 200) {
-					alert(res.data.developerMessage);
+					swal("실패!", res.data.developerMessage, "error");
 					this.errorMessage = "인증에 실패했습니다. " + res.data.developerMessage;
 				} else {
-					alert("인증에 성공하였습니다. 임시비밀번호는 등록된 이메일로 발송되었습니다.");
+					swal("성공!", "인증에 성공하였습니다. 임시비밀번호는 등록된 이메일로 발송되었습니다.", "success");
 					this.authDialog = false;
 				}
 			} catch (error) {

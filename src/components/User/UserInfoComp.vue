@@ -40,6 +40,7 @@ import FollowerComp from "./FollowerComp.vue";
 import FollowingComp from "./FollowingComp.vue";
 import { mapActions, mapGetters } from "vuex";
 import UploadImageComp from "./UploadImageComp.vue";
+import swal from "sweetalert";
 
 export default {
 	name: "UserInfoComp",
@@ -72,15 +73,13 @@ export default {
 			this.$emit("update-profile-base64Image", image);
 		},
 		async getProfileImage(userId) {
-			console.log("유저 프로필 이미지 조회!!" + userId);
 			let res = await this.getUserProfileImage(userId);
 			console.log(res.data.data);
 			return res;
 		},
 		async doFollow(userId) {
-			console.log("doFollow");
 			if (this.getLoginUserUserId === userId) {
-				alert("자기 자신은 팔로우가 불가능 합니다!");
+				swal("실패!", "자기 자신은 팔로우가 불가능 합니다!", "error");
 				return;
 			}
 			var followRequestDto = {
@@ -91,7 +90,7 @@ export default {
 			let res = await this.follow(followRequestDto);
 
 			if (res.data.statusCode === 200) {
-				alert("팔로우 성공!");
+				swal("성공!", "팔로우 성공!", "success");
 
 				var loginUser = {
 					followerUserId: this.getLoginUser.userId,
@@ -102,28 +101,25 @@ export default {
 
 				this.followerList.push(loginUser);
 			} else {
-				alert(res.data.developerMessage);
+				swal("실패!", res.data.developerMessage, "error");
 			}
 		},
 		async doCancelFollow(userId) {
-			console.log("cancelFollow");
 			if (this.getLoginUserUserId === userId) {
-				alert("자기 자신을 팔로우 취소 할 수 없습니다!");
+				swal("실패!", "자기 자신을 팔로우 취소 할 수 없습니다!", "error");
 				return;
 			}
 			var followRequestDto = {
 				userIdFrom: this.getLoginUserUserId,
 				userIdTo: userId,
 			};
-			console.log(followRequestDto);
 			let res = await this.cancelFollow(followRequestDto);
-			console.log(res.data);
 
 			if (res.data.statusCode === 200) {
-				alert("팔로우 취소 성공!");
+				swal("성공!", "팔로우 취소 성공!", "success");
 				this.followerList = this.followerList.filter((o) => o.followerUserId !== this.getLoginUserUserId);
 			} else {
-				alert(res.data.developerMessage);
+				swal("실패!", res.data.developerMessage, "error");
 			}
 		},
 	},

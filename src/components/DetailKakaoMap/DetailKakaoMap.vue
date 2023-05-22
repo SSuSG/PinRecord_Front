@@ -61,11 +61,19 @@ export default {
 		},
 
 		addMarker(position) {
+			// 마커 이미지의 이미지 주소
+			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+			var imageSize = new kakao.maps.Size(24, 35);
+			// 마커 이미지를 생성
+			var normalImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
 			const newMarker = new kakao.maps.Marker({
 				map: this.map,
 				position: position,
 				clickable: true,
+				image: normalImage,
 			});
+
 			this.markers.push(newMarker);
 			this.setMarkers();
 			return newMarker;
@@ -77,10 +85,36 @@ export default {
 		},
 
 		addMarkerEvent(marker, data) {
+			var basicInfo =
+				`<div class="customoverlay">
+                            <a href="` +
+				data.placeUrl +
+				`" target="_blank">
+                            <span class="title">` +
+				data.placeName +
+				`</span>
+                            </a>
+                            </div>`;
+
+			var customOverlay = new kakao.maps.CustomOverlay({
+				clickable: true,
+				content: basicInfo,
+				position: new kakao.maps.LatLng(data.y, data.x),
+				xAnchor: 0.5,
+				yAnchor: 1.9,
+				zIndex: 3,
+			});
+
 			kakao.maps.event.addListener(marker, "click", () => {
 				this.moveMap(data);
 				//PinComp 모달 띄우기
 				this.openPinView(data);
+			});
+			kakao.maps.event.addListener(marker, "mouseover", () => {
+				customOverlay.setMap(this.map);
+			});
+			kakao.maps.event.addListener(marker, "mouseout", () => {
+				customOverlay.setMap(null);
 			});
 		},
 		setClick(data) {
@@ -92,7 +126,7 @@ export default {
 		moveMap(data) {
 			const movePosition = new kakao.maps.LatLng(data.y, data.x);
 			this.setPanTo(movePosition);
-			this.showInfo(data, movePosition);
+			// this.showInfo(data, movePosition);
 			this.setClick(data);
 		},
 		showInfo(data, position) {

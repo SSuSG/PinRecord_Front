@@ -82,6 +82,10 @@ function authAccount(authAccountRequestDto) {
 	return API.post("/users/auth", authAccountRequestDto);
 }
 
+function getMentionListByUserId(userId) {
+	return API.get("/mentions/" + userId);
+}
+
 export {
 	login,
 	logout,
@@ -98,4 +102,5 @@ export {
 	findLoginUserByloginId,
 	tokenRegeneration,
 	authAccount,
+	getMentionListByUserId,
 };

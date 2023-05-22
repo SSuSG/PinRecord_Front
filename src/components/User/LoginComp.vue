@@ -57,7 +57,7 @@
 			</v-sheet>
 		</v-sheet>
 		<auth-comp :dialogVisible="myAuthDialog" :loginId="form.loginId" @close="myAuthDialogClose" />
-		<first-auth-comp />
+		<first-auth-comp :dialogVisible="myFirstAuthDialog" :loginId="form.loginId" @close="myFirstAuthDialogClose" />
 	</v-dialog>
 </template>
 
@@ -105,7 +105,7 @@ export default {
 			} else if (loginResult === "lock") {
 				this.myAuthDialog = true;
 			} else if (loginResult === "noAuth") {
-				this.myAuthDialog = true;
+				this.myFirstAuthDialog = true;
 			}
 		},
 		initForm() {
@@ -115,6 +115,9 @@ export default {
 		...mapActions("userStore", ["login"]),
 		myAuthDialogClose() {
 			this.myAuthDialog = false;
+		},
+		myFirstAuthDialogClose() {
+			this.myFirstAuthDialog = false;
 		},
 	},
 	computed: {

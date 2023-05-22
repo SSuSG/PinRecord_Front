@@ -34,6 +34,19 @@
 			<v-expand-transition>
 				<div v-show="show">
 					<v-divider></v-divider>
+					<v-container>
+						<v-row justify="center">
+							<v-chip-group column justify="center">
+								<v-chip v-for="tag in pin.tagList" :key="tag">
+									<v-card-subtitle>
+										{{ tag }}
+									</v-card-subtitle>
+								</v-chip>
+							</v-chip-group>
+						</v-row>
+					</v-container>
+
+					<v-divider></v-divider>
 
 					<v-card-text>
 						{{ pin.content }}

@@ -32,8 +32,8 @@ export default {
 		initMap() {
 			this.mapContainer = document.getElementById("map"); // 지도를 표시할 div
 			this.mapOption = {
-				center: new kakao.maps.LatLng(35.766826, 127.9786567), // 지도의 중심좌표
-				level: 13, // 지도의 확대 레벨
+				center: new kakao.maps.LatLng(36.266826, 127.9786567), // 지도의 중심좌표
+				level: 12, // 지도의 확대 레벨
 			};
 
 			// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
