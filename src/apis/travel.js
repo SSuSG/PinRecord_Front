@@ -49,6 +49,10 @@ function deleteTravelDetail(postId) {
 	return API.delete(`/travels/${postId}`);
 }
 
+function getCommentList(travelId) {
+	return API.get(`/comments/${travelId}`);
+}
+
 function postComment(data) {
 	return API.post("/comments", data);
 }
@@ -67,4 +71,5 @@ export {
 	deleteTravelDetail,
 	postComment,
 	deleteComment,
+	getCommentList,
 };
