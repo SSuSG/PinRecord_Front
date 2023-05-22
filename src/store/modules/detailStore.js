@@ -38,6 +38,12 @@ const detailStore = {
 				}
 			});
 		},
+		ADD_ZZIM_CNT(state) {
+			state.detailData.zzimCnt = state.detailData.zzimCnt + 1;
+		},
+		MINUS_ZZIM_CNT(state) {
+			state.detailData.zzimCnt = state.detailData.zzimCnt - 1;
+		},
 	},
 	actions: {
 		async getDetail({ commit, state }, postId) {

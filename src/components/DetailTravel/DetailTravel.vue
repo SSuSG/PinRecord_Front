@@ -30,7 +30,7 @@
 				<span>
 					<v-icon size="xlarge">mdi-map-marker-outline </v-icon>
 				</span>
-				<span>{{ prop.city }}</span>
+				<span>{{ prop.state }} {{ prop.city }}</span>
 			</div>
 			<div class="info_wrapper">
 				<span>
@@ -115,9 +115,11 @@ export default {
 				if (this.zzim) {
 					swal("성공!", "찜을 취소 하였습니다!", "success");
 					//emit함수 + prop 카운트 1 다운
+					this.$emit("cancel-zzim");
 				} else {
 					swal("성공!", "찜 하였습니다!", "success");
 					//emit함수 + prop 카운트 1 증가
+					this.$emit("do-zzim");
 				}
 			} else {
 				swal("실패!", res.data.developerMessage, "error");

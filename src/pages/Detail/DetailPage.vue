@@ -1,7 +1,7 @@
 <template>
 	<div id="detail_page">
 		<div id="detail_left">
-			<detail-travel :prop="getDetailData" :zzim="zzim" />
+			<detail-travel :prop="getDetailData" :zzim="zzim" @cancel-zzim="cancelZzim" @do-zzim="doZzim" />
 			<hr />
 			<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
 			<!-- <comment-comp :commentList="getDetailData.commentList" /> -->
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import DetailKakaoMap from "@/components/DetailKakaoMap/DetailKakaoMap.vue";
 import DetailTravel from "@/components/DetailTravel/DetailTravel.vue";
 import DetailComment from "@/components/DetailComment/DetailComment.vue";
@@ -41,6 +41,7 @@ export default {
 	},
 
 	methods: {
+		...mapMutations("detailStore", ["ADD_ZZIM_CNT", "MINUS_ZZIM_CNT"]),
 		...mapActions("zzimStore", ["isZzim"]),
 		async isUserZzim(travelId, userId) {
 			var dto = {
@@ -53,6 +54,14 @@ export default {
 			} else {
 				this.zzim = true;
 			}
+		},
+		cancelZzim() {
+			this.zzim = false;
+			this.MINUS_ZZIM_CNT();
+		},
+		doZzim() {
+			this.zzim = true;
+			this.ADD_ZZIM_CNT();
 		},
 	},
 	computed: {

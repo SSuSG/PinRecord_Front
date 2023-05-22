@@ -74,7 +74,6 @@ export default {
 		},
 		async getProfileImage(userId) {
 			let res = await this.getUserProfileImage(userId);
-			console.log(res.data.data);
 			return res;
 		},
 		async doFollow(userId) {
