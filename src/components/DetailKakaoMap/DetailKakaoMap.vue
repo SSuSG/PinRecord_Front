@@ -1,11 +1,13 @@
 <template>
 	<div id="kakao_map">
 		<div id="map"></div>
+		<pin-comp :pin="pinData" :dialogVisible="pinDialog" @close="pinDialogClose" />
 	</div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import PinComp from "../DetailTravel/PinComp.vue";
 export default {
 	name: "DetailKakaoMap",
 	data() {
@@ -15,12 +17,14 @@ export default {
 			infowindow: null,
 			toogle: false,
 			clickedMarkerData: 0,
+			pinData: null,
+			pinDialog: false,
 		};
 	},
 	props: {
 		pinList: Array,
 	},
-	components: {},
+	components: { PinComp },
 
 	mounted() {
 		if (window.kakao && window.kakao.maps) {
@@ -75,6 +79,8 @@ export default {
 		addMarkerEvent(marker, data) {
 			kakao.maps.event.addListener(marker, "click", () => {
 				this.moveMap(data);
+				//PinComp 모달 띄우기
+				this.openPinView(data);
 			});
 		},
 		setClick(data) {
@@ -99,6 +105,14 @@ export default {
 		},
 		setLevel(movePosition) {
 			this.map.setLevel(3, { animate: true }, { anchor: movePosition });
+		},
+		openPinView(pin) {
+			console.log(pin);
+			this.pinData = pin;
+			this.pinDialog = true;
+		},
+		pinDialogClose() {
+			this.pinDialog = false;
 		},
 	},
 	watch: {
