@@ -59,6 +59,17 @@ function postComment(data) {
 function deleteComment(commentId) {
 	return API.delete(`/comments/${commentId}`);
 }
+function editComment(data) {
+	return API.put("/comments", data);
+}
+
+function getZzim(data) {
+	return API.get("/zzim", data);
+}
+
+function doZzim(data) {
+	return API.post("/zzim", data);
+}
 
 export {
 	getTravelListByUserId,
@@ -71,5 +82,6 @@ export {
 	deleteTravelDetail,
 	postComment,
 	deleteComment,
+	editComment,
 	getCommentList,
 };

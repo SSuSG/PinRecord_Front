@@ -1,39 +1,46 @@
 <template>
 	<div id="detailTravel">
 		<div id="writer_info">
-			<span>
-				<v-icon size="xlarge" color="red-darken-2">mdi-account-search </v-icon>
-			</span>
-			<span @click="toUserPage(prop.userId)">
-				{{ prop.writer }}
-			</span>
+			<div>
+				<span>
+					<v-icon size="x-large">mdi-account-search </v-icon>
+				</span>
+				<span @click="toUserPage(prop.userId)">
+					{{ prop.writer }}
+				</span>
+			</div>
+			<div id="zzim">
+				<v-icon size="x-large" color="orange darken-2">mdi-star-outline</v-icon>
+				<v-icon size="x-large" color="orange darken-2">mdi-star</v-icon>
+				<span> +{{ prop.zzimCnt }} </span>
+			</div>
 		</div>
 		<div id="travel_info">
 			<div class="info_wrapper">
 				<span>
-					<v-icon size="xlarge" color="red-darken-2">mdi-airplane </v-icon>
+					<v-icon size="xlarge">mdi-airplane </v-icon>
 				</span>
 				<span>{{ prop.title }}</span>
 			</div>
 			<div class="info_wrapper">
 				<span>
-					<v-icon size="xlarge" color="red-darken-2">mdi-map-marker-outline </v-icon>
+					<v-icon size="xlarge">mdi-map-marker-outline </v-icon>
 				</span>
 				<span>{{ prop.city }}</span>
 			</div>
 			<div class="info_wrapper">
 				<span>
-					<v-icon size="xlarge" color="red-darken-2">mdi-calendar-range </v-icon>
+					<v-icon size="xlarge">mdi-calendar-range </v-icon>
 				</span>
-				<span>{{ this.convertDate(prop.startDate) }}</span>
-				<span>~</span>
-				<span>{{ this.convertDate(prop.endDate) }}</span>
+				<span v-if="prop.startDate">{{ this.convertDate(prop.startDate) }}</span>
+				<span v-if="prop.startDate">~</span>
+				<span v-if="prop.endDate">{{ this.convertDate(prop.endDate) }}</span>
 			</div>
 			<div class="info_wrapper">
 				<span>
-					<v-icon size="xlarge" color="red-darken-2">mdi-currency-krw</v-icon>
+					<v-icon size="xlarge">mdi-currency-krw</v-icon>
 				</span>
-				<span>{{ numberWithCommas }}</span>
+				<span v-if="prop.cost">{{ numberWithCommas }}</span>
 			</div>
 			<div class="info_wrapper">
 				<span>
@@ -128,10 +135,23 @@ export default {
 	width: 100%;
 	background-color: whitesmoke;
 }
+#writer_info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 5px 10px 5px;
+}
 #travel_info {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+#zzim {
+	color: #f57c00;
+	font-size: 15px;
+	font-weight: 500;
+	text-align: center;
 }
 .info_wrapper {
 	padding: 5px;

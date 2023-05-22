@@ -80,3 +80,11 @@ export const DeleteButton = styled.button`
 		color: white;
 	}
 `;
+
+export const EditInput = styled.input`
+	border-radius: 2px;
+	padding: 5px;
+	height: 30px;
+	width: 150px;
+	border: 1px solid Gainsboro;
+`;
