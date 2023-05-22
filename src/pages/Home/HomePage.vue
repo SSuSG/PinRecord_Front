@@ -1,27 +1,49 @@
 <template>
 	<div id="home_page">
 		<div id="select_container">
-			<select v-if="isPlaceSearch" name="특별/광역시, 도" class="select" @change="setSelectedSi">
-				<option value="none">시/도 선택</option>
-				<option v-for="data in si" v-bind:key="data.code" :value="data.code">
-					{{ data.name }}
-				</option>
-			</select>
-			<select v-if="isPlaceSearch" name="구/동" class="select" @change="setSelectedGu">
-				<!-- <option value="none">구, 동</option> -->
-				<option v-for="data in gu" v-bind:key="data.code" :value="data.code">
-					{{ data.name }}
-				</option>
-			</select>
-			<v-btn v-if="isPlaceSearch" @click="searchTravelByCity()">검색</v-btn>
+			<button id="toggleButton" v-if="isPlaceSearch" @click="change()">태그 검색</button>
+			<button id="toggleButton" v-else @click="change()">장소 검색</button>
+			<v-select
+				v-if="isPlaceSearch"
+				id="select"
+				:items="si"
+				item-text="name"
+				item-value="code"
+				label="특별/광역시, 도"
+				solo
+				@change="setSelectedSi"
+				v-model="selectedSi"
+				flat="true"
+				outlined="true"
+				loader-height="1"
+				dense="true"
+			></v-select>
+			<v-select
+				v-if="isPlaceSearch"
+				id="select"
+				:items="gu"
+				item-text="name"
+				item-value="code"
+				label="구/동"
+				solo
+				@change="setSelectedGu"
+				v-model="selectedGu"
+				no-data-text="시/도를 입력해주세요."
+				flat="true"
+				outlined="true"
+				dense="true"
+			></v-select>
+
+			<button id="searchButton" v-if="isPlaceSearch" @click="searchTravelByCity()">
+				<v-icon color="#4169e1">mdi-map-search-outline </v-icon>
+			</button>
 
 			<vue-tags-input v-if="!isPlaceSearch" v-model="tag" :tags="tags" @tags-changed="(newTags) => (tags = newTags)" />
-			<v-btn v-if="!isPlaceSearch" @click="searchTravelListByTag()">검색</v-btn>
-
-			<v-btn v-if="isPlaceSearch" @click="change()">태그 검색</v-btn>
-			<v-btn v-else @click="change()">장소 검색</v-btn>
+			<button id="searchButton" v-if="!isPlaceSearch" @click="searchTravelListByTag()">
+				<v-icon color="#4169e1">mdi-tag-search-outline </v-icon>
+			</button>
 		</div>
-		<grid-component :travelList="travelList" @to-travel-page="toTravelPage"></grid-component>
+		<grid-component v-if="travelList" :travelList="travelList" @to-travel-page="toTravelPage"></grid-component>
 	</div>
 </template>
 
@@ -69,11 +91,11 @@ export default {
 			const response = await getGu(code);
 			const guArray = [...response];
 			guArray.shift();
+			console.log(guArray);
 			this.gu = guArray;
 		},
 
 		setSelectedSi(e) {
-			this.selectedSi = e.target.value;
 			const siCode = this.selectedSi[0] + this.selectedSi[1];
 			for (let i = 0; i < this.si.length; i++) {
 				if (this.si[i].code === this.selectedSi) {
@@ -81,12 +103,10 @@ export default {
 					break;
 				}
 			}
-
 			this.setGu(siCode);
 		},
 
 		setSelectedGu(e) {
-			this.selectedGu = e.target.value;
 			for (let i = 0; i < this.gu.length; i++) {
 				if (this.gu[i].code === this.selectedGu) {
 					const temp = this.gu[i].name.split(" ");
@@ -95,11 +115,13 @@ export default {
 					break;
 				}
 			}
+			// this.searchTravelListByTag();
 		},
 
 		async getTravelList() {
-			let res = await this.getTravelListForHomeView();
+			const res = await this.getTravelListForHomeView();
 			this.travelList = res.data.data;
+			console.log(this.travelList);
 		},
 
 		toTravelPage(travelId) {
@@ -133,34 +155,55 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="css">
 #home_page {
 	padding-top: 70px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 #select_container {
-	width: 500px;
-	margin: 50px auto;
+	width: 900px;
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 20px;
+	height: 100px;
+}
+.v-input__control {
 	display: flex;
 	justify-content: center;
-	gap: 10px;
-	padding: 10px;
-}
-.select {
-	width: 200px;
-	height: 45px;
-	background-color: whitesmoke;
-	border: 2px solid lightgray;
-	border-radius: 5px;
-	text-align: center;
-	font-weight: bold;
+	align-items: center;
+	height: 80px;
 }
 
 .vue-tags-input {
-	background: white;
-	padding: 5px;
-	border-radius: 5px;
-	min-width: 500px;
+	/* background: white; */
+	/* padding: 5px; */
+	/* border-radius: 5px; */
+	/* min-width: 500px; */
+	width: 100%;
 	font-weight: 500;
 	letter-spacing: 1px;
+}
+.vue-tags-input.ti-focus .ti-input {
+	border: 1px solid #ebde6e;
+}
+#searchButton {
+	height: 40px;
+	border: 2px solid royalblue;
+	color: white;
+	font-weight: 600;
+	border-radius: 5px;
+	padding: 5px 20px;
+}
+#toggleButton {
+	height: 40px;
+	border: 2px solid royalblue;
+	color: royalblue;
+	font-weight: 600;
+	border-radius: 5px;
+	padding: 5px 20px;
 }
 </style>
