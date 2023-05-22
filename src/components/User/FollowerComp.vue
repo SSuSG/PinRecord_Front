@@ -19,8 +19,8 @@
 					</v-list-item-content>
 
 					<v-list-item-icon>
-						<v-btn @click="toUserPage(follower.followerUserId)">
-							<v-icon> mdi-message-outline </v-icon>
+						<v-btn plain @click="toUserPage(follower.followerUserId)">
+							<v-icon> mdi-account-details </v-icon>
 						</v-btn>
 					</v-list-item-icon>
 				</v-list-item>

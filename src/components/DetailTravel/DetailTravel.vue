@@ -10,9 +10,13 @@
 				</span>
 			</div>
 			<div id="zzim">
-				<v-icon size="x-large" color="orange darken-2">mdi-star-outline</v-icon>
-				<v-icon size="x-large" color="orange darken-2">mdi-star</v-icon>
-				<span> +{{ prop.zzimCnt }} </span>
+				<v-btn icon v-if="zzim" @click="goZzim">
+					<v-icon size="x-large" color="red">mdi-heart</v-icon>
+				</v-btn>
+				<v-btn icon v-if="!zzim" @click="goZzim">
+					<v-icon size="x-large" color="red">mdi-heart-outline</v-icon>
+				</v-btn>
+				<span> {{ prop.zzimCnt }} </span>
 			</div>
 		</div>
 		<div id="travel_info">
@@ -49,16 +53,15 @@
 				<span>{{ prop.content }}</span>
 			</div>
 		</div>
-		<!-- <comment-comp :commentList="travelInfo.commentList" /> -->
 	</div>
 </template>
 
 <script>
-// import CommentComp from "./CommentComp.vue";
-export default {
-	// components: { CommentComp },
-	name: "DetailTravel",
+import { mapGetters, mapActions } from "vuex";
+import swal from "sweetalert";
 
+export default {
+	name: "DetailTravel",
 	data() {
 		return {
 			writerInfo: {
@@ -78,16 +81,14 @@ export default {
 				travelId: "",
 				zzimCnt: "",
 			},
-			// pinList
 		};
 	},
 	props: {
 		prop: Object,
+		zzim: Boolean,
 	},
-
-	mounted() {},
-
 	methods: {
+		...mapActions("zzimStore", ["doZzim"]),
 		toUserPage(userId) {
 			// console.log(userId);
 			this.$router.push("/user/" + userId);
@@ -99,6 +100,28 @@ export default {
 			const day = ("0" + date.getDate()).slice(-2);
 			const convertedDate = year + ". " + month + ". " + day;
 			return convertedDate;
+		},
+		async goZzim() {
+			var dto = {
+				travelId: this.prop.travelId,
+				userId: this.getLoginUserUserId,
+			};
+
+			let res = await this.doZzim(dto);
+			console.log(res.data);
+			if (res.data.statusCode === 200) {
+				console.log(this.zzim);
+
+				if (this.zzim) {
+					swal("성공!", "찜을 취소 하였습니다!", "success");
+					//emit함수 + prop 카운트 1 다운
+				} else {
+					swal("성공!", "찜 하였습니다!", "success");
+					//emit함수 + prop 카운트 1 증가
+				}
+			} else {
+				swal("실패!", res.data.developerMessage, "error");
+			}
 		},
 	},
 
@@ -123,6 +146,7 @@ export default {
 		},
 	},
 	computed: {
+		...mapGetters("userStore", ["getLoginUserUserId"]),
 		numberWithCommas() {
 			return String(this.prop.cost).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		},
@@ -148,7 +172,7 @@ export default {
 }
 
 #zzim {
-	color: #f57c00;
+	color: #f50000;
 	font-size: 15px;
 	font-weight: 500;
 	text-align: center;
