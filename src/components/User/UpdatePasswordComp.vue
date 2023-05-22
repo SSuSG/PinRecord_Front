@@ -1,7 +1,7 @@
 <template>
 	<v-dialog v-model="dialog" max-width="600">
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn v-bind="attrs" v-on="on" class="ma-2" text small> 비밀번호 변경 </v-btn>
+			<button id="changePWButton" v-bind="attrs" v-on="on" class="ma-2" text small>비밀번호 변경</button>
 		</template>
 
 		<v-stepper v-model="stage" vertical id="stepper">
@@ -103,5 +103,16 @@ export default {
 <style scoped>
 #stepper {
 	font-family: "Noto Sans KR", sans-serif;
+}
+#changePWButton {
+	/* background-color: #3182f6; */
+	color: #454545;
+	font-weight: 600;
+	border-radius: 10px;
+	padding: 5px 10px;
+	transition: 0.2s ease-in-out;
+}
+#changePWButton:hover {
+	background-color: Gainsboro;
 }
 </style>

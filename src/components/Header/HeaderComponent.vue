@@ -17,7 +17,7 @@
 				<logout-comp></logout-comp>
 			</ButtonLi>
 			<ButtonLi>
-				<v-btn @click="toMyPage" darks icon class="ma-2" text small> 마이페이지 </v-btn>
+				<button id="myPageButton" @click="toMyPage" darks icon class="ma-2" text small>마이페이지</button>
 			</ButtonLi>
 		</ButtonList>
 	</StyledHeader>
@@ -53,4 +53,16 @@ export default {
 	},
 };
 </script>
-<style></style>
+<style scoped>
+#myPageButton {
+	/* background-color: #3182f6; */
+	color: #454545;
+	font-weight: 600;
+	border-radius: 10px;
+	padding: 5px 10px;
+	transition: 0.2s ease-in-out;
+}
+#myPageButton:hover {
+	background-color: Gainsboro;
+}
+</style>

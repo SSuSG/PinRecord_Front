@@ -5,27 +5,22 @@ export const StyledHeader = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	background: white;
-	/* background-color: aliceblue; */
 	box-shadow: 0px 1px 1px 1px rgba(0, 0, 0, 0.2);
-	font-size: 1em;
-	padding: 0.25em 1em;
+	font-size: 14px;
+	padding: 20px 50px;
 	width: 100vw;
 	height: 70px;
 	position: fixed;
 	top: 0;
 	z-index: 99;
-	/* background-color: red; */
 `;
 
-export const ButtonList = styled.ul`
-	list-style: none;
+export const ButtonList = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
-export const ButtonLi = styled.li`
-	float: left;
-	margin-left: 5px;
-	padding: 8px 10px;
-	/* background-color: royalblue; */
-	color: white;
+export const ButtonLi = styled.div`
 	border-radius: 10px;
-	font-weight: 400;
+	font-weight: 500;
 `;

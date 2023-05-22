@@ -1,10 +1,10 @@
 <template>
 	<v-dialog v-model="dialog" persistent max-width="600">
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn v-bind="attrs" v-on="on" icon darks>
+			<button id="loginButton" v-bind="attrs" v-on="on" icon darks>
 				<!-- <v-icon> mdi-account-arrow-right </v-icon> -->
 				로그인
-			</v-btn>
+			</button>
 		</template>
 
 		<v-sheet min-height="500">
@@ -128,3 +128,17 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+#loginButton {
+	/* background-color: #3182f6; */
+	color: #454545;
+	font-weight: 600;
+	border-radius: 10px;
+	padding: 5px 10px;
+	transition: 0.2s ease-in-out;
+}
+#loginButton:hover {
+	background-color: Gainsboro;
+}
+</style>

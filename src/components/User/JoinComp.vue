@@ -1,10 +1,7 @@
 <template>
 	<v-dialog v-model="dialog" max-width="600">
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn v-bind="attrs" v-on="on" icon darks>
-				<!-- <v-icon>mdi-account-plus</v-icon> -->
-				회원가입
-			</v-btn>
+			<button id="joinButton" v-bind="attrs" v-on="on" icon darks>회원가입</button>
 		</template>
 
 		<v-stepper v-model="stage" vertical id="stepper">
@@ -320,5 +317,17 @@ export default {
 <style>
 #stepper {
 	font-family: "Noto Sans KR", sans-serif;
+}
+
+#joinButton {
+	/* background-color: #3182f6; */
+	color: #454545;
+	font-weight: 600;
+	border-radius: 10px;
+	padding: 5px 10px;
+	transition: 0.2s ease-in-out;
+}
+#joinButton:hover {
+	background-color: Gainsboro;
 }
 </style>
