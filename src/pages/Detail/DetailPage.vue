@@ -30,11 +30,9 @@ export default {
 	},
 
 	async mounted() {
-		this.$nextTick(async function () {
-			this.postId = this.$route.params.postId;
-			const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
-			this.isUserZzim(this.getDetailData.travelId, this.getLoginUserUserId);
-		});
+		this.postId = this.$route.params.postId;
+		const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
+		this.isUserZzim(this.getDetailData.travelId, this.getLoginUserUserId);
 	},
 
 	methods: {
@@ -67,11 +65,7 @@ export default {
 		...mapGetters("detailStore", ["getDetailPinList"]),
 		...mapGetters("userStore", ["getLoginUser"]),
 	},
-	watch: {
-		getDetailData() {
-			// console.log("parent", { ...this.getDetailData.commentList });
-		},
-	},
+	watch: {},
 };
 </script>
 

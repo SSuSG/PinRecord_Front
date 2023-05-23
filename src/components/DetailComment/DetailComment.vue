@@ -108,9 +108,10 @@ export default {
 				icon: "warning",
 				buttons: true,
 				dangerMode: true,
-			}).then((willDelete) => {
+			}).then(async (willDelete) => {
 				if (willDelete) {
-					const response = this.$store.dispatch("detailStore/deleteComment", commentId);
+					const response = await this.$store.dispatch("detailStore/deleteComment", commentId);
+					console.log(response);
 					this.$store.dispatch("detailStore/getCommentList", this.postId);
 				}
 			});
@@ -145,6 +146,7 @@ export default {
 			this.editCommentId = null;
 		},
 	},
+	mounted() {},
 	watch: {
 		prop() {
 			console.log("prop 변함", this.prop);
