@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
+/* @font-face {
 	font-family: "SUITE-Regular";
 	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
 	font-weight: 400;
@@ -80,7 +80,7 @@ export default {
 }
 * {
 	font-family: "SUITE-Regular";
-}
+} */
 
 .mention-title {
 	font-size: 30px;

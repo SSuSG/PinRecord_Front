@@ -71,7 +71,7 @@ export default {
 				map: this.map,
 				position: position,
 				clickable: true,
-				image: normalImage,
+				// image: normalImage,
 			});
 
 			this.markers.push(newMarker);
