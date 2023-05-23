@@ -1,6 +1,6 @@
 <template>
 	<div id="grid_component">
-		<GridWrapper>
+		<GridWrapper v-if="travelList.length > 0">
 			<GridBox
 				v-for="travel in travelList"
 				:key="travel.travelId"
@@ -17,6 +17,17 @@
 				</OverlayInfoWrapper>
 			</GridBox>
 		</GridWrapper>
+		<v-alert
+			width="1200px"
+			id="noSearch"
+			v-if="travelList.length === 0"
+			border="right"
+			colored-border
+			type="info"
+			elevation="2"
+		>
+			검색 결과가 존재하지 않습니다.
+		</v-alert>
 	</div>
 </template>
 
@@ -71,5 +82,9 @@ export default {
 
 .show-btns {
 	color: rgba(255, 255, 255, 1) !important;
+}
+
+#noSearch {
+	margin-left: 400px;
 }
 </style>

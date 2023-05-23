@@ -18,7 +18,7 @@
 					<v-col v-for="mention in mentionList" :key="mention.mentionId" cols="12">
 						<v-card class="mx-auto" max-width="650">
 							<v-card-title class="mention-title">
-								<v-icon large left> mdi-pandora </v-icon>
+								<v-icon left> mdi-pandora </v-icon>
 								<span>PinRecord</span>
 								<v-spacer></v-spacer>
 								<v-btn @click="toTravelPage(mention.travelId)" plain>바로가기</v-btn>
@@ -83,10 +83,10 @@ export default {
 #mentionButton:hover {
 	background-color: Gainsboro;
 }
-/* .mention-title {
+.mention-title {
 	font-size: 30px;
 }
 .mention-content {
 	font-size: 22px;
-} */
+}
 </style>
