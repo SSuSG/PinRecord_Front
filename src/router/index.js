@@ -5,6 +5,7 @@ import UserPage from "@/pages/UserPage/UserPage";
 import DetailPage from "@/pages/Detail/DetailPage";
 import PostPage from "@/pages/PostPage/PostPage";
 import store from "@/store";
+import swal from "sweetalert";
 
 Vue.use(VueRouter);
 
@@ -19,7 +20,7 @@ const onlyAuthUser = async (to, from, next) => {
 		await store.dispatch("userStore/getLoginUserInfo", token);
 	}
 	if (!checkToken || checkUserInfo === null) {
-		alert("로그인이 필요한 페이지입니다..");
+		swal("주의!", "로그인 먼저 해주세요!", "warning");
 		// next({ name: "login" });
 		if (router.currentRoute.fullPath !== "/") {
 			router.push("/");

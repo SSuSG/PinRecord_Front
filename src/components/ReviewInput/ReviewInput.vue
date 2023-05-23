@@ -79,16 +79,6 @@
 				>
 					<hash-tag :isTag="isTag" :prop="data" @close="close"></hash-tag>
 				</modal-component>
-
-				<!-- <modal-component
-					v-if="showTextModal && data.id === selectedTextPin"
-					:showTextModal="showTextModal"
-					@openText="openText"
-					@closeText="closeText"
-				>
-					<v-text-area></v-text-area>>
-				</modal-component> -->
-
 				<input
 					type="file"
 					accept="image/*"
@@ -162,6 +152,7 @@ export default {
 				console.log("response:", response);
 				if (response == 200) {
 					swal("성공!", "작성에 성공 하였습니다.", "success");
+					this.$router.push("/");
 				} else {
 					swal("실패!", "작성에 실패 하였습니다.", "error");
 				}

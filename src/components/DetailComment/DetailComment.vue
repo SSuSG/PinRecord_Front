@@ -35,6 +35,7 @@
 				</CommentWrapper>
 			</CommentListWrapper>
 		</div>
+		<!-- <comment-comp :commentList="prop" /> -->
 		<CommentInputWrapper>
 			<CommentInput v-model="comment.content" @keyup.enter="onSubmit" />
 			<SubmitButton @click="onSubmit">댓글 작성</SubmitButton>
@@ -54,6 +55,7 @@ import {
 	DeleteButton,
 	EditInput,
 } from "./style";
+import CommentComp from "../DetailTravel/CommentComp.vue";
 export default {
 	name: "DetailComment",
 	data() {
@@ -82,6 +84,7 @@ export default {
 		EditButton,
 		DeleteButton,
 		EditInput,
+		// CommentComp,
 	},
 	methods: {
 		async onSubmit() {

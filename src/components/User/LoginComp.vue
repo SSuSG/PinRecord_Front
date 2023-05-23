@@ -9,7 +9,7 @@
 
 		<v-sheet min-height="500">
 			<div class="text-center">
-				<img src="@/assets/ssafy.svg" class="img-fluid pa-3 my-5" alt="Logo" width="250" height="150" />
+				<img src="@/assets/PinRecord.svg" class="img-fluid pa-3 my-5" alt="Logo" width="350" height="250" />
 			</div>
 			<v-sheet class="headline mb-2 text-center"> 로그인 </v-sheet>
 
@@ -17,7 +17,6 @@
 				<v-form ref="form" lazy-validation class="pa-5 ma-5">
 					<v-text-field
 						v-model="form.loginId"
-						:counter="20"
 						:rules="valid.loginId"
 						label="아이디"
 						placeholder="6글자 이상, 영문 대/소문자 및 숫자"
@@ -34,6 +33,7 @@
 						placeholder="최소 8글자, 대/소문자 구분"
 						counter
 						required
+						@click:append="options.passwordShow = !options.passwordShow"
 						class="mb-5"
 					/>
 

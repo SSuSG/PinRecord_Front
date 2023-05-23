@@ -1,6 +1,6 @@
 <template>
 	<v-card>
-		<v-card flat>
+		<!-- <v-card flat>
 			<v-card-title>
 				<span class="text-h5">Comments</span>
 			</v-card-title>
@@ -22,7 +22,7 @@
 				</v-card-actions>
 			</v-container>
 		</v-card>
-		<v-divider class="pa-0 ma-0"></v-divider>
+		<v-divider class="pa-0 ma-0"></v-divider> -->
 		<v-card>
 			<v-container max-height="3000px">
 				<v-row dense>
@@ -32,20 +32,25 @@
 								<v-avatar color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
 									<img v-bind:src="'data:image/jpeg;base64,' + comment.image" />
 								</v-avatar>
+								<!-- <v-card-subtitle> {{ comment.nickname }} </v-card-subtitle> -->
 							</v-card>
-							<v-card flat class="mx-4 my-0 pa-0" style="position: relative" width="300px">
+							<v-card flat class="mx-4 my-0 pa-0" style="position: relative" width="600px">
 								<v-row class="pa-0 ma-0">
-									<v-text style="font-size: 20px; position: relative"> @{{ comment.nickname }} </v-text>
+									<v-text style="font-size: 20px; position: relative"> {{ comment.nickname }} </v-text>
 									<v-spacer></v-spacer>
-									<v-btn v-if="comment.nickname === getLoginUserNickname && !comment.editing" @click="toUpdate(comment)"
+									<v-btn
+										plain
+										v-if="comment.nickname === getLoginUserNickname && !comment.editing"
+										@click="toUpdate(comment)"
 										>수정</v-btn
 									>
 									<v-btn
+										plain
 										v-if="comment.nickname === getLoginUserNickname && comment.editing"
 										@click="updateComment(comment)"
 										>작성</v-btn
 									>
-									<v-btn v-if="comment.nickname === getLoginUserNickname">삭제</v-btn>
+									<v-btn plain v-if="comment.nickname === getLoginUserNickname">삭제</v-btn>
 								</v-row>
 								<v-row class="pa-0 ma-0 my-2">
 									<v-text v-if="!comment.editing" style="position: relative">
