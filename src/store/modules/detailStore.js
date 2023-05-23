@@ -14,7 +14,6 @@ const detailStore = {
 	},
 	getters: {
 		getDetailData(state) {
-			// console.log("DETAIL DATA", state.detailData);
 			return state.detailData;
 		},
 		getDetailPinList(state) {
@@ -29,9 +28,12 @@ const detailStore = {
 			state.detailData.commentList = { ...state.detailData.commentList, ...data };
 		},
 		DELETE_COMMENTLIST(state, data) {
+			console.log("delete:", data);
 			state.detailData.commentList = [...state.detailData.commentList].filter((e) => e.commentId != data);
+			console.log(state.detailData.commentList);
 		},
 		EDIT_COMMENT(state, editData) {
+			console.log(editData);
 			state.detailData.commentList = [...state.detailData.commentList].map((e) => {
 				if (e.commentId === editData.commentId) {
 					e = { ...e, content: editData.content };
@@ -58,7 +60,7 @@ const detailStore = {
 		async getCommentList({ commit, state }, postId) {
 			try {
 				const res = await getCommentList(postId);
-				commit("SET_COMMENTLIST", res.data.data);
+				await commit("SET_COMMENTLIST", res.data.data);
 				return res.data.data;
 			} catch (e) {
 				return e;
@@ -72,7 +74,7 @@ const detailStore = {
 				return e;
 			}
 		},
-		async deleeteComment({ commit, state }, commentId) {
+		async deleteComment({ commit, state }, commentId) {
 			try {
 				const res = await deleteComment(commentId);
 				commit("DELETE_COMMENTLIST", commentId);

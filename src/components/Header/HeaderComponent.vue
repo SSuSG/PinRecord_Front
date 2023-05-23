@@ -51,7 +51,7 @@ export default {
 	},
 	methods: {
 		toMyPage() {
-			this.$router.push("/user/" + this.getLoginUserUserId);
+			this.$router.push("/user/" + this.getLoginUserUserId).catch(() => {});
 		},
 		toWriteTravelPage() {
 			this.$router.push("/post");

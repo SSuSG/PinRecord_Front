@@ -118,9 +118,7 @@ export default {
 	gap: 10px;
 	transition: 0.2s ease-in-out;
 }
-#travel_info:hover {
-	/* transform: scale(1.02); */
-}
+
 #image_carousel {
 	width: 300px;
 }

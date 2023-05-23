@@ -26,6 +26,19 @@ export const CommentWrapper = styled.div`
 	padding: 10px;
 `;
 
+export const AvatarWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+`;
+
+export const CommentContent = styled.span`
+	width: 63%;
+	text-overflow: ellipsis;
+	text-align: start;
+`;
+
 export const CommentInputWrapper = styled.div`
 	padding: 5px 0;
 	display: flex;
@@ -85,6 +98,6 @@ export const EditInput = styled.input`
 	border-radius: 2px;
 	padding: 5px;
 	height: 30px;
-	width: 150px;
+	width: 400px;
 	border: 1px solid Gainsboro;
 `;
