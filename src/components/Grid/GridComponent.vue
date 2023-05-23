@@ -1,52 +1,27 @@
 <template>
-	<v-container>
-		<v-row class="ml-10 fill-height" justify="center" v-if="travelList">
-			<template v-for="(travel, i) in travelList">
-				<v-col :key="i" cols="12" md="4">
-					<v-hover v-slot="{ hover }">
-						<v-card height="300px" width="500px" :elevation="hover ? 12 : 2" :class="{ 'on-hover': hover }">
-							<v-img
-								:src="'data:image/png;base64,' + travel.pinList[0].imageList[0].image"
-								height="300px"
-								width="500px"
-							>
-								<v-card-title class="text-h6">
-									<v-row class="fill-height flex-column" justify="space-between">
-										<p class="mt-4 subheading text-left">
-											{{ travel.title }}
-										</p>
-
-										<div>
-											<p class="ma-0 text-body-1 font-weight-bold font-italic text-left">
-												{{ travel.state }} {{ travel.city }}
-											</p>
-											<p class="text-caption font-weight-medium font-italic text-left">
-												{{ travel.content }}
-											</p>
-										</div>
-
-										<div class="align-self-center">
-											<v-overlay v-if="hover" absolute :color="transparent">
-												<v-btn @click="toTravelPage(travel.travelId)">보기</v-btn>
-											</v-overlay>
-										</div>
-									</v-row>
-								</v-card-title>
-							</v-img>
-						</v-card>
-					</v-hover>
-				</v-col>
-			</template>
-		</v-row>
-		<v-row v-if="travelList.length === 0">
-			<v-col>
-				<v-alert border="right" colored-border type="info" elevation="2"> 검색 결과가 없습니다. </v-alert>
-			</v-col>
-		</v-row>
-	</v-container>
+	<div id="grid_component">
+		<GridWrapper>
+			<GridBox
+				v-for="travel in travelList"
+				:key="travel.travelId"
+				@mouseover="showOverlay(travel.travelId)"
+				@mouseleave="closeOverlay"
+			>
+				<ImgBox :src="'data:image/png;base64,' + travel.pinList[0].imageList[0].image" />
+				<OverlayInfoWrapper v-if="overlayToggle === travel.travelId" @click="toTravelPage(travel.travelId)">
+					<OverlayInfo>
+						<h2>{{ travel.title }}</h2>
+						<span>{{ travel.state }} {{ travel.city }}</span>
+						<span>{{ travel.content }} </span>
+					</OverlayInfo>
+				</OverlayInfoWrapper>
+			</GridBox>
+		</GridWrapper>
+	</div>
 </template>
 
 <script>
+import { GridWrapper, GridBox, ImgBox, OverlayInfoWrapper, OverlayInfo } from "./style";
 export default {
 	name: "GridComponent",
 	props: {
@@ -56,25 +31,34 @@ export default {
 		return {
 			overlay: false,
 			transparent: "rgba(255, 255, 255, 0)",
+			overlayToggle: null,
 		};
+	},
+	components: {
+		GridWrapper,
+		GridBox,
+		ImgBox,
+		OverlayInfoWrapper,
+		OverlayInfo,
 	},
 	methods: {
 		toTravelPage(travelId) {
 			this.$emit("to-travel-page", travelId);
+		},
+		showOverlay(travelId) {
+			this.overlayToggle = travelId;
+		},
+		closeOverlay() {
+			this.overlayToggle = null;
 		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-#content_wrapper {
+#grid_component {
 	width: 100%;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: left;
-	align-items: left;
-	background-color: rgba($color: #036358, $alpha: 0.4);
 }
 
 .v-card {
