@@ -6,6 +6,7 @@ import {
 	editComment,
 	getCommentList,
 } from "@/apis/travel";
+import lodash from "lodash";
 
 const detailStore = {
 	namespaced: true,
@@ -25,19 +26,15 @@ const detailStore = {
 			state.detailData = { ...state.detailData, ...data };
 		},
 		SET_COMMENTLIST(state, data) {
-			state.detailData.commentList = { ...state.detailData.commentList, ...data };
+			state.detailData = { ...state.detailData, commentList: [...data] };
 		},
 		DELETE_COMMENTLIST(state, data) {
-			console.log("delete:", data);
 			state.detailData.commentList = [...state.detailData.commentList].filter((e) => e.commentId != data);
-			console.log(state.detailData.commentList);
 		},
 		EDIT_COMMENT(state, editData) {
-			console.log(editData);
 			state.detailData.commentList = [...state.detailData.commentList].map((e) => {
-				if (e.commentId === editData.commentId) {
-					e = { ...e, content: editData.content };
-				}
+				if (e.commentId === editData.commentId) return { ...e, content: editData.content };
+				else return e;
 			});
 		},
 		ADD_ZZIM_CNT(state) {
@@ -86,6 +83,7 @@ const detailStore = {
 		async editComment({ commit, state }, editData) {
 			try {
 				const res = await editComment(editData);
+				console.log("수정 요청");
 				commit("EDIT_COMMENT", editData);
 				return res.data.statusCode;
 			} catch (e) {
