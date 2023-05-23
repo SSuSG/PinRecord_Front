@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="dialog" max-width="800">
+	<v-dialog v-model="dialog" max-width="800" v-if="mentionList">
 		<template v-slot:activator="{ on, attrs }">
 			<button id="mentionButton" v-bind="attrs" v-on="on" icon darks>
 				<!-- <v-icon>mdi-account-plus</v-icon> -->

@@ -182,7 +182,6 @@ export default {
 .info_wrapper {
 	padding: 5px;
 	display: flex;
-	/* flex-direction: column; */
 	gap: 15px;
 	background-color: white;
 	border-radius: 5px;

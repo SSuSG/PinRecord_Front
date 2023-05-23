@@ -1,17 +1,16 @@
 <template>
 	<div>
 		<div id="detail_comment">
-			<CommentListWrapper>
+			<CommentListWrapper v-if="prop">
 				<CommentWrapper v-for="item in prop" :key="item.commentId">
-					<div>
-						<v-avatar v-if="item.image" color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
-							<img v-bind:src="'data:image/jpeg;base64,' + item.image" />
+					<AvatarWrapper>
+						<v-avatar v-if="item.image" color="grey" size="50px" style="position: relative">
+							<img v-if="item.image" v-bind:src="'data:image/jpeg;base64,' + item.image" />
+							<img v-else src="@/assets/default.png" />
 						</v-avatar>
-						<v-avatar v-else color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
-							<img src="@/assets/default.png" />
-						</v-avatar>
-						<span v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} 재밌어보여요!!! </span>
-					</div>
+						<span style="font-size: 15px">{{ item.nickname }}</span>
+					</AvatarWrapper>
+					<CommentContent v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} </CommentContent>
 					<div v-if="!isEdit || editCommentId !== item.commentId">
 						<span
 							v-if="item.userId === loginUser.userId"
@@ -35,7 +34,6 @@
 				</CommentWrapper>
 			</CommentListWrapper>
 		</div>
-		<!-- <comment-comp :commentList="prop" /> -->
 		<CommentInputWrapper>
 			<CommentInput v-model="comment.content" @keyup.enter="onSubmit" />
 			<SubmitButton @click="onSubmit">댓글 작성</SubmitButton>
@@ -54,8 +52,10 @@ import {
 	EditButton,
 	DeleteButton,
 	EditInput,
+	AvatarWrapper,
+	CommentContent,
 } from "./style";
-import CommentComp from "../DetailTravel/CommentComp.vue";
+
 export default {
 	name: "DetailComment",
 	data() {
@@ -84,7 +84,8 @@ export default {
 		EditButton,
 		DeleteButton,
 		EditInput,
-		// CommentComp,
+		AvatarWrapper,
+		CommentContent,
 	},
 	methods: {
 		async onSubmit() {
@@ -97,7 +98,6 @@ export default {
 				travelId: this.postId,
 				userId: this.loginUser.userId,
 			};
-
 			const response = await this.$store.dispatch("detailStore/postComment", newComment);
 			this.comment.content = "";
 			await this.$store.dispatch("detailStore/getCommentList", this.postId);
@@ -110,17 +110,10 @@ export default {
 				dangerMode: true,
 			}).then((willDelete) => {
 				if (willDelete) {
-					const response = this.$store.dispatch("detailStore/deleeteComment", commentId);
-					this.$store.dispatch("detailStore/getDetail", this.postId);
+					const response = this.$store.dispatch("detailStore/deleteComment", commentId);
+					this.$store.dispatch("detailStore/getCommentList", this.postId);
 				}
 			});
-
-			// if (confirm("댓글을 삭제하겠습니까?")) {
-			// 	const response = await this.$store.dispatch("detailStore/deleeteComment", commentId);
-			// 	await this.$store.dispatch("detailStore/getDetail", this.postId);
-			// } else {
-			// 	return;
-			// }
 		},
 		toggleIsEdit(commentId) {
 			this.isEdit = !this.isEdit;
@@ -133,19 +126,13 @@ export default {
 				icon: "warning",
 				buttons: true,
 				dangerMode: true,
-			}).then((willDelete) => {
+			}).then(async (willDelete) => {
 				if (willDelete) {
-					const response = this.$store.dispatch("detailStore/editComment", editData);
-					this.$store.dispatch("detailStore/getDetail", this.postId);
+					this.$store.dispatch("detailStore/editComment", editData);
+					const response = await this.$store.dispatch("detailStore/getCommentList", this.postId);
 				}
 			});
 
-			// if (confirm("댓글을 수정하겠습니까?")) {
-			// 	const response = await this.$store.dispatch("detailStore/editComment", editData);
-			// 	await this.$store.dispatch("detailStore/getDetail", this.postId);
-			// } else {
-			// 	return;
-			// }
 			this.toggleIsEdit(commentId);
 			this.editContent = "";
 			this.editCommentId = null;
@@ -156,6 +143,11 @@ export default {
 		cancelEdit() {
 			this.isEdit = !this.isEdit;
 			this.editCommentId = null;
+		},
+	},
+	watch: {
+		prop() {
+			console.log("prop 변함", this.prop);
 		},
 	},
 };

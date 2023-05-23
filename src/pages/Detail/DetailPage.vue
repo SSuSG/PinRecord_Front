@@ -4,7 +4,6 @@
 			<detail-travel :prop="getDetailData" :zzim="zzim" @cancel-zzim="cancelZzim" @do-zzim="doZzim" />
 			<hr />
 			<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
-			<!-- <comment-comp :commentList="getDetailData.commentList" /> -->
 		</div>
 		<detail-kakao-map :pinList="getDetailPinList" />
 	</div>
@@ -15,7 +14,6 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import DetailKakaoMap from "@/components/DetailKakaoMap/DetailKakaoMap.vue";
 import DetailTravel from "@/components/DetailTravel/DetailTravel.vue";
 import DetailComment from "@/components/DetailComment/DetailComment.vue";
-// import CommentComp from "@/components/DetailTravel/CommentComp.vue";
 
 export default {
 	name: "DetailPage",
@@ -23,21 +21,20 @@ export default {
 		DetailKakaoMap,
 		DetailTravel,
 		DetailComment,
-		// CommentComp,
 	},
 	data() {
 		return {
-			postId: String,
-			zzim: Boolean,
+			postId: null,
+			zzim: null,
 		};
 	},
 
 	async mounted() {
-		this.postId = this.$route.params.postId;
-		const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
-		// if (response !== 200) alert("불러오기 실패");
-
-		this.isUserZzim(this.getDetailData.travelId, this.getLoginUserUserId);
+		this.$nextTick(async function () {
+			this.postId = this.$route.params.postId;
+			const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
+			this.isUserZzim(this.getDetailData.travelId, this.getLoginUserUserId);
+		});
 	},
 
 	methods: {
@@ -70,6 +67,11 @@ export default {
 		...mapGetters("detailStore", ["getDetailPinList"]),
 		...mapGetters("userStore", ["getLoginUser"]),
 	},
+	watch: {
+		getDetailData() {
+			// console.log("parent", { ...this.getDetailData.commentList });
+		},
+	},
 };
 </script>
 
@@ -90,5 +92,6 @@ export default {
 	gap: 18px;
 	background-color: whitesmoke;
 	z-index: 2;
+	min-width: 650px;
 }
 </style>

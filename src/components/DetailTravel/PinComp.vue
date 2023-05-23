@@ -1,5 +1,5 @@
 <template>
-	<v-dialog width="700px" v-model="pinViewDialog">
+	<v-dialog width="700px" v-model="pinViewDialog" v-if="pin">
 		<v-card class="mx-auto" max-width="900">
 			<v-carousel hide-delimiters>
 				<v-carousel-item
