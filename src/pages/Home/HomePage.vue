@@ -158,6 +158,7 @@ export default {
 <style scoped lang="css">
 #home_page {
 	padding-top: 70px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
