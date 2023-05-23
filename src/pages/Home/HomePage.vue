@@ -13,10 +13,10 @@
 				solo
 				@change="setSelectedSi"
 				v-model="selectedSi"
-				flat="true"
-				outlined="true"
+				:flat="true"
+				:outlined="true"
 				loader-height="1"
-				dense="true"
+				:dense="true"
 			></v-select>
 			<v-select
 				v-if="isPlaceSearch"
@@ -29,9 +29,9 @@
 				@change="setSelectedGu"
 				v-model="selectedGu"
 				no-data-text="시/도를 입력해주세요."
-				flat="true"
-				outlined="true"
-				dense="true"
+				:flat="true"
+				:outlined="true"
+				:dense="true"
 			></v-select>
 
 			<button id="searchButton" v-if="isPlaceSearch" @click="searchTravelByCity()">

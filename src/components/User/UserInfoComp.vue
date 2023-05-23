@@ -1,38 +1,40 @@
 <template>
-	<v-card class="flex-column" outlined>
-		<v-sheet color="white" elevation="1" class="d-flex flex-column" width="100%">
-			<v-row justify="center" class="mt-4">
-				<v-avatar size="130" style="position: relative">
-					<v-img v-if="user.urlProfileImage" :src="'data:image/png;base64,' + user.urlProfileImage"></v-img>
-					<v-img v-else src="@/assets/default.png"></v-img>
-					<upload-image-comp
-						:userId="user.userId"
-						v-if="user.nickname === getLoginUserNickname"
-						@update-profile-image="updateProfileimage"
-						class="overlay-icon"
-					/>
-				</v-avatar>
-			</v-row>
+	<div id="user_info_comp">
+		<div id="user_info_wrapper">
+			<v-avatar size="180" style="position: relative">
+				<v-img v-if="user.urlProfileImage" :src="'data:image/png;base64,' + user.urlProfileImage"></v-img>
+				<v-img v-else src="@/assets/default.png"></v-img>
+				<upload-image-comp
+					:userId="user.userId"
+					v-if="user.nickname === getLoginUserNickname"
+					@update-profile-image="updateProfileimage"
+					class="overlay-icon"
+				/>
+			</v-avatar>
+		</div>
 
-			<v-row justify="center">
-				<v-card-text>{{ user.nickname }}</v-card-text>
-			</v-row>
-
-			<v-row justify="center" class="pb-2">
-				<follower-comp :followerList="followerList" />
-				<following-comp :followingList="followingList" />
-			</v-row>
-
-			<v-row justify="center" class="pb-6">
+		<div id="follow_wrapper">
+			<h2>{{ user.nickname }}</h2>
+			<div id="follow_box">
+				<div>
+					<h3>{{ user.followerCnt }}</h3>
+					<follower-comp :followerList="followerList" />
+				</div>
+				<div>
+					<h3>{{ user.followingCnt }}</h3>
+					<following-comp :followingList="followingList" />
+				</div>
+			</div>
+			<div id="follow_box" v-if="getLoginUserUserId !== user.userId">
 				<v-btn text @click="doFollow(user.userId)">
 					<v-icon>mdi-account-plus</v-icon>
 				</v-btn>
 				<v-btn text @click="doCancelFollow(user.userId)">
 					<v-icon>mdi-account-remove</v-icon>
 				</v-btn>
-			</v-row>
-		</v-sheet>
-	</v-card>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -137,5 +139,32 @@ export default {
 	top: 90%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+#user_info_comp {
+	height: 30%;
+	display: flex;
+	align-items: center;
+	border: 1px solid #acacac;
+	padding: 10px 40px;
+}
+#user_info_wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+#follow_wrapper {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 30px;
+	gap: 8px;
+}
+#follow_box {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
 }
 </style>

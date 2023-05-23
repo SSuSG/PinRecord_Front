@@ -1,21 +1,13 @@
 <template>
 	<div id="user_page">
-		<v-col cols="12" lg="4">
-			<v-row no-gutters>
-				<v-col>
-					<user-info-comp :user="user" @update-profile-base64Image="updateProfileimage" />
-				</v-col>
-			</v-row>
-			<v-row no-gutters>
-				<v-col>
-					<user-tabs-info-comp
-						:userNickname="user.nickname"
-						:travelList="writeTravelList"
-						:zzimTravelList="zzimTravelList"
-					/>
-				</v-col>
-			</v-row>
-		</v-col>
+		<div id="user_side">
+			<user-info-comp :user="user" @update-profile-base64Image="updateProfileimage" />
+			<user-tabs-info-comp
+				:userNickname="user.nickname"
+				:travelList="writeTravelList"
+				:zzimTravelList="zzimTravelList"
+			/>
+		</div>
 		<user-page-map-comp :travelList="writeTravelList" />
 	</div>
 </template>
@@ -81,5 +73,9 @@ export default {
 	flex-direction: row;
 	height: 100%;
 	padding-top: 70px; // 헤더 높이
+}
+#user_side {
+	height: 100%;
+	min-width: 650px;
 }
 </style>
