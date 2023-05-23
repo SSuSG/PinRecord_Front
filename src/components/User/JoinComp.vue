@@ -6,7 +6,7 @@
 
 		<v-stepper v-model="stage" vertical id="stepper">
 			<div class="text-center">
-				<img src="@/assets/ssafy.svg" class="img-fluid pa-3" alt="Logo" width="250" height="150" />
+				<img src="@/assets/PinRecord.svg" class="img-fluid pa-3 my-5" alt="Logo" width="350" height="250" />
 			</div>
 			<v-sheet class="headline mb-2 text-center"> 회원 가입 </v-sheet>
 
@@ -44,31 +44,31 @@
 					</v-list-item>
 
 					<v-form ref="form" lazy-validation>
-						<v-row>
-							<v-text-field
-								v-model="form.loginId"
-								ref="loginId"
-								:counter="20"
-								:rules="valid.loginId"
-								label="아이디"
-								placeholder="6글자 이상, 영문 대/소문자 및 숫자"
-								required
-								maxlength="20"
-							></v-text-field>
+						<v-text-field
+							v-model="form.loginId"
+							ref="loginId"
+							:counter="20"
+							:rules="valid.loginId"
+							label="아이디"
+							placeholder="6글자 이상, 영문 대/소문자 및 숫자"
+							required
+							append-icon="mdi-check-bold"
+							maxlength="20"
+							@click:append="doValidateLoginId"
+						></v-text-field>
 
-							<v-btn width="8" height="40" @click="doValidateLoginId()"> 중복 </v-btn>
-						</v-row>
-						<v-row>
-							<v-text-field
-								v-model="form.email"
-								ref="email"
-								:rules="valid.email"
-								label="E-mail"
-								placeholder=" "
-								required
-							></v-text-field>
-							<v-btn width="8" height="40" @click="doValidateEmail()"> 중복 </v-btn>
-						</v-row>
+						<!-- <v-btn plain width="8" height="40" @click="doValidateLoginId()"> 중복 </v-btn> -->
+						<v-text-field
+							v-model="form.email"
+							ref="email"
+							:rules="valid.email"
+							label="E-mail"
+							placeholder=" "
+							required
+							append-icon="mdi-email-check"
+							@click:append="doValidateEmail"
+						></v-text-field>
+						<!-- <v-btn plain width="8" height="40" @click="doValidateEmail()"> 중복 </v-btn> -->
 
 						<v-text-field
 							v-model="form.password"
@@ -85,6 +85,7 @@
 
 						<v-text-field
 							ref="password2"
+							v-model="password2"
 							:append-icon="options.passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
 							:rules="valid.password2"
 							:type="options.passwordShow ? 'text' : 'password'"
@@ -98,7 +99,17 @@
 				</v-card>
 
 				<v-sheet class="text-center">
-					<v-btn color="primary" @click="submit" outlined :disabled="!form1OK" class="mr-2">확인</v-btn>
+					<v-tooltip bottom>
+						<template v-slot:activator="{ on, attrs }">
+							<v-btn color="primary" v-bind="attrs" v-on="on" @click="submit" outlined :disabled="!form1OK" class="mr-2"
+								>확인</v-btn
+							>
+							<!-- <v-btn color="primary" v-bind="attrs" v-on="on"> Button </v-btn> -->
+						</template>
+						<span>아이디,이메일 중복확인을 해주세요!</span>
+					</v-tooltip>
+
+					<!-- <v-btn color="primary" @click="submit" outlined :disabled="!form1OK" class="mr-2">확인</v-btn> -->
 					<v-btn color="grey darken-1" @click="(dialog = false), (stage = 1), clear()" outlined>취소</v-btn>
 					<v-alert v-show="errorMessage" type="error" dense outlined>
 						{{ errorMessage }}
@@ -185,6 +196,8 @@ export default {
 			stage: 1,
 			counter: 7,
 			errorMessage: "",
+			idCheck: false,
+			emailCheck: false,
 			form: {
 				loginId: null,
 				password: null,
@@ -192,6 +205,7 @@ export default {
 				name: null,
 				nickname: null,
 			},
+			password2: "",
 			options: {
 				passwordShow: false,
 			},
@@ -217,7 +231,13 @@ export default {
 	computed: {
 		form1OK() {
 			let ok = false;
-			if (this.form.loginId && this.form.password && this.form.email) {
+			if (
+				this.form.loginId &&
+				this.form.password &&
+				this.form.email &&
+				this.password2 &&
+				this.form.password === this.password2
+			) {
 				ok = true;
 			}
 			return ok;
@@ -241,6 +261,10 @@ export default {
 				this.$refs.password2.validate() &&
 				this.$refs.email.validate()
 			) {
+				if (!this.idCheck || !this.emailCheck) {
+					swal("주의!", "아이디,이메일 중복확인을 진행해주세요!", "warning");
+					return;
+				}
 				this.stage = 3;
 			} else if (this.stage === 3 && this.$refs.name.validate() && this.$refs.nickname.validate()) {
 				console.log(this.form);
@@ -272,8 +296,10 @@ export default {
 
 				if (response.data.statusCode !== 200) {
 					swal("실패!", "이미 존재하는 아이디 입니다.", "error");
+					this.idCheck = false;
 				} else {
 					swal("성공!", "사용가능한 아이디 입니다.", "success");
+					this.idCheck = true;
 				}
 			} catch (error) {
 				console.log(error);
@@ -284,8 +310,10 @@ export default {
 				const response = await this.validateEmail(this.form.email);
 				if (response.data.statusCode !== 200) {
 					swal("실패!", "이미 존재하는 이메일 입니다.", "error");
+					this.emailCheck = false;
 				} else {
 					swal("성공!", "사용가능한 이메일 입니다.", "success");
+					this.emailCheck = true;
 				}
 			} catch (error) {
 				console.log(error);

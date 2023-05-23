@@ -72,6 +72,14 @@ const travelStore = {
 				else return e;
 			});
 		},
+		ADD_CONTENT_TO_PIN(state, data) {
+			const content = data.submitData;
+			const dataId = data.dataId;
+			state.travelData.pinList = [...state.travelData.pinList].map((e) => {
+				if (e.id === dataId) return { ...e, content: content };
+				else return e;
+			});
+		},
 		SET_FOLLOWER_LIST(state, data) {
 			console.log(data);
 			state.followerList = data;

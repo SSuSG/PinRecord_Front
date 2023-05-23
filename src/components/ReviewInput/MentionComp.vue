@@ -1,7 +1,7 @@
 <template>
 	<v-dialog v-model="dialog" width="500">
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn text v-bind="attrs" v-on="on"> 멘션 </v-btn>
+			<v-btn icon v-bind="attrs" v-on="on"> <v-icon> mdi-account-plus </v-icon> </v-btn>
 		</template>
 		<v-card>
 			<v-list subheader two-line>
@@ -19,7 +19,7 @@
 					</v-list-item-content>
 
 					<v-list-item-icon>
-						<v-btn @click="add(index)"> 추가 </v-btn>
+						<v-btn plain @click="add(index)"> 추가 </v-btn>
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
@@ -41,7 +41,7 @@
 					</v-list-item-content>
 
 					<v-list-item-icon>
-						<v-btn @click="remove(index)"> 삭제 </v-btn>
+						<v-btn plain @click="remove(index)"> 삭제 </v-btn>
 					</v-list-item-icon>
 				</v-list-item>
 			</v-list>
