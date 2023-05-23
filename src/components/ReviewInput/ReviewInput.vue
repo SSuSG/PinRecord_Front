@@ -68,7 +68,8 @@
 					<v-icon size="x-large" color="red darken-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
 				<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
-				<button @click="open(data.id)"># 태그입력</button>
+				<button @click="open(data.id, true)"><v-icon color="blue darken-2">mdi-tag-plus</v-icon></button>
+				<button @click="open(data.id, false)"><v-icon color="blue darken-2">mdi-text-box-plus</v-icon></button>
 				<modal-component
 					v-if="showModal && data.id === selectedPin"
 					buttonName="# Tag"
@@ -76,8 +77,18 @@
 					@open="open"
 					@close="close"
 				>
-					<hash-tag :prop="data" @close="close"></hash-tag>
+					<hash-tag :isTag="isTag" :prop="data" @close="close"></hash-tag>
 				</modal-component>
+
+				<!-- <modal-component
+					v-if="showTextModal && data.id === selectedTextPin"
+					:showTextModal="showTextModal"
+					@openText="openText"
+					@closeText="closeText"
+				>
+					<v-text-area></v-text-area>>
+				</modal-component> -->
+
 				<input
 					type="file"
 					accept="image/*"
@@ -110,12 +121,16 @@ export default {
 				cost: "",
 				content: "",
 				state: "test",
+				city: "",
 				title: "",
 				userId: 0,
 			},
 			selectedImages: [],
 			selectedPin: "",
+			selectedTextPin: "",
 			showModal: false,
+			showTextModal: false,
+			isTag: false,
 			si: [],
 			selectedSi: String,
 			gu: [],
@@ -217,13 +232,24 @@ export default {
 		close(e) {
 			this.showModal = false;
 		},
-		open(PinId) {
+		open(PinId, isTag) {
+			this.isTag = isTag;
 			this.selectedPin = PinId;
 			this.showModal = true;
 		},
 		// 태그로 데이터 전덜
 		copyData(data) {
 			return { ...data };
+		},
+
+		// 모달
+		closeText(e) {
+			this.showTextModal = false;
+		},
+		openText(PinId) {
+			console.log(PinId);
+			this.selectedTextPin = PinId;
+			this.showTextModal = true;
 		},
 
 		async setSi() {

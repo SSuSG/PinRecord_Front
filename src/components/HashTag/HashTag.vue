@@ -4,10 +4,13 @@
 		<vue-tags-input
 			placeholder=" 태그를 입력하세요."
 			v-model="tag"
+			v-if="isTag"
 			:tags="tags"
 			@tags-changed="(newTags) => (tags = newTags)"
 		/>
-		<button id="submit_button" @click="submitTags(prop)">입력완료</button>
+		<v-textarea v-else v-model="content"></v-textarea>
+		<button v-if="isTag" id="submit_button" @click="submitTags(prop)">입력완료</button>
+		<button v-if="!isTag" id="submit_button" @click="submitContent(prop)">입력완료</button>
 	</div>
 </template>
 
@@ -22,14 +25,17 @@ export default {
 		return {
 			tag: "",
 			tags: [],
+			content: "",
 		};
 	},
 	props: {
 		prop: Object,
+		isTag: Boolean,
 	},
 
 	mounted() {
 		[...this.prop.tagList].forEach((e) => this.tags.push({ text: e }));
+		this.content = this.prop.content;
 	},
 
 	methods: {
@@ -40,6 +46,13 @@ export default {
 				submitData.push(e.text);
 			});
 			this.$store.commit("travelStore/ADD_TAGS_TO_PIN", { submitData: submitData, dataId: dataId });
+			this.$emit("close");
+		},
+		submitContent(data) {
+			console.log(data);
+			const submitData = this.content;
+			const dataId = data.id;
+			this.$store.commit("travelStore/ADD_CONTENT_TO_PIN", { submitData: submitData, dataId: dataId });
 			this.$emit("close");
 		},
 	},

@@ -10,9 +10,7 @@
 						<v-avatar v-else color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
 							<img src="@/assets/default.png" />
 						</v-avatar>
-						<span v-if="!isEdit || editCommentId !== item.commentId">
-							{{ item.content }}
-						</span>
+						<span v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} 재밌어보여요!!! </span>
 					</div>
 					<div v-if="!isEdit || editCommentId !== item.commentId">
 						<span
