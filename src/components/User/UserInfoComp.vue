@@ -26,12 +26,15 @@
 				</div>
 			</div>
 			<div id="follow_box" v-if="getLoginUserUserId !== user.userId">
-				<v-btn text @click="doFollow(user.userId)">
+				<v-btn v-if="!this.isFollow" text @click="doFollow(user.userId)">
 					<v-icon>mdi-account-plus</v-icon>
 				</v-btn>
-				<v-btn text @click="doCancelFollow(user.userId)">
+				<v-btn v-if="this.isFollow" text @click="doCancelFollow(user.userId)">
 					<v-icon>mdi-account-remove</v-icon>
 				</v-btn>
+			</div>
+			<div id="follow_box" v-else>
+				<update-password-comp />
 			</div>
 		</div>
 	</div>
@@ -43,6 +46,7 @@ import FollowingComp from "./FollowingComp.vue";
 import { mapActions, mapGetters } from "vuex";
 import UploadImageComp from "./UploadImageComp.vue";
 import swal from "sweetalert";
+import UpdatePasswordComp from "./UpdatePasswordComp.vue";
 
 export default {
 	name: "UserInfoComp",
@@ -54,16 +58,24 @@ export default {
 			profileImage: null,
 			followerList: null,
 			followingList: null,
+			isFollow: false,
 		};
 	},
 	components: {
 		FollowerComp,
 		FollowingComp,
 		UploadImageComp,
+		UpdatePasswordComp,
 	},
 	methods: {
-		...mapActions("followStore", ["findFollowingByUserId", "findFollowerByUserId", "follow", "cancelFollow"]),
-		...mapActions("userStore", ["getUserProfileImage"]),
+		...mapActions("followStore", [
+			"findFollowingByUserId",
+			"findFollowerByUserId",
+			"follow",
+			"cancelFollow",
+			"followRelation",
+		]),
+		...mapActions("userStore", ["getUserProfileImage", "getLoginUserUserId"]),
 		async getUserFollowInfo(userId) {
 			let res1 = await this.findFollowerByUserId(userId);
 			this.followerList = res1.data.data;
@@ -92,6 +104,8 @@ export default {
 
 			if (res.data.statusCode === 200) {
 				swal("성공!", "팔로우 성공!", "success");
+				this.isFollow = true;
+				this.$emit("plus-follower-cnt");
 
 				var loginUser = {
 					followerUserId: this.getLoginUser.userId,
@@ -118,9 +132,24 @@ export default {
 
 			if (res.data.statusCode === 200) {
 				swal("성공!", "팔로우 취소 성공!", "success");
+				this.isFollow = false;
+				this.$emit("minus-follower-cnt");
+
 				this.followerList = this.followerList.filter((o) => o.followerUserId !== this.getLoginUserUserId);
 			} else {
 				swal("실패!", res.data.developerMessage, "error");
+			}
+		},
+		async isFollowRelation(userIdTo) {
+			var dto = {
+				userIdTo: userIdTo,
+				userIdFrom: this.getLoginUserUserId,
+			};
+			let res = await this.followRelation(dto);
+			if (res.data.statusCode === 200) {
+				this.isFollow = true;
+			} else {
+				this.isFollow = false;
 			}
 		},
 	},
@@ -129,6 +158,7 @@ export default {
 	},
 	created() {
 		this.getUserFollowInfo(this.$route.params.userId);
+		this.isFollowRelation(this.$route.params.userId);
 	},
 };
 </script>
