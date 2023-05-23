@@ -1,7 +1,12 @@
 <template>
 	<div id="user_page">
 		<div id="user_side">
-			<user-info-comp :user="user" @update-profile-base64Image="updateProfileimage" />
+			<user-info-comp
+				:user="user"
+				@update-profile-base64Image="updateProfileimage"
+				@plus-follower-cnt="plusFollowerCnt"
+				@minus-follower-cnt="minusFollowerCnt"
+			/>
 			<user-tabs-info-comp
 				:userNickname="user.nickname"
 				:travelList="writeTravelList"
@@ -62,6 +67,12 @@ export default {
 		},
 		updateProfileimage(image) {
 			this.user.urlProfileImage = image;
+		},
+		plusFollowerCnt() {
+			this.user.followerCnt = this.user.followerCnt + 1;
+		},
+		minusFollowerCnt() {
+			this.user.followerCnt = this.user.followerCnt - 1;
 		},
 	},
 };

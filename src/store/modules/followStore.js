@@ -1,4 +1,4 @@
-import { findFollowingByUserId, findFollowerByUserId, follow, cancelFollow } from "@/apis/follow";
+import { findFollowingByUserId, findFollowerByUserId, follow, cancelFollow, followRelation } from "@/apis/follow";
 
 const followStore = {
 	namespaced: true,
@@ -17,6 +17,9 @@ const followStore = {
 		},
 		cancelFollow({ commit }, followRequestDto) {
 			return cancelFollow(followRequestDto);
+		},
+		followRelation({ commit }, followRequestDto) {
+			return followRelation(followRequestDto);
 		},
 	},
 };

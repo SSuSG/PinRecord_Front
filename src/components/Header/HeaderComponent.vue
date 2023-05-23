@@ -1,6 +1,6 @@
 <template>
 	<StyledHeader>
-		<router-link to="/">홈화면</router-link>
+		<router-link to="/" id="title">PINRECORD</router-link>
 		<ButtonList v-if="isLogin === false">
 			<ButtonLi>
 				<login-comp></login-comp>
@@ -11,13 +11,13 @@
 		</ButtonList>
 		<ButtonList v-else>
 			<ButtonLi>
-				<update-password-comp />
+				<logout-comp></logout-comp>
 			</ButtonLi>
 			<ButtonLi>
 				<mention-list-comp />
 			</ButtonLi>
 			<ButtonLi>
-				<logout-comp></logout-comp>
+				<button id="myPageButton" @click="toWriteTravelPage" darks icon class="ma-2" text small>여행후기작성</button>
 			</ButtonLi>
 			<ButtonLi>
 				<button id="myPageButton" @click="toMyPage" darks icon class="ma-2" text small>마이페이지</button>
@@ -32,7 +32,6 @@ import LoginComp from "../User/LoginComp.vue";
 import JoinComp from "../User/JoinComp.vue";
 import { mapState, mapGetters } from "vuex";
 import LogoutComp from "../User/LogoutComp.vue";
-import UpdatePasswordComp from "../User/UpdatePasswordComp.vue";
 import MentionListComp from "../User/MentionListComp.vue";
 
 export default {
@@ -44,7 +43,6 @@ export default {
 		ButtonLi,
 		ButtonList,
 		LogoutComp,
-		UpdatePasswordComp,
 		MentionListComp,
 	},
 	computed: {
@@ -54,6 +52,9 @@ export default {
 	methods: {
 		toMyPage() {
 			this.$router.push("/user/" + this.getLoginUserUserId).catch(() => {});
+		},
+		toWriteTravelPage() {
+			this.$router.push("/post");
 		},
 	},
 };
@@ -69,5 +70,37 @@ export default {
 }
 #myPageButton:hover {
 	background-color: Gainsboro;
+}
+
+@font-face {
+	font-family: "LOTTERIACHAB";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2") format("woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: "TTWanjudaedunsancheB";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/TTWanjudaedunsancheB.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face {
+	font-family: "HSJiptokki-Round";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/HSJiptokki-Round.woff2") format("woff2");
+	font-weight: 800;
+	font-style: normal;
+}
+@font-face {
+	font-family: "EF_jejudoldam";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-EF@1.0/EF_jejudoldam.woff2") format("woff2");
+	font-weight: normal;
+	font-style: normal;
+}
+#title {
+	/* font-family: "TTWanjudaedunsancheB"; */
+	font-family: "LOTTERIACHAB";
+	/* font-family: "HSJiptokki-Round"; */
+	/* font-family: "EF_jejudoldam"; */
+	font-size: 32px;
 }
 </style>

@@ -20,4 +20,8 @@ function cancelFollow(followRequestDto) {
 	return API.post("/follows/delete", followRequestDto);
 }
 
-export { findFollowingByUserId, findFollowerByUserId, follow, cancelFollow };
+function followRelation(followRequestDto) {
+	return API.post("/follows/follow", followRequestDto);
+}
+
+export { findFollowingByUserId, findFollowerByUserId, follow, cancelFollow, followRelation };
