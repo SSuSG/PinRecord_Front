@@ -1,10 +1,10 @@
 <template>
 	<v-dialog v-model="dialog" max-width="800">
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn v-bind="attrs" v-on="on" icon darks>
+			<button id="mentionButton" v-bind="attrs" v-on="on" icon darks>
 				<!-- <v-icon>mdi-account-plus</v-icon> -->
-				Mention
-			</v-btn>
+				알림
+			</button>
 		</template>
 
 		<v-card max-width="800" class="mx-auto">
@@ -72,20 +72,21 @@ export default {
 </script>
 
 <style scoped>
-/* @font-face {
-	font-family: "SUITE-Regular";
-	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/SUITE-Regular.woff2") format("woff2");
-	font-weight: 400;
-	font-style: normal;
+#mentionButton {
+	/* background-color: #3182f6; */
+	color: #454545;
+	font-weight: 600;
+	border-radius: 10px;
+	padding: 5px 10px;
+	transition: 0.2s ease-in-out;
 }
-* {
-	font-family: "SUITE-Regular";
-} */
-
-.mention-title {
+#mentionButton:hover {
+	background-color: Gainsboro;
+}
+/* .mention-title {
 	font-size: 30px;
 }
 .mention-content {
 	font-size: 22px;
-}
+} */
 </style>

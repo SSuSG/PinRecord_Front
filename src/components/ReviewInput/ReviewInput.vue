@@ -1,8 +1,41 @@
 <template>
 	<div id="review_input">
-		<label>어디를 여행하셨나요?</label>
-		<TextInput type="text" v-model="travelInfo.title" ref="cost" />
-		<mention-comp />
+		<label>어디를 여행하셨나요? </label>
+
+		<div id="date_wrapper">
+			<v-select
+				id="select"
+				:items="si"
+				item-text="name"
+				item-value="code"
+				label="특별/광역시, 도"
+				solo
+				@change="setSelectedSi"
+				v-model="selectedSi"
+				flat="true"
+				outlined="true"
+				loader-height="1"
+				dense="true"
+			></v-select>
+			<v-select
+				id="select"
+				:items="gu"
+				item-text="name"
+				item-value="code"
+				label="구/동"
+				solo
+				@change="setSelectedGu"
+				v-model="selectedGu"
+				no-data-text="시/도를 입력해주세요."
+				flat="true"
+				outlined="true"
+				dense="true"
+			></v-select>
+			<!-- <TextInput type="text" placeholder="특별/광역시, 도" readonly />
+			<TextInput type="text" placeholder="시/군/구" readonly /> -->
+		</div>
+
+		<TextInput type="text" v-model="travelInfo.title" placeholder="제목" ref="cost" />
 
 		<div id="date_wrapper">
 			<div id="input_wrapper">
@@ -16,6 +49,10 @@
 			<div id="input_wrapper">
 				<label>비용</label>
 				<TextInput type="number" v-model="travelInfo.cost" ref="cost" />
+			</div>
+			<div id="input_wrapper">
+				<label>멘션</label>
+				<mention-comp />
 			</div>
 		</div>
 
@@ -56,6 +93,8 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { getSido, getGu } from "@/apis/sido";
+import swal from "sweetalert";
 import { DateInput, TextInput, CommentInput, PinContainer, PinData, PinDataInfo } from "./style";
 import ModalComponent from "@/components/Modal/ModalComponent.vue";
 import HashTag from "@/components/HashTag/HashTag.vue";
@@ -77,6 +116,10 @@ export default {
 			selectedImages: [],
 			selectedPin: "",
 			showModal: false,
+			si: [],
+			selectedSi: String,
+			gu: [],
+			selectedGu: String,
 		};
 	},
 	components: {
@@ -103,20 +146,22 @@ export default {
 				});
 				console.log("response:", response);
 				if (response == 200) {
-					alert("작성 완료");
+					swal("성공!", "작성에 성공 하였습니다.", "success");
+				} else {
+					swal("실패!", "작성에 실패 하였습니다.", "error");
 				}
 			}
 		},
 		validate() {
 			if (this.travelInfo.startDate === "" || this.travelInfo.endDate === "") {
-				alert("날짜를 입력해주세요.");
+				swal("주의!", "날짜를 입력해주세요.", "warning");
 				return false;
 			} else if (this.travelInfo.cost === "") {
-				alert("여행비용을 입력해주세요.");
+				swal("주의!", "여행비용을 입력해주세요.", "warning");
 				this.$refs.cost.$el.focus();
 				return false;
 			} else if (this.travelInfo.content === "") {
-				alert("코멘트를 입력해주세요.");
+				swal("주의!", "코멘트를 입력해주세요.", "warning");
 				this.$refs.content.$el.focus();
 				return false;
 			}
@@ -180,8 +225,50 @@ export default {
 		copyData(data) {
 			return { ...data };
 		},
+
+		async setSi() {
+			const response = await getSido();
+			this.si = [...response];
+		},
+
+		async setGu(code) {
+			const response = await getGu(code);
+			const guArray = [...response];
+			guArray.shift();
+			const newGuArray = [];
+			for (var i = 0; i < guArray.length; i++) {
+				newGuArray.push(guArray[i].name.split(" ")[1]);
+			}
+
+			this.gu = newGuArray;
+		},
+
+		setSelectedSi(e) {
+			const siCode = this.selectedSi[0] + this.selectedSi[1];
+			for (let i = 0; i < this.si.length; i++) {
+				if (this.si[i].code === this.selectedSi) {
+					this.travelInfo.state = this.si[i].name;
+					break;
+				}
+			}
+			this.setGu(siCode);
+		},
+
+		setSelectedGu(e) {
+			for (let i = 0; i < this.gu.length; i++) {
+				if (this.gu[i].code === this.selectedGu) {
+					const temp = this.gu[i].name.split(" ");
+					this.travelInfo.state = temp[0];
+					this.travelInfo.city = temp[1];
+					console.log(this.travelInfo.state + " " + this.travelInfo.city);
+					break;
+				}
+			}
+			// this.searchTravelListByTag();
+		},
 	},
 	mounted() {
+		this.setSi();
 		this.travelInfo.userId = this.getUserId();
 	},
 	computed: {

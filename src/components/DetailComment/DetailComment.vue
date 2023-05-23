@@ -4,8 +4,11 @@
 			<CommentListWrapper>
 				<CommentWrapper v-for="item in prop" :key="item.commentId">
 					<div>
-						<v-avatar color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
+						<v-avatar v-if="item.image" color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
 							<img v-bind:src="'data:image/jpeg;base64,' + item.image" />
+						</v-avatar>
+						<v-avatar v-else color="grey" size="55px" style="position: relative" class="ma-3 pa-3">
+							<img src="@/assets/default.png" />
 						</v-avatar>
 						<span v-if="!isEdit || editCommentId !== item.commentId">
 							{{ item.content }}
@@ -42,6 +45,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 import {
 	CommentListWrapper,
 	CommentWrapper,
@@ -84,7 +88,7 @@ export default {
 	methods: {
 		async onSubmit() {
 			if (this.comment.content === "") {
-				alert("댓글 내용을 입력해주세요.");
+				swal("주의!", "댓글 내용을 입력해주세요.", "warning");
 				return;
 			}
 			const newComment = {
@@ -97,13 +101,25 @@ export default {
 			this.comment.content = "";
 			await this.$store.dispatch("detailStore/getCommentList", this.postId);
 		},
-		async deleteComment(commentId) {
-			if (confirm("댓글을 삭제하겠습니까?")) {
-				const response = await this.$store.dispatch("detailStore/deleeteComment", commentId);
-				await this.$store.dispatch("detailStore/getDetail", this.postId);
-			} else {
-				return;
-			}
+		deleteComment(commentId) {
+			swal({
+				title: "댓글을 삭제하겠습니까?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					const response = this.$store.dispatch("detailStore/deleeteComment", commentId);
+					this.$store.dispatch("detailStore/getDetail", this.postId);
+				}
+			});
+
+			// if (confirm("댓글을 삭제하겠습니까?")) {
+			// 	const response = await this.$store.dispatch("detailStore/deleeteComment", commentId);
+			// 	await this.$store.dispatch("detailStore/getDetail", this.postId);
+			// } else {
+			// 	return;
+			// }
 		},
 		toggleIsEdit(commentId) {
 			this.isEdit = !this.isEdit;
@@ -111,12 +127,24 @@ export default {
 		},
 		async onEdit(commentId) {
 			const editData = { commentId: commentId, content: this.editContent };
-			if (confirm("댓글을 수정하겠습니까?")) {
-				const response = await this.$store.dispatch("detailStore/editComment", editData);
-				await this.$store.dispatch("detailStore/getDetail", this.postId);
-			} else {
-				return;
-			}
+			swal({
+				title: "댓글을 수정하겠습니까?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					const response = this.$store.dispatch("detailStore/editComment", editData);
+					this.$store.dispatch("detailStore/getDetail", this.postId);
+				}
+			});
+
+			// if (confirm("댓글을 수정하겠습니까?")) {
+			// 	const response = await this.$store.dispatch("detailStore/editComment", editData);
+			// 	await this.$store.dispatch("detailStore/getDetail", this.postId);
+			// } else {
+			// 	return;
+			// }
 			this.toggleIsEdit(commentId);
 			this.editContent = "";
 			this.editCommentId = null;
