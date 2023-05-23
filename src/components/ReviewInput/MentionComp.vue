@@ -5,7 +5,7 @@
 		</template>
 		<v-card>
 			<v-list subheader two-line>
-				<v-subheader>Follower List</v-subheader>
+				<v-subheader class="subheader">Follower List</v-subheader>
 				<v-divider></v-divider>
 				<v-list-item v-for="(follower, index) in this.getFollowerList" :key="follower.followerUserId" ripple>
 					<v-list-item-avatar>
@@ -27,7 +27,7 @@
 			<v-divider></v-divider>
 
 			<v-list subheader>
-				<v-subheader>Mention List</v-subheader>
+				<v-subheader class="subheader">Mention List</v-subheader>
 				<v-divider></v-divider>
 				<v-list-item v-for="(mentionUser, index) in this.getPreMentionList" :key="mentionUser.followerUserId" ripple>
 					<v-list-item-avatar>
@@ -80,4 +80,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.subheader {
+	font-size: 24px;
+}
+</style>
