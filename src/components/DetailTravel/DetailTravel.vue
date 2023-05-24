@@ -1,7 +1,7 @@
 <template>
 	<div id="detailTravel">
 		<div id="writer_info">
-			<div>
+			<div style="display: flex; justify-content: center; align-items: center; gap: 15px; cursor: pointer">
 				<span>
 					<v-icon size="x-large">mdi-account-search </v-icon>
 				</span>

@@ -1,12 +1,15 @@
 import {
 	getTravelListByUserId,
 	getZzimTravelListByUserId,
-	getTravelListForHomeView,
 	getTravelListByCity,
 	postTravel,
 	searchTravelByTag,
-	getTravelListForHomeViewOrderByZzim,
-	getTravelListForHomeViewOrderByCommentCnt,
+	getTravelListByTime,
+	getTravelListByComment,
+	getTravelListByZzim,
+	// getTravelListForHomeView,
+	// getTravelListForHomeViewOrderByZzim,
+	// getTravelListForHomeViewOrderByCommentCnt,
 } from "@/apis/travel";
 
 import { findFollowerByUserId } from "@/apis/follow";
@@ -112,18 +115,27 @@ const travelStore = {
 		getTravelListByUserId({ commit }, userId) {
 			return getTravelListByUserId(userId);
 		},
-
-		getTravelListForHomeView({ commit }) {
-			return getTravelListForHomeView();
+		//무한스크롤
+		getTravelListByTime({ commit }, pageNum) {
+			return getTravelListByTime(pageNum);
 		},
-
-		getTravelListForHomeViewOrderByZzim({ commit }) {
-			return getTravelListForHomeViewOrderByZzim();
+		getTravelListByComment({ commit }, pageNum) {
+			return getTravelListByComment(pageNum);
 		},
-
-		getTravelListForHomeViewOrderByCommentCnt({ commit }) {
-			return getTravelListForHomeViewOrderByCommentCnt();
+		getTravelListByZzim({ commit }, pageNum) {
+			return getTravelListByZzim(pageNum);
 		},
+		// getTravelListForHomeView({ commit }) {
+		// 	return getTravelListForHomeView();
+		// },
+
+		// getTravelListForHomeViewOrderByZzim({ commit }) {
+		// 	return getTravelListForHomeViewOrderByZzim();
+		// },
+
+		// getTravelListForHomeViewOrderByCommentCnt({ commit }) {
+		// 	return getTravelListForHomeViewOrderByCommentCnt();
+		// },
 
 		getTravelListByCity({ commit }, dto) {
 			return getTravelListByCity(dto);

@@ -3,7 +3,7 @@ import styled from "vue-styled-components";
 export const GridWrapper = styled.div`
 	margin: 0 auto;
 	width: 80%;
-	height: 100vh;
+	height: 100%;
 	padding: 20px;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 350px);

@@ -1,6 +1,6 @@
 <template>
 	<div id="grid_component">
-		<GridWrapper v-if="travelList.length > 0">
+		<GridWrapper>
 			<GridBox
 				v-for="travel in travelList"
 				:key="travel.travelId"
@@ -29,26 +29,21 @@
 				</OverlayInfoWrapper>
 			</GridBox>
 		</GridWrapper>
-		<v-alert
-			width="1200px"
-			id="noSearch"
-			v-if="travelList.length === 0"
-			border="right"
-			colored-border
-			type="info"
-			elevation="2"
-		>
-			검색 결과가 존재하지 않습니다.
-		</v-alert>
+		<infinite-loading v-if="pagination && travelList" @infinite="infiniteHandler" spinner="circles"></infinite-loading>
+		<div v-if="!pagination">
+			<h2>마지막 페이지 입니다.</h2>
+		</div>
 	</div>
 </template>
 
 <script>
+import InfiniteLoading from "vue-infinite-loading";
 import { GridWrapper, GridBox, ImgBox, OverlayInfoWrapper, OverlayInfo, CountInfo, TextInfo } from "./style";
 export default {
 	name: "GridComponent",
 	props: {
 		travelList: Array,
+		pagination: Boolean,
 	},
 	data() {
 		return {
@@ -65,6 +60,7 @@ export default {
 		OverlayInfo,
 		TextInfo,
 		CountInfo,
+		InfiniteLoading,
 	},
 	methods: {
 		toTravelPage(travelId) {
@@ -75,6 +71,12 @@ export default {
 		},
 		closeOverlay() {
 			this.overlayToggle = null;
+		},
+		infiniteHandler() {
+			// setTimeout(() => {
+			// 	this.$emit("increasePageNum");
+			// }, 200);
+			this.$emit("increasePageNum");
 		},
 	},
 };

@@ -1,5 +1,5 @@
 <template>
-	<div id="user_page">
+	<div id="user_page" v-if="user.nickname && writeTravelList">
 		<div id="user_side">
 			<user-info-comp
 				:user="user"
@@ -15,6 +15,7 @@
 		</div>
 		<user-page-map-comp :travelList="writeTravelList" />
 	</div>
+	<loading-spinner-comp v-else />
 </template>
 
 <script>
@@ -22,10 +23,11 @@ import UserInfoComp from "@/components/User/UserInfoComp.vue";
 import UserTabsInfoComp from "@/components/User/UserTabsInfoComp.vue";
 import UserPageMapComp from "@/components/User/UserPageMapComp.vue";
 import { mapActions } from "vuex";
+import LoadingSpinnerComp from "@/components/User/LoadingSpinnerComp.vue";
 
 export default {
 	name: "UserPage",
-	components: { UserInfoComp, UserTabsInfoComp, UserPageMapComp },
+	components: { UserInfoComp, UserTabsInfoComp, UserPageMapComp, LoadingSpinnerComp },
 	data() {
 		return {
 			user: {

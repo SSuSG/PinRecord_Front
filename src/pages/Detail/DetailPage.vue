@@ -1,9 +1,11 @@
 <template>
 	<div id="detail_page">
 		<div id="detail_left">
-			<detail-travel :prop="getDetailData" :zzim="zzim" @cancel-zzim="cancelZzim" @do-zzim="doZzim" />
-			<hr />
-			<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
+			<div v-if="!isLoading">
+				<detail-travel :prop="getDetailData" :zzim="zzim" @cancel-zzim="cancelZzim" @do-zzim="doZzim" />
+				<hr />
+				<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
+			</div>
 		</div>
 		<detail-kakao-map :pinList="getDetailPinList" />
 	</div>
@@ -14,6 +16,7 @@ import { mapGetters, mapActions, mapMutations } from "vuex";
 import DetailKakaoMap from "@/components/DetailKakaoMap/DetailKakaoMap.vue";
 import DetailTravel from "@/components/DetailTravel/DetailTravel.vue";
 import DetailComment from "@/components/DetailComment/DetailComment.vue";
+import LoadingSpinnerComp from "@/components/User/LoadingSpinnerComp.vue";
 
 export default {
 	name: "DetailPage",
@@ -21,11 +24,13 @@ export default {
 		DetailKakaoMap,
 		DetailTravel,
 		DetailComment,
+		// LoadingSpinnerComp,
 	},
 	data() {
 		return {
 			postId: null,
 			zzim: null,
+			isLoading: true,
 		};
 	},
 
@@ -33,6 +38,7 @@ export default {
 		this.postId = this.$route.params.postId;
 		const response = await this.$store.dispatch("detailStore/getDetail", this.postId);
 		this.isUserZzim(this.getDetailData.travelId, this.getLoginUserUserId);
+		this.isLoading = false;
 	},
 
 	methods: {

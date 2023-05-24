@@ -55,7 +55,13 @@
 				</v-menu>
 			</div>
 		</div>
-		<grid-component v-if="travelList" :travelList="travelList" @to-travel-page="toTravelPage"></grid-component>
+		<grid-component
+			v-if="travelList"
+			:travelList="travelList"
+			:pagination="pagination"
+			@to-travel-page="toTravelPage"
+			@increasePageNum="increasePageNum"
+		></grid-component>
 	</div>
 </template>
 
@@ -78,29 +84,65 @@ export default {
 			city: null,
 			tag: "",
 			tags: [],
-			travelList: null,
+			travelList: [],
 			items: [{ title: "최신순" }, { title: "찜순" }, { title: "댓글순" }],
+			pageNum: 0,
+			pagination: true,
 		};
 	},
 	components: {
 		GridComponent,
 		VueTagsInput,
 	},
-	created() {
-		this.getTravelList();
-	},
+	created() {},
 	mounted() {
+		this.getTravelList(this.pageNum);
 		this.setSi();
 	},
 
 	methods: {
 		...mapActions("travelStore", [
 			"getTravelListByCity",
-			"getTravelListForHomeView",
 			"searchTravelByTag",
-			"getTravelListForHomeViewOrderByZzim",
-			"getTravelListForHomeViewOrderByCommentCnt",
+			"getTravelListByTime",
+			"getTravelListByComment",
+			"getTravelListByZzim",
 		]),
+
+		async getTravelList(pageNum) {
+			const res = await this.getTravelListByTime(pageNum);
+			if (res.data.data.length < 4) {
+				this.pagination = false;
+			}
+			[...res.data.data].forEach((e) => {
+				this.travelList.push(e);
+			});
+		},
+
+		async newTravelList(index) {
+			this.travelList = [];
+			var res = null;
+			if (index === 0) {
+				this.pageNum = 0;
+				this.pagination = true;
+				this.getTravelList(0);
+			} else if (index === 1) {
+				res = await this.getTravelListByComment(0);
+				this.travelList = res.data.data;
+			} else if (index === 2) {
+				res = await this.getTravelListByZzim(0);
+				this.travelList = res.data.data;
+			}
+		},
+
+		increasePageNum() {
+			this.pageNum += 1;
+			this.getTravelList(this.pageNum);
+		},
+		initPageNum() {
+			this.pageNum = 0;
+		},
+
 		async setSi() {
 			const response = await getSido();
 			this.si = [...response];
@@ -133,25 +175,6 @@ export default {
 					break;
 				}
 			}
-		},
-
-		async getTravelList() {
-			const res = await this.getTravelListForHomeView();
-			this.travelList = res.data.data;
-			console.log(this.travelList);
-		},
-
-		async newTravelList(index) {
-			var res = null;
-			if (index === 0) {
-				res = await this.getTravelListForHomeView();
-			} else if (index === 1) {
-				res = await this.getTravelListForHomeViewOrderByZzim();
-			} else if (index === 2) {
-				res = await this.getTravelListForHomeViewOrderByCommentCnt();
-			}
-			console.log(res.data.data);
-			this.travelList = res.data.data;
 		},
 
 		toTravelPage(travelId) {
@@ -188,6 +211,7 @@ export default {
 #home_page {
 	padding-top: 70px;
 	width: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -209,16 +233,9 @@ export default {
 }
 
 .vue-tags-input {
-	/* background: white; */
-	/* padding: 5px; */
-	/* border-radius: 5px; */
-	/* min-width: 500px; */
 	width: 100%;
 	font-weight: 500;
 	letter-spacing: 1px;
-}
-.vue-tags-input.ti-focus .ti-input {
-	border: 1px solid #ebde6e;
 }
 #searchButton {
 	height: 40px;
