@@ -90,6 +90,9 @@ const detailStore = {
 				return e;
 			}
 		},
+		deleteTravelDetail({ commit }, travelId) {
+			return deleteTravelDetail(travelId);
+		},
 	},
 };
 

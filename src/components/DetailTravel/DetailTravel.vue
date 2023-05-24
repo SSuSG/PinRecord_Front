@@ -10,6 +10,9 @@
 				</span>
 			</div>
 			<div id="zzim">
+				<v-btn icon>
+					<v-icon v-if="prop.userId === this.getLoginUserUserId" @click="deleteTravel">mdi-delete</v-icon>
+				</v-btn>
 				<v-btn icon v-if="zzim" @click="goZzim">
 					<v-icon size="x-large" color="red">mdi-heart</v-icon>
 				</v-btn>
@@ -89,6 +92,7 @@ export default {
 	},
 	methods: {
 		...mapActions("zzimStore", ["doZzim"]),
+		...mapActions("detailStore", ["deleteTravelDetail"]),
 		toUserPage(userId) {
 			// console.log(userId);
 			this.$router.push("/user/" + userId);
@@ -101,6 +105,28 @@ export default {
 			const convertedDate = year + ". " + month + ". " + day;
 			return convertedDate;
 		},
+		deleteTravel() {
+			swal({
+				title: "게시글을 삭제하겠습니까?",
+				icon: "warging",
+				buttons: true,
+				dangerMode: true,
+			}).then(async (willDelete) => {
+				if (willDelete) {
+					let res = await this.deleteTravelDetail(this.prop.travelId);
+					console.log(res);
+					if (res.data.statusCode === 200) {
+						this.$router.push("/");
+					} else {
+						swal("실패!", res.data.developerMessage, "error");
+					}
+				}
+			});
+
+			// let res = this.deleteTravelDetail(this.prop.travelId);
+			// console.log(res);
+		},
+
 		async goZzim() {
 			var dto = {
 				travelId: this.prop.travelId,
