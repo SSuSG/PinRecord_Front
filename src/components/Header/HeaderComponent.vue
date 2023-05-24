@@ -11,6 +11,9 @@
 		</ButtonList>
 		<ButtonList v-else>
 			<ButtonLi>
+				<search-user></search-user>
+			</ButtonLi>
+			<ButtonLi>
 				<logout-comp></logout-comp>
 			</ButtonLi>
 			<ButtonLi>
@@ -33,6 +36,7 @@ import JoinComp from "../User/JoinComp.vue";
 import { mapState, mapGetters } from "vuex";
 import LogoutComp from "../User/LogoutComp.vue";
 import MentionListComp from "../User/MentionListComp.vue";
+import SearchUser from "../User/SearchUser.vue";
 
 export default {
 	name: "HeaderComponent",
@@ -44,6 +48,7 @@ export default {
 		ButtonList,
 		LogoutComp,
 		MentionListComp,
+		SearchUser,
 	},
 	computed: {
 		...mapState("userStore", ["isLogin"]),
@@ -64,7 +69,7 @@ export default {
 	/* background-color: #3182f6; */
 	color: #454545;
 	font-weight: 600;
-	border-radius: 10px;
+	border-radius: 5px;
 	padding: 5px 10px;
 	transition: 0.2s ease-in-out;
 }

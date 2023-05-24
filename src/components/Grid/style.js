@@ -7,7 +7,6 @@ export const GridWrapper = styled.div`
 	padding: 20px;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 350px);
-	grid-column-gap: 10px;
 	justify-content: center;
 	column-gap: 20px;
 `;
@@ -52,9 +51,30 @@ export const OverlayInfoWrapper = styled.div`
 `;
 
 export const OverlayInfo = styled.div`
+	height: 100%;
+	width: 100%;
+
 	padding: 20px 10px;
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	align-items: start;
 	letter-spacing: 1px;
+`;
+
+export const CountInfo = styled.div`
+	display: flex;
+	width: 100%;
+	align-items: start;
+	justify-content: end;
+	padding-right: 10px;
+	gap: 10px;
+	font-weight: bold;
+`;
+export const TextInfo = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: end;
+	gap: 2px;
 `;
