@@ -5,6 +5,8 @@ import {
 	getTravelListByCity,
 	postTravel,
 	searchTravelByTag,
+	getTravelListForHomeViewOrderByZzim,
+	getTravelListForHomeViewOrderByCommentCnt,
 } from "@/apis/travel";
 
 import { findFollowerByUserId } from "@/apis/follow";
@@ -105,6 +107,14 @@ const travelStore = {
 
 		getTravelListForHomeView({ commit }) {
 			return getTravelListForHomeView();
+		},
+
+		getTravelListForHomeViewOrderByZzim({ commit }) {
+			return getTravelListForHomeViewOrderByZzim();
+		},
+
+		getTravelListForHomeViewOrderByCommentCnt({ commit }) {
+			return getTravelListForHomeViewOrderByCommentCnt();
 		},
 
 		getTravelListByCity({ commit }, dto) {

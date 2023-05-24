@@ -11,8 +11,15 @@ function getZzimTravelListByUserId(userId) {
 }
 
 function getTravelListForHomeView() {
-	// console.log("메인화면에 보여줄 여행리스트 API");
 	return API.get("/travels");
+}
+
+function getTravelListForHomeViewOrderByZzim() {
+	return API.get("/travels/zzims");
+}
+
+function getTravelListForHomeViewOrderByCommentCnt() {
+	return API.get("/travels/comments");
 }
 
 function getTravelListByCity(dto) {
@@ -84,4 +91,6 @@ export {
 	deleteComment,
 	editComment,
 	getCommentList,
+	getTravelListForHomeViewOrderByZzim,
+	getTravelListForHomeViewOrderByCommentCnt,
 };
