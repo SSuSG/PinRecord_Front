@@ -45,7 +45,7 @@
 			<div class="text-center">
 				<v-menu offset-y>
 					<template v-slot:activator="{ on, attrs }">
-						<v-btn id="searchButton" color="#4169e1" v-bind="attrs" v-on="on">정렬</v-btn>
+						<button id="sortButton" color="#4169e1" v-bind="attrs" v-on="on">정렬</button>
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, index) in items" :key="index">
@@ -110,7 +110,6 @@ export default {
 			const response = await getGu(code);
 			const guArray = [...response];
 			guArray.shift();
-			console.log(guArray);
 			this.gu = guArray;
 		},
 
@@ -134,7 +133,6 @@ export default {
 					break;
 				}
 			}
-			// this.searchTravelListByTag();
 		},
 
 		async getTravelList() {
@@ -145,15 +143,11 @@ export default {
 
 		async newTravelList(index) {
 			var res = null;
-			console.log(index);
 			if (index === 0) {
-				console.log(index);
 				res = await this.getTravelListForHomeView();
 			} else if (index === 1) {
-				console.log(index);
 				res = await this.getTravelListForHomeViewOrderByZzim();
 			} else if (index === 2) {
-				console.log(index);
 				res = await this.getTravelListForHomeViewOrderByCommentCnt();
 			}
 			console.log(res.data.data);
@@ -161,7 +155,6 @@ export default {
 		},
 
 		toTravelPage(travelId) {
-			console.log("toTravelPage");
 			this.$router.push("/detail/" + travelId);
 		},
 
@@ -230,6 +223,15 @@ export default {
 #searchButton {
 	height: 40px;
 	border: 2px solid royalblue;
+	color: white;
+	font-weight: 600;
+	border-radius: 5px;
+	padding: 5px 20px;
+}
+#sortButton {
+	height: 40px;
+	border: 2px solid royalblue;
+	background-color: royalblue;
 	color: white;
 	font-weight: 600;
 	border-radius: 5px;

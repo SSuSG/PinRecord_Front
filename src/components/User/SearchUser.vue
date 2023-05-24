@@ -9,10 +9,10 @@
 					<div id="search_text">
 						<span> 유저 검색 </span>
 					</div>
-					<input id="search_input" type="text" v-model="nickname" />
+					<input id="search_input" type="text" v-model="nickname" @keyup.enter="searchUser(nickname)" />
 					<button id="search_button" @click="searchUser(nickname)">검색</button>
 				</div>
-				<v-list-item v-for="user in userList" :key="user.userId" ripple>
+				<div id="find-list" v-for="user in userList" :key="user.userId" ripple>
 					<v-list-item-avatar>
 						<v-img v-if="user.urlProfileImage" :src="'data:image/png;base64,' + user.urlProfileImage"></v-img>
 						<v-img v-else src="@/assets/default.png"></v-img>
@@ -23,10 +23,10 @@
 					</v-list-item-content>
 					<v-list-item-icon>
 						<v-btn plain @click="toUserPage(user.userId)">
-							<v-icon> mdi-account-details </v-icon>
+							<v-icon size="38px"> mdi-account-search </v-icon>
 						</v-btn>
 					</v-list-item-icon>
-				</v-list-item>
+				</div>
 			</div>
 		</v-card>
 	</v-dialog>
@@ -74,6 +74,7 @@ export default {
 #search_box_wrapper {
 	width: 100%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 30px;
@@ -106,6 +107,12 @@ export default {
 	border-radius: 5px;
 	padding: 5px 10px;
 	transition: 0.2s ease-in-out;
+}
+#find-list {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 5px 50px;
 }
 #search_button:hover {
 	background-color: #1364d6;

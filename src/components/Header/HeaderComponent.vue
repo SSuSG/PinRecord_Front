@@ -107,5 +107,19 @@ export default {
 	/* font-family: "HSJiptokki-Round"; */
 	/* font-family: "EF_jejudoldam"; */
 	font-size: 32px;
+	color: royalblue;
+	transition: 0.2s ease-in-out;
+}
+#title:hover {
+	/* animation: vibrate 0.05s linear infinite; */
+	color: rgb(0, 44, 177);
+}
+@keyframes vibrate {
+	from {
+		transform: rotate(10deg);
+	}
+	to {
+		transform: rotate(-10deg);
+	}
 }
 </style>
