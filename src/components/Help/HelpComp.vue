@@ -24,19 +24,15 @@
 					<v-card flat>
 						<v-card-text>
 							<p>
-								Sed aliquam ultrices mauris. Donec posuere vulputate arcu. Morbi ac felis. Etiam feugiat lorem non
-								metus. Sed a libero.
+								집에서 혼자 갤러리 열어서 여행사진 보는거 외롭지 않으셨나요? 옛날사진이 무슨사진이고 여행에서 어떤일이
+								있었는지 기억이 잘 나지 않으신가요?
 							</p>
 
-							<p>
-								Nam ipsum risus, rutrum vitae, vestibulum eu, molestie vel, lacus. Aenean tellus metus, bibendum sed,
-								posuere ac, mattis non, nunc. Aliquam lobortis. Aliquam lobortis. Suspendisse non nisl sit amet velit
-								hendrerit rutrum.
-							</p>
+							<p>저희 서비스를 이용하시면 이런 걱정을 날려버릴수 있습니다!</p>
 
 							<p class="mb-0">
-								Phasellus dolor. Fusce neque. Fusce fermentum odio nec arcu. Pellentesque libero tortor, tincidunt et,
-								tincidunt eget, semper nec, quam. Phasellus blandit leo ut odio.
+								방문했던 장소를 실제 지도에 핀을찍고 사진을 남기고 추억을 남기세요! 작성한 추억을 같이 공유하고싶은
+								친구들과 공유할 수 있습니다!
 							</p>
 						</v-card-text>
 					</v-card>
