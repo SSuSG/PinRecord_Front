@@ -57,7 +57,7 @@
 		</div>
 
 		<label>여행은 어떠셨나요?</label>
-		<CommentInput type="text" v-model="travelInfo.content" ref="content" />
+		<CommentInput type="text" placeholder="여행후기" v-model="travelInfo.content" ref="content" />
 		<button @click="onSubmit()">작성하기</button>
 
 		<PinContainer ref="pinScroll">

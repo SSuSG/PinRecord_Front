@@ -42,6 +42,18 @@
 			<button id="searchButton" v-if="!isPlaceSearch" @click="searchTravelListByTag()">
 				<v-icon color="#4169e1">mdi-tag-search-outline </v-icon>
 			</button>
+			<div class="text-center">
+				<v-menu offset-y>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn id="searchButton" color="#4169e1" v-bind="attrs" v-on="on">정렬</v-btn>
+					</template>
+					<v-list>
+						<v-list-item v-for="(item, index) in items" :key="index">
+							<v-list-item-title @click="newTravelList(index)">{{ item.title }}</v-list-item-title>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+			</div>
 		</div>
 		<grid-component v-if="travelList" :travelList="travelList" @to-travel-page="toTravelPage"></grid-component>
 	</div>
@@ -67,6 +79,7 @@ export default {
 			tag: "",
 			tags: [],
 			travelList: null,
+			items: [{ title: "최신순" }, { title: "찜순" }, { title: "댓글순" }],
 		};
 	},
 	components: {
@@ -81,7 +94,13 @@ export default {
 	},
 
 	methods: {
-		...mapActions("travelStore", ["getTravelListByCity", "getTravelListForHomeView", "searchTravelByTag"]),
+		...mapActions("travelStore", [
+			"getTravelListByCity",
+			"getTravelListForHomeView",
+			"searchTravelByTag",
+			"getTravelListForHomeViewOrderByZzim",
+			"getTravelListForHomeViewOrderByCommentCnt",
+		]),
 		async setSi() {
 			const response = await getSido();
 			this.si = [...response];
@@ -122,6 +141,23 @@ export default {
 			const res = await this.getTravelListForHomeView();
 			this.travelList = res.data.data;
 			console.log(this.travelList);
+		},
+
+		async newTravelList(index) {
+			var res = null;
+			console.log(index);
+			if (index === 0) {
+				console.log(index);
+				res = await this.getTravelListForHomeView();
+			} else if (index === 1) {
+				console.log(index);
+				res = await this.getTravelListForHomeViewOrderByZzim();
+			} else if (index === 2) {
+				console.log(index);
+				res = await this.getTravelListForHomeViewOrderByCommentCnt();
+			}
+			console.log(res.data.data);
+			this.travelList = res.data.data;
 		},
 
 		toTravelPage(travelId) {
@@ -165,7 +201,7 @@ export default {
 	align-items: center;
 }
 #select_container {
-	width: 920px;
+	width: 930px;
 	display: flex;
 	justify-content: center;
 	gap: 10px;
