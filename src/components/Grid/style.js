@@ -7,8 +7,10 @@ export const GridWrapper = styled.div`
 	padding: 20px;
 	display: grid;
 	grid-template-columns: repeat(auto-fill, 350px);
+	grid-template-rows: repeat(auto-fill, 300px);
 	justify-content: center;
-	column-gap: 20px;
+	grid-column-gap: 20px;
+	grid-row-gap: 25px;
 `;
 
 export const GridBox = styled.div`

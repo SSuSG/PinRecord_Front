@@ -19,8 +19,6 @@
 			</v-card-subtitle>
 
 			<v-card-actions>
-				<v-btn color="black lighten-2" text> 더보기 </v-btn>
-
 				<v-spacer></v-spacer>
 
 				<v-btn icon @click="show = !show">
@@ -37,7 +35,7 @@
 					<v-container>
 						<v-row justify="center">
 							<v-chip-group column justify="center">
-								<v-chip v-for="tag in pin.tagList" :key="tag">
+								<v-chip v-for="tag in pin.tagList" :key="tag" :ripple="false">
 									<v-card-subtitle>
 										{{ tag }}
 									</v-card-subtitle>
