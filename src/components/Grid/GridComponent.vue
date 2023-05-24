@@ -10,9 +10,21 @@
 				<ImgBox :src="'data:image/png;base64,' + travel.pinList[0].imageList[0].image" />
 				<OverlayInfoWrapper v-if="overlayToggle === travel.travelId" @click="toTravelPage(travel.travelId)">
 					<OverlayInfo>
-						<h2>{{ travel.title }}</h2>
-						<span>{{ travel.state }} {{ travel.city }}</span>
-						<span>{{ travel.content }} </span>
+						<CountInfo>
+							<div>
+								<v-icon size="large" fixed color="red lighten-0">mdi-cards-heart</v-icon>
+								<span class="ms-2" style="color: #f44336">{{ travel.zzimCnt }}</span>
+							</div>
+							<div>
+								<v-icon size="large" fixed color="blue lighten-0">mdi-comment-multiple</v-icon>
+								<span class="ms-2" style="color: #2196f3">{{ travel.commentList.length }}</span>
+							</div>
+						</CountInfo>
+						<TextInfo>
+							<h2>{{ travel.title }}</h2>
+							<span>{{ travel.state }} {{ travel.city }}</span>
+							<span>{{ travel.content }} </span>
+						</TextInfo>
 					</OverlayInfo>
 				</OverlayInfoWrapper>
 			</GridBox>
@@ -32,7 +44,7 @@
 </template>
 
 <script>
-import { GridWrapper, GridBox, ImgBox, OverlayInfoWrapper, OverlayInfo } from "./style";
+import { GridWrapper, GridBox, ImgBox, OverlayInfoWrapper, OverlayInfo, CountInfo, TextInfo } from "./style";
 export default {
 	name: "GridComponent",
 	props: {
@@ -51,6 +63,8 @@ export default {
 		ImgBox,
 		OverlayInfoWrapper,
 		OverlayInfo,
+		TextInfo,
+		CountInfo,
 	},
 	methods: {
 		toTravelPage(travelId) {
