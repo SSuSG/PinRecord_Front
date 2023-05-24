@@ -30,7 +30,6 @@
 				outlined="true"
 				dense="true"
 			></v-select>
-			<!-- <TextInput type="text" placeholder="특별/광역시, 도" readonly />
 			<TextInput type="text" placeholder="시/군/구" readonly /> -->
 		</div>
 
@@ -66,9 +65,14 @@
 					{{ data.placeName }}
 					<v-icon size="x-large" color="red darken-2" @click="removePin(data.id)">mdi-delete-forever</v-icon>
 				</PinDataInfo>
-				<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
-				<button @click="open(data.id, true)"><v-icon color="blue darken-2">mdi-tag-plus</v-icon></button>
-				<button @click="open(data.id, false)"><v-icon color="blue darken-2">mdi-text-box-plus</v-icon></button>
+				<ButtonContainer>
+					<v-icon size="x-large" color="blue darken-2" @click="doPhotoEvent(index)">mdi-camera</v-icon>
+					<button @click="open(data.id, true)"><v-icon color="blue darken-2">mdi-tag-plus</v-icon></button>
+					<button @click="open(data.id, false)"><v-icon color="blue darken-2">mdi-text-box-plus</v-icon></button>
+				</ButtonContainer>
+				<HashTagContainer>
+					<HashTagSpan v-for="(tag, index) in data.tagList" :key="index"> #{{ tag }} </HashTagSpan>
+				</HashTagContainer>
 				<modal-component
 					v-if="showModal && data.id === selectedPin"
 					buttonName="# Tag"
@@ -95,7 +99,17 @@
 import { mapGetters, mapActions } from "vuex";
 import { getSido, getGu } from "@/apis/sido";
 import swal from "sweetalert";
-import { DateInput, TextInput, CommentInput, PinContainer, PinData, PinDataInfo } from "./style";
+import {
+	DateInput,
+	TextInput,
+	CommentInput,
+	PinContainer,
+	PinData,
+	PinDataInfo,
+	ButtonContainer,
+	HashTagContainer,
+	HashTagSpan,
+} from "./style";
 import ModalComponent from "@/components/Modal/ModalComponent.vue";
 import HashTag from "@/components/HashTag/HashTag.vue";
 import MentionComp from "./MentionComp.vue";
@@ -136,6 +150,9 @@ export default {
 		HashTag,
 		ModalComponent,
 		MentionComp,
+		ButtonContainer,
+		HashTagContainer,
+		HashTagSpan,
 	},
 	created() {
 		this.findFollowerByUserId(this.$store.getters["userStore/getLoginUserUserId"]);

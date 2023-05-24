@@ -139,6 +139,7 @@ export default {
 				marker.setMap(null);
 			});
 			this.markers = [];
+			this.searchResults = [];
 		},
 		resetSearchResults() {
 			this.searchResults = [];

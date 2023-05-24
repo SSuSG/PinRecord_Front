@@ -8,7 +8,7 @@
 			:tags="tags"
 			@tags-changed="(newTags) => (tags = newTags)"
 		/>
-		<v-textarea v-else v-model="content"></v-textarea>
+		<v-textarea v-else v-model="content" :no-resize="true"></v-textarea>
 		<button v-if="isTag" id="submit_button" @click="submitTags(prop)">입력완료</button>
 		<button v-if="!isTag" id="submit_button" @click="submitContent(prop)">입력완료</button>
 	</div>
@@ -49,7 +49,6 @@ export default {
 			this.$emit("close");
 		},
 		submitContent(data) {
-			console.log(data);
 			const submitData = this.content;
 			const dataId = data.id;
 			this.$store.commit("travelStore/ADD_CONTENT_TO_PIN", { submitData: submitData, dataId: dataId });

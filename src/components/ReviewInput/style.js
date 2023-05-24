@@ -66,3 +66,21 @@ export const PinDataInfo = styled.div`
 	display: flex;
 	justify-content: space-between;
 `;
+
+export const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+`;
+export const HashTagContainer = styled.div`
+	width: 100%;
+	text-overflow: ellipsis;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+`;
+
+export const HashTagSpan = styled.span`
+	font-size: 15px;
+	color: #8a8a8a;
+`;

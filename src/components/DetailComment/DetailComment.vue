@@ -1,41 +1,36 @@
 <template>
-	<div>
-		<div id="detail_comment">
-			<CommentListWrapper v-if="prop">
-				<CommentWrapper v-for="item in prop" :key="item.commentId">
-					<AvatarWrapper>
-						<v-avatar v-if="item.image" color="grey" size="50px" style="position: relative">
-							<img v-if="item.image" v-bind:src="'data:image/jpeg;base64,' + item.image" />
-						</v-avatar>
-						<v-avatar v-else color="grey" size="50px" style="position: relative">
-							<img src="@/assets/default.png" />
-						</v-avatar>
-						<span style="font-size: 15px">{{ item.nickname }}</span>
-					</AvatarWrapper>
-					<CommentContent v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} </CommentContent>
-					<div v-if="!isEdit || editCommentId !== item.commentId">
-						<span
-							v-if="item.userId === loginUser.userId"
-							style="cursor: pointer"
-							@click="deleteComment(item.commentId)"
-						>
-							<DeleteButton>삭제</DeleteButton>
-						</span>
-						&nbsp;
-						<span v-if="item.userId === loginUser.userId" style="cursor: pointer">
-							<EditButton @click="toggleIsEdit(item.commentId)">수정</EditButton>
-						</span>
-					</div>
-					<div v-if="isEdit && editCommentId === item.commentId">
-						<EditInput type="text" :value="item.content" @input="changeComment" @keyup.enter="onEdit(item.commentId)" />
-						&nbsp;
-						<DeleteButton @click="cancelEdit">취소</DeleteButton>
-						&nbsp;
-						<EditButton @click="onEdit(item.commentId)">수정</EditButton>
-					</div>
-				</CommentWrapper>
-			</CommentListWrapper>
-		</div>
+	<div id="detail_comment">
+		<CommentListWrapper v-if="prop">
+			<CommentWrapper v-for="item in prop" :key="item.commentId">
+				<AvatarWrapper>
+					<v-avatar v-if="item.image" color="grey" size="50px" style="position: relative">
+						<img v-if="item.image" v-bind:src="'data:image/jpeg;base64,' + item.image" />
+					</v-avatar>
+					<v-avatar v-else color="grey" size="50px" style="position: relative">
+						<img src="@/assets/default.png" />
+					</v-avatar>
+					<span style="font-size: 15px">{{ item.nickname }}</span>
+				</AvatarWrapper>
+				<CommentContent v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} </CommentContent>
+				<div v-if="!isEdit || editCommentId !== item.commentId">
+					<span v-if="item.userId === loginUser.userId" style="cursor: pointer" @click="deleteComment(item.commentId)">
+						<DeleteButton>삭제</DeleteButton>
+					</span>
+					&nbsp;
+					<span v-if="item.userId === loginUser.userId" style="cursor: pointer">
+						<EditButton @click="toggleIsEdit(item.commentId)">수정</EditButton>
+					</span>
+				</div>
+				<div v-if="isEdit && editCommentId === item.commentId">
+					<EditInput type="text" :value="item.content" @input="changeComment" @keyup.enter="onEdit(item.commentId)" />
+					&nbsp;
+					<DeleteButton @click="cancelEdit">취소</DeleteButton>
+					&nbsp;
+					<EditButton @click="onEdit(item.commentId)">수정</EditButton>
+				</div>
+			</CommentWrapper>
+		</CommentListWrapper>
+		<!--  -->
 		<CommentInputWrapper>
 			<CommentInput v-model="comment.content" @keyup.enter="onSubmit" />
 			<SubmitButton @click="onSubmit">댓글 작성</SubmitButton>
@@ -169,7 +164,7 @@ export default {
 <style>
 #detail_comment {
 	min-height: 500px;
-	max-height: 50%;
+	/* max-height: 50%; */
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

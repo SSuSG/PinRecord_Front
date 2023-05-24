@@ -5,7 +5,7 @@ export const CommentListWrapper = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 5px;
-	max-height: 300px;
+	max-height: 350px;
 	overflow: auto;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
