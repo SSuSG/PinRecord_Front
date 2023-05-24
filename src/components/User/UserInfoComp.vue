@@ -91,6 +91,10 @@ export default {
 			return res;
 		},
 		async doFollow(userId) {
+			if (!this.getIsLogin) {
+				swal("실패!", "로그인 먼저 해주세요!", "error");
+			}
+
 			if (this.getLoginUserUserId === userId) {
 				swal("실패!", "자기 자신은 팔로우가 불가능 합니다!", "error");
 				return;
@@ -120,6 +124,10 @@ export default {
 			}
 		},
 		async doCancelFollow(userId) {
+			if (!this.getIsLogin) {
+				swal("실패!", "로그인 먼저 해주세요!", "error");
+			}
+
 			if (this.getLoginUserUserId === userId) {
 				swal("실패!", "자기 자신을 팔로우 취소 할 수 없습니다!", "error");
 				return;
@@ -154,7 +162,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserNickname", "getLoginUserUserId", "getLoginUser"]),
+		...mapGetters("userStore", ["getLoginUserNickname", "getLoginUserUserId", "getLoginUser", "getIsLogin"]),
 	},
 	created() {
 		this.getUserFollowInfo(this.$route.params.userId);

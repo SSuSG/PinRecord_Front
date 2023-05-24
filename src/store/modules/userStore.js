@@ -44,6 +44,9 @@ const userStore = {
 		getLoginUserLoginId(state) {
 			return state.login_user.loginId;
 		},
+		getIsLogin(state) {
+			return state.isLogin;
+		},
 		getLoginUser(state) {
 			return state.login_user;
 		},
@@ -62,6 +65,8 @@ const userStore = {
 			state.login_user.userId = "";
 			state.login_user.loginId = "";
 			state.login_user.nickname = "";
+			state.login_user.image = "";
+			state.login_user.name = "";
 		},
 		SET_IS_LOGIN: (state, isLogin) => {
 			state.isLogin = isLogin;
