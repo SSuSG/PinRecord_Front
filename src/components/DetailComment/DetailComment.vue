@@ -6,7 +6,9 @@
 					<AvatarWrapper>
 						<v-avatar v-if="item.image" color="grey" size="50px" style="position: relative">
 							<img v-if="item.image" v-bind:src="'data:image/jpeg;base64,' + item.image" />
-							<img v-else src="@/assets/default.png" />
+						</v-avatar>
+						<v-avatar v-else color="grey" size="50px" style="position: relative">
+							<img src="@/assets/default.png" />
 						</v-avatar>
 						<span style="font-size: 15px">{{ item.nickname }}</span>
 					</AvatarWrapper>
