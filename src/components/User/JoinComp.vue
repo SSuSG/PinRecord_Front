@@ -351,7 +351,7 @@ export default {
 	/* background-color: #3182f6; */
 	color: #454545;
 	font-weight: 600;
-	border-radius: 10px;
+	border-radius: 5px;
 	padding: 5px 10px;
 	transition: 0.2s ease-in-out;
 }

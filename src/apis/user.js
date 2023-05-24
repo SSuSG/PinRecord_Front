@@ -61,6 +61,9 @@ function updateProfileImage(dto) {
 	console.log("유저 프로필 이미지 변경 API");
 	return IMAGE_API.post("/users/images/" + dto.userId, dto.profileImage);
 }
+function searchUser(nickname) {
+	return API.get(`/users/search/${nickname}`);
+}
 
 // function updateProfileImage(dto) {
 // 	console.log("유저 프로필 이미지 변경 API");
@@ -103,4 +106,5 @@ export {
 	tokenRegeneration,
 	authAccount,
 	getMentionListByUserId,
+	searchUser,
 };

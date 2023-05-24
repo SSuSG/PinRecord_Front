@@ -21,6 +21,6 @@ export const ButtonList = styled.div`
 	align-items: center;
 `;
 export const ButtonLi = styled.div`
-	border-radius: 10px;
+	border-radius: 5px;
 	font-weight: 500;
 `;
