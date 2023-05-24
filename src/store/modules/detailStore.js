@@ -48,6 +48,7 @@ const detailStore = {
 		async getDetail({ commit, state }, postId) {
 			try {
 				const res = await getTravelDetail(postId);
+				console.log(res.data.data);
 				commit("SET_Detail", res.data.data);
 				return res.data.statusCode;
 			} catch (e) {

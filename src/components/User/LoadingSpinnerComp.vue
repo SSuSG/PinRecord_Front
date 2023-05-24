@@ -1,6 +1,7 @@
 <template>
 	<div class="spinner-container">
-		<div class="spinner"></div>
+		<!-- <div class="spinner"></div> -->
+		<img src="@/../public/images/spinner.gif" alt="" />
 	</div>
 </template>
 
@@ -15,7 +16,9 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 240px;
+	height: 100%;
+	width: 100%;
+	z-index: 99;
 }
 .spinner {
 	width: 50px;

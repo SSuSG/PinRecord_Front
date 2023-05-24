@@ -1,29 +1,41 @@
 import { API } from "./index";
 import { IMAGE_API } from "./index";
 function getTravelListByUserId(userId) {
-	// console.log("유저페이지의 유저가 작성한 여행후기 API");
 	return API.get("/travels/users/" + userId);
 }
 
 function getZzimTravelListByUserId(userId) {
-	// console.log("유저페이지의 유저가 찜한 여행후기 API");
 	return API.get("/travels/" + userId + "/zzims");
 }
 
+// not
 function getTravelListForHomeView() {
 	return API.get("/travels");
 }
 
+// not
 function getTravelListForHomeViewOrderByZzim() {
 	return API.get("/travels/zzims");
 }
-
+// not
 function getTravelListForHomeViewOrderByCommentCnt() {
 	return API.get("/travels/comments");
 }
 
+// 홈화면 무한스크롤 API
+function getTravelListByTime(pageNum) {
+	return API.get(`/travels/home/${pageNum}`);
+}
+// 홈화면 무한스크롤 API
+function getTravelListByComment(pageNum) {
+	return API.get(`/travels/comments/${pageNum}`);
+}
+// 홈화면 무한스크롤 API
+function getTravelListByZzim(pageNum) {
+	return API.get(`/travels/zzims/${pageNum}`);
+}
+
 function getTravelListByCity(dto) {
-	console.log("도시로 검색결과 여행리스트 API");
 	const state = dto.state;
 	const city = dto.city;
 	return API.get("/travels/location", {
@@ -43,16 +55,13 @@ function searchTravelByTag(tags) {
 }
 
 function postTravel(data) {
-	console.log("여핼 게시글 작성");
 	return API.post("/travels", data);
 }
 
 function getTravelDetail(postId) {
-	// console.log(`${postId}번 게시물 조회`);
 	return API.get(`/travels/${postId}`);
 }
 function deleteTravelDetail(postId) {
-	// console.log(`${postId}번 게시물 삭제`);
 	return API.delete(`/travels/${postId}`);
 }
 
@@ -93,4 +102,7 @@ export {
 	getCommentList,
 	getTravelListForHomeViewOrderByZzim,
 	getTravelListForHomeViewOrderByCommentCnt,
+	getTravelListByTime,
+	getTravelListByComment,
+	getTravelListByZzim,
 };
