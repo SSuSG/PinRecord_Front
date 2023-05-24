@@ -128,6 +128,7 @@ export default {
 		},
 
 		async goZzim() {
+			console.log(this.getIsLogin);
 			if (!this.getIsLogin) {
 				swal("실패!", "로그인 먼저 해주세요!", "error");
 				return;
@@ -179,7 +180,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserUserId", "isLogin"]),
+		...mapGetters("userStore", ["getLoginUserUserId", "getIsLogin"]),
 		numberWithCommas() {
 			return String(this.prop.cost).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		},

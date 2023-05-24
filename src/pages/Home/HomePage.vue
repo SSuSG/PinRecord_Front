@@ -49,7 +49,7 @@
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, index) in items" :key="index">
-							<v-list-item-title @click="newTravelList(item.id)">{{ item.title }}</v-list-item-title>
+							<v-list-item-title @click="changeSortId(item.id)">{{ item.title }}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -119,9 +119,9 @@ export default {
 			if (sortId === 0) {
 				res = await this.getTravelListByTime(pageNum);
 			} else if (sortId === 1) {
-				res = await this.getTravelListByComment(pageNum);
-			} else if (sortId === 2) {
 				res = await this.getTravelListByZzim(pageNum);
+			} else if (sortId === 2) {
+				res = await this.getTravelListByComment(pageNum);
 			}
 			if (res.data.data.length < 4) {
 				this.pagination = false;
@@ -131,7 +131,8 @@ export default {
 			});
 		},
 
-		async newTravelList(sortId) {
+		async changeSortId(sortId) {
+			if (this.sortId === sortId) return;
 			this.travelList = [];
 			this.sortId = sortId;
 		},

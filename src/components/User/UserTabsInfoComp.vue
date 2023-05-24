@@ -56,7 +56,7 @@ export default {
 	font-weight: 500;
 }
 #tab_wrapper {
-	height: 550px;
+	height: 490px;
 	overflow: auto;
 }
 #tab_wrapper::-webkit-scrollbar {
