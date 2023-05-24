@@ -94,6 +94,7 @@ export default {
 		async onSubmit() {
 			if (!this.getIsLogin) {
 				swal("실패!", "로그인 먼저 해주세요!", "error");
+				return;
 			}
 
 			if (this.comment.content === "") {

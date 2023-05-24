@@ -130,6 +130,7 @@ export default {
 		async goZzim() {
 			if (!this.getIsLogin) {
 				swal("실패!", "로그인 먼저 해주세요!", "error");
+				return;
 			}
 
 			var dto = {
