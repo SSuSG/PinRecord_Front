@@ -73,10 +73,10 @@ export default {
 			this.overlayToggle = null;
 		},
 		infiniteHandler() {
-			// setTimeout(() => {
-			// 	this.$emit("increasePageNum");
-			// }, 200);
-			this.$emit("increasePageNum");
+			setTimeout(() => {
+				this.$emit("increasePageNum");
+			}, 200);
+			// this.$emit("increasePageNum");
 		},
 	},
 };
