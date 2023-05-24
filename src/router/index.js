@@ -40,13 +40,11 @@ const routes = [
 	{
 		path: "/user/:userId",
 		name: "user",
-		beforeEnter: onlyAuthUser,
 		component: UserPage,
 	},
 	{
 		path: "/detail/:postId",
 		name: "detail",
-		beforeEnter: onlyAuthUser,
 		component: DetailPage,
 	},
 	{

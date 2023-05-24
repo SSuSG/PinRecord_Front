@@ -3,6 +3,9 @@
 		<router-link to="/" id="title">PINRECORD</router-link>
 		<ButtonList v-if="isLogin === false">
 			<ButtonLi>
+				<help-comp></help-comp>
+			</ButtonLi>
+			<ButtonLi>
 				<login-comp></login-comp>
 			</ButtonLi>
 			<ButtonLi>
@@ -10,6 +13,9 @@
 			</ButtonLi>
 		</ButtonList>
 		<ButtonList v-else>
+			<ButtonLi>
+				<help-comp></help-comp>
+			</ButtonLi>
 			<ButtonLi>
 				<search-user></search-user>
 			</ButtonLi>
@@ -37,6 +43,7 @@ import { mapState, mapGetters } from "vuex";
 import LogoutComp from "../User/LogoutComp.vue";
 import MentionListComp from "../User/MentionListComp.vue";
 import SearchUser from "../User/SearchUser.vue";
+import HelpComp from "../Help/HelpComp.vue";
 
 export default {
 	name: "HeaderComponent",
@@ -49,6 +56,7 @@ export default {
 		LogoutComp,
 		MentionListComp,
 		SearchUser,
+		HelpComp,
 	},
 	computed: {
 		...mapState("userStore", ["isLogin"]),
@@ -102,10 +110,7 @@ export default {
 	font-style: normal;
 }
 #title {
-	/* font-family: "TTWanjudaedunsancheB"; */
 	font-family: "LOTTERIACHAB";
-	/* font-family: "HSJiptokki-Round"; */
-	/* font-family: "EF_jejudoldam"; */
 	font-size: 32px;
 	color: royalblue;
 	transition: 0.2s ease-in-out;

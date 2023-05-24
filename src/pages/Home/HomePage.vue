@@ -24,7 +24,7 @@
 				:items="gu"
 				item-text="name"
 				item-value="code"
-				label="구/동"
+				label="시/군/구"
 				solo
 				@change="setSelectedGu"
 				v-model="selectedGu"
@@ -152,7 +152,12 @@ export default {
 			const response = await getGu(code);
 			const guArray = [...response];
 			guArray.shift();
-			this.gu = guArray;
+			const newGuArray = [];
+			for (var i = 0; i < guArray.length; i++) {
+				newGuArray.push(guArray[i].name.split(" ")[1]);
+			}
+
+			this.gu = newGuArray;
 		},
 
 		setSelectedSi(e) {

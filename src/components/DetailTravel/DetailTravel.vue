@@ -128,6 +128,11 @@ export default {
 		},
 
 		async goZzim() {
+			if (!this.getIsLogin) {
+				swal("실패!", "로그인 먼저 해주세요!", "error");
+				return;
+			}
+
 			var dto = {
 				travelId: this.prop.travelId,
 				userId: this.getLoginUserUserId,
@@ -174,7 +179,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserUserId"]),
+		...mapGetters("userStore", ["getLoginUserUserId", "isLogin"]),
 		numberWithCommas() {
 			return String(this.prop.cost).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		},

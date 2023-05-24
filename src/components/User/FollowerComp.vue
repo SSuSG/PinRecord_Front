@@ -20,7 +20,7 @@
 
 					<v-list-item-icon>
 						<v-btn plain @click="toUserPage(follower.followerUserId)">
-							<v-icon> mdi-account-details </v-icon>
+							<v-icon> mdi-account-search </v-icon>
 						</v-btn>
 					</v-list-item-icon>
 				</v-list-item>

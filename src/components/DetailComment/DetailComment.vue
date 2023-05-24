@@ -45,6 +45,7 @@
 
 <script>
 import swal from "sweetalert";
+import { mapGetters } from "vuex";
 import {
 	CommentListWrapper,
 	CommentWrapper,
@@ -91,6 +92,11 @@ export default {
 	},
 	methods: {
 		async onSubmit() {
+			if (!this.getIsLogin) {
+				swal("실패!", "로그인 먼저 해주세요!", "error");
+				return;
+			}
+
 			if (this.comment.content === "") {
 				swal("주의!", "댓글 내용을 입력해주세요.", "warning");
 				return;
@@ -149,6 +155,9 @@ export default {
 		},
 	},
 	mounted() {},
+	computed: {
+		...mapGetters("userStore", ["getIsLogin"]),
+	},
 	watch: {
 		prop() {
 			console.log("prop 변함", this.prop);
