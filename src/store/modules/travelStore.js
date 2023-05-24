@@ -48,23 +48,17 @@ const travelStore = {
 			state.travelData = { ...state.travelData, ...data };
 		},
 		ADD_PIN_LIST(state, data) {
-			// console.log("ADD_PIN_LIST", state.travelData.pinList);
 			state.travelData.pinList.push(data);
 		},
 		REMOVE_PIN_LIST(state, id) {
-			// console.log("REMOVE_PIN_LIST", state.travelData.pinList);
 			state.travelData.pinList = [...state.travelData.pinList].filter((e) => e.id !== id);
 		},
 		ADD_IMAGELIST_TO_PIN(state, data) {
-			// console.log("ADD_IMAGELIST_TO_PIN");
 			const { base64Images, dataId } = { ...data };
-			console.log(base64Images);
 			state.travelData.pinList = [...state.travelData.pinList].map((e) => {
 				if (e.id === dataId) return { ...e, imageList: base64Images };
 				else return e;
 			});
-			console.log(state.travelData.pinList);
-			// state.travelData.pinList = [];
 		},
 		ADD_TAGS_TO_PIN(state, data) {
 			const tagList = data.submitData;
@@ -83,9 +77,7 @@ const travelStore = {
 			});
 		},
 		SET_FOLLOWER_LIST(state, data) {
-			console.log(data);
 			state.followerList = data;
-			console.log(state.followerList);
 		},
 		ADD_USER_TO_MENTION_LIST(state, data) {
 			state.preMentionList.push(state.followerList[data]);
@@ -94,6 +86,22 @@ const travelStore = {
 		ADD_USER_TO_FOLLOWER_LIST(state, data) {
 			state.followerList.push(state.preMentionList[data]);
 			state.preMentionList.splice(data, 1);
+		},
+		INIT_DATA(state) {
+			state = {
+				travelData: {
+					city: "",
+					content: "",
+					cost: 0,
+					endDate: "",
+					mentionList: [],
+					pinList: [],
+					startDate: "",
+					userId: 0,
+				},
+				followerList: [],
+				preMentionList: [],
+			};
 		},
 	},
 	actions: {
@@ -127,16 +135,16 @@ const travelStore = {
 		},
 
 		async postTravel({ commit, state }, data) {
-			// console.log("postTravel", data);
 			commit("SET_POST_INPUT", data);
 			try {
-				for (var i = 0; i < state.preMentionList.length; i++) {
+				for (let i = 0; i < state.preMentionList.length; i++) {
 					state.travelData.mentionList.push(state.preMentionList[i].followerUserId);
 				}
-
 				const res = await postTravel(state.travelData);
+				commit("INIT_DATA");
 				return res.data.statusCode;
 			} catch (e) {
+				commit("INIT_DATA");
 				return e;
 			}
 		},

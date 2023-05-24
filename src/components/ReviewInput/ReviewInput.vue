@@ -1,7 +1,6 @@
 <template>
 	<div id="review_input">
 		<label>어디를 여행하셨나요? </label>
-
 		<div id="date_wrapper">
 			<v-select
 				id="select"
@@ -149,16 +148,19 @@ export default {
 				const response = await this.$store.dispatch("travelStore/postTravel", {
 					...this.travelInfo,
 				});
-				console.log("response:", response);
 				if (response == 200) {
 					swal("성공!", "작성에 성공 하였습니다.", "success");
-					this.$router.push("/");
+					// this.$router.push("/");
+					window.location.replace("/");
 				} else {
 					swal("실패!", "작성에 실패 하였습니다.", "error");
 				}
 			}
 		},
 		validate() {
+			const start = new Date(this.travelInfo.startDate);
+			const end = new Date(this.travelInfo.endDate);
+			const dateCheck = start <= end;
 			if (this.travelInfo.startDate === "" || this.travelInfo.endDate === "") {
 				swal("주의!", "날짜를 입력해주세요.", "warning");
 				return false;
@@ -170,6 +172,11 @@ export default {
 				swal("주의!", "코멘트를 입력해주세요.", "warning");
 				this.$refs.content.$el.focus();
 				return false;
+			} else if (!dateCheck) {
+				swal("주의!", "여행 시작일이 종료일 보다 빨라야 합니다.", "warning");
+			} else if (this.$store.getters["travelStore/getPinList"].length < 1) {
+				swal("주의!", "지도에서 위치를 입력해주세요.", "warning");
+				return false;
 			}
 			return true;
 		},
@@ -180,12 +187,9 @@ export default {
 			this.$refs.getPinList[index].click();
 		},
 		onFileChange(event, index, data) {
-			// const fileList = this.$refs.getPinList[index].files;
 			const imageList = this.$refs.getPinList[index].files;
 			const dataId = data.id;
-
 			let base64Images = [];
-
 			[...imageList].forEach((file) => {
 				const reader = new FileReader();
 				let result;
@@ -196,15 +200,7 @@ export default {
 				};
 				reader.readAsDataURL(file);
 			});
-
 			this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { base64Images, dataId });
-
-			// const imageList = new FormData();
-			// [...fileList].forEach((file) => {
-			// 	imageList.append(file.name, file);
-			// });
-
-			// this.$store.commit("travelStore/ADD_IMAGELIST_TO_PIN", { imageList, dataId });
 		},
 
 		changeStartDateFormat(event) {
