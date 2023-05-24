@@ -1,7 +1,7 @@
 <template>
 	<div id="detailTravel">
 		<div id="writer_info">
-			<div style="display: flex; justify-content: center; align-items: center; gap: 15px; cursor: pointer">
+			<div>
 				<span>
 					<v-icon size="x-large">mdi-account-search </v-icon>
 				</span>
@@ -179,7 +179,7 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters("userStore", ["getLoginUserUserId", "isLogin"]),
+		...mapGetters("userStore", ["getLoginUserUserId", "getIsLogin"]),
 		numberWithCommas() {
 			return String(this.prop.cost).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		},
