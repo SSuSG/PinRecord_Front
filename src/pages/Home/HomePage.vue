@@ -49,7 +49,7 @@
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, index) in items" :key="index">
-							<v-list-item-title @click="newTravelList(index)">{{ item.title }}</v-list-item-title>
+							<v-list-item-title @click="newTravelList(item.id)">{{ item.title }}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -85,32 +85,44 @@ export default {
 			tag: "",
 			tags: [],
 			travelList: [],
-			items: [{ title: "최신순" }, { title: "찜순" }, { title: "댓글순" }],
+			items: [
+				{ title: "최신순", id: 0 },
+				{ title: "찜순", id: 1 },
+				{ title: "댓글순", id: 2 },
+			],
 			pageNum: 0,
 			pagination: true,
+			sortId: 0,
 		};
 	},
 	components: {
 		GridComponent,
 		VueTagsInput,
 	},
-	created() {},
+	watch: {
+		sortId() {
+			this.pageNum = 0;
+			this.pagination = true;
+			console.log(this.sortId);
+			this.getTravelList(this.pageNum, this.sortId);
+		},
+	},
 	mounted() {
-		this.getTravelList(this.pageNum);
 		this.setSi();
+		this.getTravelList(this.pageNum, this.sortId);
 	},
 
 	methods: {
-		...mapActions("travelStore", [
-			"getTravelListByCity",
-			"searchTravelByTag",
-			"getTravelListByTime",
-			"getTravelListByComment",
-			"getTravelListByZzim",
-		]),
+		async getTravelList(pageNum, sortId) {
+			let res = null;
 
-		async getTravelList(pageNum) {
-			const res = await this.getTravelListByTime(pageNum);
+			if (sortId === 0) {
+				res = await this.getTravelListByTime(pageNum);
+			} else if (sortId === 1) {
+				res = await this.getTravelListByComment(pageNum);
+			} else if (sortId === 2) {
+				res = await this.getTravelListByZzim(pageNum);
+			}
 			if (res.data.data.length < 4) {
 				this.pagination = false;
 			}
@@ -119,25 +131,14 @@ export default {
 			});
 		},
 
-		async newTravelList(index) {
+		async newTravelList(sortId) {
 			this.travelList = [];
-			var res = null;
-			if (index === 0) {
-				this.pageNum = 0;
-				this.pagination = true;
-				this.getTravelList(0);
-			} else if (index === 1) {
-				res = await this.getTravelListByComment(0);
-				this.travelList = res.data.data;
-			} else if (index === 2) {
-				res = await this.getTravelListByZzim(0);
-				this.travelList = res.data.data;
-			}
+			this.sortId = sortId;
 		},
 
 		increasePageNum() {
 			this.pageNum += 1;
-			this.getTravelList(this.pageNum);
+			this.getTravelList(this.pageNum, this.sortId);
 		},
 		initPageNum() {
 			this.pageNum = 0;
@@ -208,6 +209,13 @@ export default {
 			let res = await this.searchTravelByTag(submitData);
 			this.travelList = res.data.data;
 		},
+		...mapActions("travelStore", [
+			"getTravelListByCity",
+			"searchTravelByTag",
+			"getTravelListByTime",
+			"getTravelListByComment",
+			"getTravelListByZzim",
+		]),
 	},
 };
 </script>
