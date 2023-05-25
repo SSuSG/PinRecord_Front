@@ -123,7 +123,7 @@ export default {
 			} else if (sortId === 2) {
 				res = await this.getTravelListByComment(pageNum);
 			}
-			if (res.data.data.length < 9) {
+			if (res.data.data.length < 12) {
 				this.pagination = false;
 			}
 			[...res.data.data].forEach((e) => {

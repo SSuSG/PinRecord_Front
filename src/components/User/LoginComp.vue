@@ -35,6 +35,7 @@
 						required
 						@click:append="options.passwordShow = !options.passwordShow"
 						class="mb-5"
+						@keyup.enter="doLogin"
 					/>
 
 					<v-alert v-show="errorMessage" type="error" dense outlined>
