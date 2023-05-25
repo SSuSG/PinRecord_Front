@@ -56,17 +56,19 @@
 			</div>
 		</div>
 		<grid-component
-			v-if="travelList"
+			v-if="travelList.length > 0"
 			:travelList="travelList"
 			:pagination="pagination"
 			@to-travel-page="toTravelPage"
 			@increasePageNum="increasePageNum"
 		></grid-component>
+		<LoadingSpinnerComp v-else style="padding-top: 170px" />
 	</div>
 </template>
 
 <script>
 import GridComponent from "@/components/Grid/GridComponent.vue";
+import LoadingSpinnerComp from "@/components/User/LoadingSpinnerComp.vue";
 import { getSido, getGu } from "@/apis/sido";
 import { mapActions } from "vuex";
 import VueTagsInput from "@johmun/vue-tags-input";
@@ -98,6 +100,7 @@ export default {
 	components: {
 		GridComponent,
 		VueTagsInput,
+		LoadingSpinnerComp,
 	},
 	watch: {
 		sortId() {
