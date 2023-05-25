@@ -2,35 +2,20 @@
 	<StyledHeader>
 		<router-link to="/" id="title">PINRECORD</router-link>
 		<ButtonList v-if="isLogin === false">
-			<ButtonLi>
-				<help-comp></help-comp>
-			</ButtonLi>
-			<ButtonLi>
-				<login-comp></login-comp>
-			</ButtonLi>
-			<ButtonLi>
-				<join-comp></join-comp>
-			</ButtonLi>
+			<help-comp></help-comp>
+			<login-comp></login-comp>
+			<join-comp></join-comp>
 		</ButtonList>
 		<ButtonList v-else>
-			<ButtonLi>
-				<help-comp></help-comp>
-			</ButtonLi>
-			<ButtonLi>
-				<search-user></search-user>
-			</ButtonLi>
-			<ButtonLi>
-				<logout-comp></logout-comp>
-			</ButtonLi>
-			<ButtonLi>
-				<mention-list-comp />
-			</ButtonLi>
-			<ButtonLi>
-				<button id="myPageButton" @click="toWriteTravelPage" darks icon class="ma-2" text small>여행후기작성</button>
-			</ButtonLi>
-			<ButtonLi>
-				<button id="myPageButton" @click="toMyPage" darks icon class="ma-2" text small>마이페이지</button>
-			</ButtonLi>
+			<help-comp></help-comp>
+			<search-user></search-user>
+			<logout-comp></logout-comp>
+			<mention-list-comp />
+			&nbsp;
+			<div style="display: flex">
+				<button id="myPageButton" @click="toWriteTravelPage">여행후기작성</button>
+				<button id="myPageButton" @click="toMyPage">마이페이지</button>
+			</div>
 		</ButtonList>
 	</StyledHeader>
 </template>
@@ -51,7 +36,6 @@ export default {
 		StyledHeader,
 		LoginComp,
 		JoinComp,
-		ButtonLi,
 		ButtonList,
 		LogoutComp,
 		MentionListComp,
@@ -74,15 +58,15 @@ export default {
 </script>
 <style scoped>
 #myPageButton {
-	/* background-color: #3182f6; */
-	color: #454545;
+	color: royalblue;
 	font-weight: 600;
 	border-radius: 5px;
 	padding: 5px 10px;
 	transition: 0.2s ease-in-out;
+	margin: 0px;
 }
 #myPageButton:hover {
-	background-color: Gainsboro;
+	background-color: whitesmoke;
 }
 
 @font-face {

@@ -1,11 +1,12 @@
 import styled from "vue-styled-components";
 
 export const CommentListWrapper = styled.div`
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 5px;
-	max-height: 350px;
+	max-height: 440px;
 	overflow: auto;
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
