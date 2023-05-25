@@ -11,8 +11,8 @@
 					<div id="mention" v-for="mention in mentionList" :key="mention.mentionId" cols="12">
 						<!--  -->
 						<div id="logo">
-							<v-icon left color="#4169E1"> mdi-pandora </v-icon>
-							<span style="color: royalblue; font-weight: 600; font-size: 19px">PinRecord</span>
+							<!-- <v-icon left color="#4169E1"> mdi-pandora </v-icon> -->
+							<span id="title">PinRecord</span>
 						</div>
 						<span> [{{ mention.nickname }}]님이 [{{ mention.title }}] 을(를) 공유했어요! </span>
 						<button id="linkButton" @click="toTravelPage(mention.travelId)" plain>바로가기</button>
@@ -61,6 +61,12 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+	font-family: "LOTTERIACHAB";
+	src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2") format("woff2");
+	font-weight: normal;
+	font-style: normal;
+}
 #mention_title {
 	background-color: #4169e1;
 	color: white;
@@ -96,6 +102,13 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+#title {
+	font-family: "LOTTERIACHAB";
+	font-size: 20px;
+	font-weight: 300;
+	color: royalblue;
+	transition: 0.2s ease-in-out;
 }
 #linkButton {
 	color: royalblue;

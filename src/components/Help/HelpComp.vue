@@ -8,12 +8,16 @@
 			<v-divider></v-divider>
 			<v-tabs vertical :hide-slider="true">
 				<v-tab class="text">
-					<v-icon left> mdi-target </v-icon>
-					목적&목표
+					<div style="display: flex; width: 100%">
+						<v-icon left> mdi-target </v-icon>
+						목적&목표
+					</div>
 				</v-tab>
 				<v-tab class="text">
-					<v-icon left> mdi-function </v-icon>
-					주요기능 및 서비스
+					<div style="display: flex; width: 100%">
+						<v-icon left> mdi-function </v-icon>
+						주요기능 및 서비스
+					</div>
 				</v-tab>
 
 				<v-tab-item>
