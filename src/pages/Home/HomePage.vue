@@ -123,7 +123,7 @@ export default {
 			} else if (sortId === 2) {
 				res = await this.getTravelListByComment(pageNum);
 			}
-			if (res.data.data.length < 12) {
+			if (res.data.data.length < 9) {
 				this.pagination = false;
 			}
 			[...res.data.data].forEach((e) => {
@@ -226,7 +226,7 @@ export default {
 	align-items: center;
 }
 #select_container {
-	width: 930px;
+	width: 60%;
 	display: flex;
 	justify-content: center;
 	gap: 10px;

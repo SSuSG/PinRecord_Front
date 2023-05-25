@@ -29,7 +29,11 @@
 				</OverlayInfoWrapper>
 			</GridBox>
 		</GridWrapper>
-		<infinite-loading v-if="pagination && travelList" @infinite="infiniteHandler" spinner="circles"></infinite-loading>
+		<infinite-loading
+			v-if="pagination && travelList.length > 0"
+			@infinite="infiniteHandler"
+			spinner="circles"
+		></infinite-loading>
 		<div v-if="!pagination">
 			<h2>마지막 페이지 입니다.</h2>
 		</div>
@@ -73,10 +77,10 @@ export default {
 			this.overlayToggle = null;
 		},
 		infiniteHandler() {
-			setTimeout(() => {
-				this.$emit("increasePageNum");
-			}, 1000);
-			// this.$emit("increasePageNum");
+			// setTimeout(() => {
+			// 	this.$emit("increasePageNum");
+			// }, 1000);
+			this.$emit("increasePageNum");
 		},
 	},
 };

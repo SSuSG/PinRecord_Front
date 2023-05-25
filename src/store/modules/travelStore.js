@@ -90,6 +90,7 @@ const travelStore = {
 			state.followerList.push(state.preMentionList[data]);
 			state.preMentionList.splice(data, 1);
 		},
+
 		INIT_DATA(state) {
 			state = {
 				travelData: {
