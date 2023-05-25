@@ -160,6 +160,7 @@ export default {
 			}
 
 			this.gu = newGuArray;
+			console.log(this.gu);
 		},
 
 		setSelectedSi(e) {
@@ -174,14 +175,7 @@ export default {
 		},
 
 		setSelectedGu(e) {
-			for (let i = 0; i < this.gu.length; i++) {
-				if (this.gu[i].code === this.selectedGu) {
-					const temp = this.gu[i].name.split(" ");
-					this.state = temp[0];
-					this.city = temp[1];
-					break;
-				}
-			}
+			this.city = this.selectedGu;
 		},
 
 		toTravelPage(travelId) {
@@ -225,6 +219,7 @@ export default {
 #home_page {
 	padding-top: 70px;
 	width: 100%;
+
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
