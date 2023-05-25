@@ -123,7 +123,7 @@ export default {
 			} else if (sortId === 2) {
 				res = await this.getTravelListByComment(pageNum);
 			}
-			if (res.data.data.length < 4) {
+			if (res.data.data.length < 12) {
 				this.pagination = false;
 			}
 			[...res.data.data].forEach((e) => {
@@ -225,7 +225,6 @@ export default {
 #home_page {
 	padding-top: 70px;
 	width: 100%;
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

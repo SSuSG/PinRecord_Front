@@ -75,7 +75,7 @@ export default {
 		infiniteHandler() {
 			setTimeout(() => {
 				this.$emit("increasePageNum");
-			}, 200);
+			}, 1000);
 			// this.$emit("increasePageNum");
 		},
 	},
