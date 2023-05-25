@@ -2,16 +2,21 @@
 	<div id="detail_comment">
 		<CommentListWrapper v-if="prop">
 			<CommentWrapper v-for="item in prop" :key="item.commentId">
-				<AvatarWrapper>
-					<v-avatar v-if="item.image" color="grey" size="50px" style="position: relative">
-						<img v-if="item.image" v-bind:src="'data:image/jpeg;base64,' + item.image" />
-					</v-avatar>
-					<v-avatar v-else color="grey" size="50px" style="position: relative">
-						<img src="@/assets/default.png" />
-					</v-avatar>
-					<span style="font-size: 15px">{{ item.nickname }}</span>
-				</AvatarWrapper>
-				<CommentContent v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} </CommentContent>
+				<!--  -->
+				<div style="display: flex; gap: 50px; justify-content: center; align-items: center">
+					<AvatarWrapper>
+						<v-avatar v-if="item.image" color="grey" size="50px" style="position: relative">
+							<img v-if="item.image" v-bind:src="'data:image/jpeg;base64,' + item.image" />
+						</v-avatar>
+						<v-avatar v-else color="grey" size="50px" style="position: relative">
+							<img src="@/assets/default.png" />
+						</v-avatar>
+						<span style="font-size: 15px">{{ item.nickname }}</span>
+					</AvatarWrapper>
+					<!--  -->
+					<CommentContent v-if="!isEdit || editCommentId !== item.commentId"> {{ item.content }} </CommentContent>
+				</div>
+				<!--  -->
 				<div v-if="!isEdit || editCommentId !== item.commentId">
 					<span v-if="item.userId === loginUser.userId" style="cursor: pointer" @click="deleteComment(item.commentId)">
 						<DeleteButton>삭제</DeleteButton>
