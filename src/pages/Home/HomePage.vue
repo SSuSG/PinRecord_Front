@@ -231,7 +231,7 @@ export default {
 	align-items: center;
 }
 #select_container {
-	width: 930px;
+	width: 60%;
 	display: flex;
 	justify-content: center;
 	gap: 10px;
