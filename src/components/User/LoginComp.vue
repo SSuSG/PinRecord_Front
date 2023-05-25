@@ -1,14 +1,15 @@
 <template>
 	<v-dialog v-model="dialog" persistent max-width="600">
 		<template v-slot:activator="{ on, attrs }">
-			<v-btn v-bind="attrs" v-on="on" icon darks>
-				<v-icon> mdi-account-arrow-right </v-icon>
-			</v-btn>
+			<button id="loginButton" v-bind="attrs" v-on="on" icon darks>
+				<!-- <v-icon> mdi-account-arrow-right </v-icon> -->
+				로그인
+			</button>
 		</template>
 
 		<v-sheet min-height="500">
 			<div class="text-center">
-				<img src="@/assets/ssafy.svg" class="img-fluid pa-3 my-5" alt="Logo" width="250" height="150" />
+				<img src="@/assets/PinRecord.svg" class="img-fluid pa-3 my-5" alt="Logo" width="350" height="250" />
 			</div>
 			<v-sheet class="headline mb-2 text-center"> 로그인 </v-sheet>
 
@@ -16,7 +17,6 @@
 				<v-form ref="form" lazy-validation class="pa-5 ma-5">
 					<v-text-field
 						v-model="form.loginId"
-						:counter="20"
 						:rules="valid.loginId"
 						label="아이디"
 						placeholder="6글자 이상, 영문 대/소문자 및 숫자"
@@ -33,7 +33,9 @@
 						placeholder="최소 8글자, 대/소문자 구분"
 						counter
 						required
+						@click:append="options.passwordShow = !options.passwordShow"
 						class="mb-5"
+						@keyup.enter="doLogin"
 					/>
 
 					<v-alert v-show="errorMessage" type="error" dense outlined>
@@ -50,18 +52,25 @@
 			<br />
 			<v-divider></v-divider>
 			<v-sheet>
-				<!-- <find-id></find-id> -->
+				<find-login-id-comp />
 				<v-text style="color: #9e9e9e">|</v-text>
-				<!-- <find-pw></find-pw> -->
+				<find-password-comp />
 			</v-sheet>
 		</v-sheet>
+		<auth-comp :dialogVisible="myAuthDialog" :loginId="form.loginId" @close="myAuthDialogClose" />
+		<first-auth-comp :dialogVisible="myFirstAuthDialog" :loginId="form.loginId" @close="myFirstAuthDialogClose" />
 	</v-dialog>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import FindLoginIdComp from "@/components/User/FindLoginIdComp.vue";
+import FindPasswordComp from "@/components/User/FindPasswordComp.vue";
+import AuthComp from "./AuthComp.vue";
+import FirstAuthComp from "./FirstAuthComp.vue";
 
 export default {
+	components: { FindLoginIdComp, FindPasswordComp, AuthComp, FirstAuthComp },
 	name: "LoginComp",
 	data() {
 		return {
@@ -71,6 +80,8 @@ export default {
 			},
 			errorMessage: "",
 			dialog: false,
+			myAuthDialog: false,
+			myFirstAuthDialog: false,
 			counter: 5,
 			options: {
 				passwordShow: false,
@@ -90,8 +101,12 @@ export default {
 	methods: {
 		async doLogin() {
 			let loginResult = await this.login(this.form);
-			if (loginResult) {
+			if (loginResult === true) {
 				this.dialog = false;
+			} else if (loginResult === "lock") {
+				this.myAuthDialog = true;
+			} else if (loginResult === "noAuth") {
+				this.myFirstAuthDialog = true;
 			}
 		},
 		initForm() {
@@ -99,6 +114,12 @@ export default {
 			this.password = "";
 		},
 		...mapActions("userStore", ["login"]),
+		myAuthDialogClose() {
+			this.myAuthDialog = false;
+		},
+		myFirstAuthDialogClose() {
+			this.myFirstAuthDialog = false;
+		},
 	},
 	computed: {
 		form1OK() {
@@ -111,3 +132,17 @@ export default {
 	},
 };
 </script>
+
+<style scoped>
+#loginButton {
+	/* background-color: #3182f6; */
+	color: #454545;
+	font-weight: 600;
+	border-radius: 5px;
+	padding: 5px 10px;
+	transition: 0.2s ease-in-out;
+}
+#loginButton:hover {
+	background-color: Gainsboro;
+}
+</style>

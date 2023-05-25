@@ -1,23 +1,21 @@
 <template>
-	<v-container fluid>
-		<v-row no-gutters>
-			<v-col cols="12" lg="4">
-				<v-row no-gutters>
-					<v-col>
-						<user-info-comp :user="user" />
-					</v-col>
-				</v-row>
-				<v-row no-gutters>
-					<v-col>
-						<user-tabs-info-comp :userNickname="user.nickname" />
-					</v-col>
-				</v-row>
-			</v-col>
-			<v-col cols="12" lg="8" class="pl-2">
-				<user-page-map-comp :writeTravelList="writeTravelList" />
-			</v-col>
-		</v-row>
-	</v-container>
+	<div id="user_page" v-if="user.nickname && writeTravelList">
+		<div id="user_side">
+			<user-info-comp
+				:user="user"
+				@update-profile-base64Image="updateProfileimage"
+				@plus-follower-cnt="plusFollowerCnt"
+				@minus-follower-cnt="minusFollowerCnt"
+			/>
+			<user-tabs-info-comp
+				:userNickname="user.nickname"
+				:travelList="writeTravelList"
+				:zzimTravelList="zzimTravelList"
+			/>
+		</div>
+		<user-page-map-comp :travelList="writeTravelList" />
+	</div>
+	<loading-spinner-comp v-else />
 </template>
 
 <script>
@@ -25,25 +23,32 @@ import UserInfoComp from "@/components/User/UserInfoComp.vue";
 import UserTabsInfoComp from "@/components/User/UserTabsInfoComp.vue";
 import UserPageMapComp from "@/components/User/UserPageMapComp.vue";
 import { mapActions } from "vuex";
+import LoadingSpinnerComp from "@/components/User/LoadingSpinnerComp.vue";
 
 export default {
 	name: "UserPage",
-	components: { UserInfoComp, UserTabsInfoComp, UserPageMapComp },
+	components: { UserInfoComp, UserTabsInfoComp, UserPageMapComp, LoadingSpinnerComp },
 	data() {
 		return {
 			user: {
-				userId: "",
+				userId: Number,
 				email: "",
 				nickname: "",
 				name: "",
 				profileImage: "",
+				urlProfileImage: null,
+				followerCnt: null,
+				followingCnt: null,
 			},
-			writeTravelList: [],
+			writeTravelList: null,
+			zzimTravelList: null,
 		};
 	},
 	created() {
+		console.log("유저id : " + this.$route.params.userId);
 		this.getUserInfo(this.$route.params.userId);
 		this.getUserTravelList(this.$route.params.userId);
+		this.getUserZzimTravelList(this.$route.params.userId);
 	},
 
 	methods: {
@@ -51,16 +56,39 @@ export default {
 		...mapActions("travelStore", ["getTravelListByUserId", "getZzimTravelListByUserId"]),
 		async getUserInfo(userId) {
 			let res = await this.getUserByUserId(userId);
+			console.log(res);
 			this.user = res.data.data;
-			console.log(this.user);
 		},
 		async getUserTravelList(userId) {
 			let res = await this.getTravelListByUserId(userId);
 			this.writeTravelList = res.data.data;
-			console.log(this.writeTravelList);
+		},
+		async getUserZzimTravelList(userId) {
+			let res = await this.getZzimTravelListByUserId(userId);
+			this.zzimTravelList = res.data.data;
+		},
+		updateProfileimage(image) {
+			this.user.urlProfileImage = image;
+		},
+		plusFollowerCnt() {
+			this.user.followerCnt = this.user.followerCnt + 1;
+		},
+		minusFollowerCnt() {
+			this.user.followerCnt = this.user.followerCnt - 1;
 		},
 	},
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+#user_page {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	padding-top: 70px; // 헤더 높이
+}
+#user_side {
+	height: 100%;
+	min-width: 650px;
+}
+</style>
