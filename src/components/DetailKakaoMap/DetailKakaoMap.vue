@@ -159,7 +159,7 @@ export default {
 				this.addMarkerEvent(marker, pin);
 			});
 			this.map.setBounds(bounds);
-			this.map.setLevel(3);
+			this.map.setLevel(8);
 		},
 	},
 	computed: {
