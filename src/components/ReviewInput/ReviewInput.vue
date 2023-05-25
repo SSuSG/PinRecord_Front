@@ -11,10 +11,10 @@
 				solo
 				@change="setSelectedSi"
 				v-model="selectedSi"
-				flat="true"
-				outlined="true"
+				:flat="true"
+				:outlined="true"
 				loader-height="1"
-				dense="true"
+				:dense="true"
 			></v-select>
 			<v-select
 				id="select"
@@ -26,11 +26,10 @@
 				@change="setSelectedGu"
 				v-model="selectedGu"
 				no-data-text="시/도를 입력해주세요."
-				flat="true"
-				outlined="true"
-				dense="true"
+				:flat="true"
+				:outlined="true"
+				:dense="true"
 			></v-select>
-			<TextInput type="text" placeholder="시/군/구" readonly /> -->
 		</div>
 
 		<TextInput type="text" v-model="travelInfo.title" placeholder="제목" ref="cost" />
@@ -123,7 +122,7 @@ export default {
 				endDate: "",
 				cost: "",
 				content: "",
-				state: "test",
+				state: "",
 				city: "",
 				title: "",
 				userId: 0,
@@ -274,6 +273,7 @@ export default {
 		},
 
 		setSelectedSi(e) {
+			console.log(e);
 			const siCode = this.selectedSi[0] + this.selectedSi[1];
 			for (let i = 0; i < this.si.length; i++) {
 				if (this.si[i].code === this.selectedSi) {
@@ -285,16 +285,7 @@ export default {
 		},
 
 		setSelectedGu(e) {
-			for (let i = 0; i < this.gu.length; i++) {
-				if (this.gu[i].code === this.selectedGu) {
-					const temp = this.gu[i].name.split(" ");
-					this.travelInfo.state = temp[0];
-					this.travelInfo.city = temp[1];
-					console.log(this.travelInfo.state + " " + this.travelInfo.city);
-					break;
-				}
-			}
-			// this.searchTravelListByTag();
+			this.travelInfo.city = e;
 		},
 	},
 	mounted() {

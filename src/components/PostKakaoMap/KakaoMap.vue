@@ -19,7 +19,7 @@
 			</ResultWrapper>
 		</ResultContainer>
 		<ButtonGroup>
-			<KeywordInput type="text" placeholder="검색어 입력" v-model="searchKeyword" />
+			<KeywordInput type="text" placeholder="검색어 입력" v-model="searchKeyword" @keyup.enter="searchPlaces" />
 			<SearchButton @click="searchPlaces()">검색</SearchButton>
 			<SearchButton @click="resetMarker()">리셋</SearchButton>
 		</ButtonGroup>
