@@ -163,7 +163,7 @@ export default {
 
 <style>
 #detail_comment {
-	min-height: 500px;
+	height: 550px;
 	/* max-height: 50%; */
 	display: flex;
 	flex-direction: column;

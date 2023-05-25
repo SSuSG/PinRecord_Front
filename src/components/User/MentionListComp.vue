@@ -75,6 +75,8 @@ export default {
 #mention_container {
 	width: 100%;
 	display: flex;
+	flex-direction: column;
+	gap: 10px;
 	justify-content: center;
 	align-items: center;
 	padding: 10px;

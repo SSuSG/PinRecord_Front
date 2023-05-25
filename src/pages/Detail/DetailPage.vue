@@ -3,7 +3,7 @@
 		<div id="detail_left">
 			<div v-if="!isLoading">
 				<detail-travel :prop="getDetailData" :zzim="zzim" @cancel-zzim="cancelZzim" @do-zzim="doZzim" />
-				<hr />
+				<br />
 				<detail-comment :prop="getDetailData.commentList" :loginUser="getLoginUser" :postId="postId" />
 			</div>
 		</div>
